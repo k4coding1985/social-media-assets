@@ -42,3 +42,4 @@ tools/.venv/bin/python tools/add_voiceover.py -i in.mp4 -o out.mp4 --speech-file
 ```
 
 Diagram-style Reels: see `DIAGRAM_REEL_TEMPLATE.md`.
+Motion-graphics Reels (current IG/FB style, marker chapter titles + UI windows + data dots + SFX): see `MOTION_REEL_TEMPLATE.md` and `render_motion_reel.py`.

@@ -24,3 +24,23 @@ of a third-party Content ID claim.
 Pixabay and other stock tracks were considered but skipped when they
 were marked Content ID registered, which can mute or claim Instagram
 Reels.
+
+## ambient-pad-bed.mp3 and the motion-Reel UI SFX
+
+- **Files:** `tools/music/ambient-pad-bed.mp3` (24 s seamless loop),
+  `tools/sfx/whoosh.wav`, `pop.wav`, `tick.wav`, `alert.wav`, `ding.wav`
+- **Source:** Original sounds synthesized from scratch with numpy (noise, sine
+  and harmonic oscillators, envelopes, one-pole filters) by
+  `tools/sfx/generate_motion_sfx.py`. No third-party samples or recordings
+  were used. Generation is deterministic (fixed seed).
+- **License:** [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
+- **Use:** `render_motion_reel.py` mixes the SFX at about -18 dB below the voice peak
+  and uses the ambient pad as the music bed. `add_voiceover.py` ducks the pad about
+  16 dB under the voice.
+
+## Fonts (tools/fonts)
+
+- `PermanentMarker-Regular.ttf`: Permanent Marker by Font Diner, Apache License 2.0
+  (`fonts/LICENSE-PermanentMarker-Apache2.txt`)
+- `Inter-Variable.ttf`: Inter, SIL Open Font License 1.1 (`fonts/OFL-Inter.txt`)
+- `JetBrainsMono-Variable.ttf`: JetBrains Mono, SIL OFL 1.1 (`fonts/OFL-JetBrainsMono.txt`)
