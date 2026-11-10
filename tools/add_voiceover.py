@@ -18,7 +18,8 @@ Examples:
       -t "Where email equals NULL returns zero rows. Use IS NULL."
 
   tools/.venv/bin/python tools/add_voiceover.py \\
-      -i in.mp4 -o out.mp4 --text-file script.txt --no-music
+      -i in.mp4 -o out.mp4 --text-file script.txt --no-music \\
+      --voice en-US-AndrewMultilingualNeural --rate +5% --pitch +0Hz
 """
 from __future__ import annotations
 
@@ -109,12 +110,12 @@ def probe_video_size(path: Path) -> tuple[int, int]:
     return int(w), int(h)
 
 
-def tts_edge(text: str, dest: Path, voice: str, rate: str) -> None:
+def tts_edge(text: str, dest: Path, voice: str, rate: str, pitch: str) -> None:
     import asyncio
     import edge_tts
 
     async def _synth() -> None:
-        communicate = edge_tts.Communicate(text, voice=voice, rate=rate)
+        communicate = edge_tts.Communicate(text, voice=voice, rate=rate, pitch=pitch)
         await communicate.save(str(dest))
 
     asyncio.run(_synth())
@@ -184,10 +185,10 @@ def tts_espeak(text: str, dest: Path) -> None:
     _finalize_audio(wav_dest, dest)
 
 
-def synthesize_speech(text: str, dest: Path, voice: str, rate: str) -> str:
+def synthesize_speech(text: str, dest: Path, voice: str, rate: str, pitch: str) -> str:
     """Try TTS engines in order. Returns the name of the engine that worked."""
     engines = [
-        ("edge-tts", lambda: tts_edge(text, dest, voice, rate)),
+        ("edge-tts", lambda: tts_edge(text, dest, voice, rate, pitch)),
         ("gTTS", lambda: tts_gtts(text, dest)),
         ("piper", lambda: tts_piper(text, dest)),
         ("espeak-ng", lambda: tts_espeak(text, dest)),
@@ -391,6 +392,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     text.add_argument("--text-file", type=Path, help="File containing the voiceover script")
     p.add_argument("--voice", default=DEFAULT_VOICE, help=f"edge-tts voice (default: {DEFAULT_VOICE})")
     p.add_argument("--rate", default="+0%", help='edge-tts rate, e.g. "+5%%" or "-10%%"')
+    p.add_argument("--pitch", default="+0Hz", help='edge-tts pitch, e.g. "-3Hz" or "+2Hz"')
     p.add_argument("--music", type=Path, default=DEFAULT_MUSIC, help="Music bed file (looped/trimmed)")
     p.add_argument("--no-music", action="store_true", help="Voice only; skip the music bed")
     return p.parse_args(argv)
@@ -434,7 +436,7 @@ def main(argv: list[str] | None = None) -> int:
     with tempfile.TemporaryDirectory(prefix="add_voiceover_") as td:
         tdir = Path(td)
         raw_speech = tdir / "speech_raw.mp3"
-        engine = synthesize_speech(text, raw_speech, args.voice, args.rate)
+        engine = synthesize_speech(text, raw_speech, args.voice, args.rate, args.pitch)
         voice_wav = tdir / "speech.wav"
         to_wav_48k_stereo(raw_speech, voice_wav)
         speech_dur = probe_duration(voice_wav)
