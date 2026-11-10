@@ -1,0 +1,470 @@
+{
+ "title": "{{JOIN}} duplicated my rows",
+ "title_size": 66,
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your JOIN just duplicated customers. One row went in, two came out."
+  },
+  {
+   "id": "setup",
+   "text": "Asha is one row in customers. She has two rows in orders."
+  },
+  {
+   "id": "bug",
+   "text": "The join matches her row to every order, so Asha appears twice. Count customers now, and you get two, not one."
+  },
+  {
+   "id": "fix",
+   "text": "The fix: group orders by customer first, so each customer has one row. Then join."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding.",
+   "caption": false
+  }
+ ],
+ "captions": {
+  "keywords": [
+   "JOIN",
+   "duplicated",
+   "twice",
+   "two",
+   "group orders",
+   "one row",
+   "join"
+  ],
+  "max_chars": 24
+ },
+ "cover_at": "bug@two",
+ "end_card": {
+  "segment": "follow",
+  "line1": "Follow",
+  "line2": "{{@k4coding}}",
+  "line3": "one bug, one diagram, daily"
+ },
+ "nodes": [
+  {
+   "id": "customers",
+   "type": "table",
+   "x": 270,
+   "y": 774,
+   "w": 400,
+   "label": "customers",
+   "rows": [
+    "1 Asha",
+    "2 Ravi"
+   ],
+   "start_visible": true,
+   "row_h": 88,
+   "row_size": 46,
+   "gap": 20,
+   "pad": 26
+  },
+  {
+   "id": "orders",
+   "type": "table",
+   "x": 810,
+   "y": 828,
+   "w": 400,
+   "label": "orders",
+   "rows": [
+    "#101 cid=1",
+    "#102 cid=1",
+    "#103 cid=2"
+   ],
+   "start_visible": true,
+   "row_h": 88,
+   "row_size": 46,
+   "gap": 20,
+   "pad": 26
+  },
+  {
+   "id": "result",
+   "type": "table",
+   "x": 540,
+   "y": 1268,
+   "w": 640,
+   "label": "result",
+   "rows": [
+    {
+     "text": "Asha #101",
+     "hidden": true
+    },
+    {
+     "text": "Asha #102",
+     "hidden": true
+    },
+    {
+     "text": "Ravi #103",
+     "hidden": true
+    }
+   ],
+   "row_h": 88,
+   "row_size": 46,
+   "gap": 20,
+   "pad": 26
+  }
+ ],
+ "paths": [
+  {
+   "id": "p_a1",
+   "points": [
+    "customers.r0.right",
+    "orders.r0.left"
+   ]
+  },
+  {
+   "id": "p_a2",
+   "points": [
+    "customers.r0.right",
+    "orders.r1.left"
+   ]
+  }
+ ],
+ "code": [
+  {
+   "id": "l1",
+   "x": 60,
+   "y": 370,
+   "text": "SELECT c.name FROM customers c",
+   "start_visible": true
+  },
+  {
+   "id": "l2",
+   "x": 60,
+   "y": 428,
+   "text": "JOIN orders o ON {{o.cid = c.id}}",
+   "start_visible": true
+  },
+  {
+   "id": "l3",
+   "x": 60,
+   "y": 486,
+   "text": "  FROM orders {{GROUP BY cid}}) o"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0.15,
+   "do": "show",
+   "target": [
+    "p_a1",
+    "p_a2"
+   ],
+   "dur": 0.4
+  },
+  {
+   "at": 0.2,
+   "do": "move",
+   "from": "customers.r0.right",
+   "to": [
+    "orders.r0.left",
+    "orders.r1.left"
+   ],
+   "dur": 0.8
+  },
+  {
+   "at": 0.9,
+   "do": "show",
+   "target": "result",
+   "dur": 0.4
+  },
+  {
+   "at": 1.0,
+   "do": "move",
+   "from": [
+    "orders.r0.left",
+    "orders.r1.left"
+   ],
+   "to": [
+    "result.r0.top",
+    "result.r1.top"
+   ],
+   "via": [
+    [
+     540,
+     1040
+    ]
+   ],
+   "dur": 0.8
+  },
+  {
+   "at": 1.7,
+   "do": "show",
+   "target": [
+    "result.r0",
+    "result.r1"
+   ],
+   "dur": 0.35
+  },
+  {
+   "at": 1.75,
+   "do": "highlight",
+   "target": [
+    "result.r0",
+    "result.r1"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "hook@One",
+   "do": "pulse",
+   "target": "customers.r0"
+  },
+  {
+   "at": "hook@two",
+   "do": "pulse",
+   "target": [
+    "result.r0",
+    "result.r1"
+   ]
+  },
+  {
+   "at": "setup",
+   "do": "unhighlight",
+   "target": [
+    "result.r0",
+    "result.r1"
+   ]
+  },
+  {
+   "at": "setup",
+   "do": "highlight",
+   "target": "customers.r0"
+  },
+  {
+   "at": "setup@customers",
+   "do": "pulse",
+   "target": "customers.r0"
+  },
+  {
+   "at": "setup@She",
+   "do": "move",
+   "from": "customers.r0.right",
+   "to": [
+    "orders.r0.left",
+    "orders.r1.left"
+   ],
+   "dur": 0.9
+  },
+  {
+   "at": "setup@two",
+   "do": "highlight",
+   "target": [
+    "orders.r0",
+    "orders.r1"
+   ]
+  },
+  {
+   "at": "setup@orders",
+   "do": "pulse",
+   "target": [
+    "orders.r0",
+    "orders.r1"
+   ]
+  },
+  {
+   "at": "bug",
+   "do": "move",
+   "from": "customers.r0.right",
+   "to": [
+    "orders.r0.left",
+    "orders.r1.left"
+   ],
+   "dur": 1.0
+  },
+  {
+   "at": "bug@every",
+   "do": "move",
+   "from": [
+    "orders.r0.left",
+    "orders.r1.left"
+   ],
+   "to": [
+    "result.r0.top",
+    "result.r1.top"
+   ],
+   "via": [
+    [
+     540,
+     1040
+    ]
+   ],
+   "dur": 1.0
+  },
+  {
+   "at": "bug@twice",
+   "do": "highlight",
+   "target": [
+    "result.r0",
+    "result.r1"
+   ]
+  },
+  {
+   "at": "bug@twice",
+   "do": "pulse",
+   "target": [
+    "result.r0",
+    "result.r1"
+   ]
+  },
+  {
+   "at": "bug@twice+0.3",
+   "do": "move",
+   "from": "customers.r1.right",
+   "to": "orders.r2.left",
+   "dur": 0.7
+  },
+  {
+   "at": "+0.7",
+   "do": "show",
+   "target": "result.r2",
+   "dur": 0.4
+  },
+  {
+   "at": "bug@Count",
+   "do": "swap",
+   "target": "result:label",
+   "text": "COUNT(Asha) = {{2}}"
+  },
+  {
+   "at": "bug@now",
+   "do": "pulse",
+   "target": "result.r0"
+  },
+  {
+   "at": "bug@two",
+   "do": "pulse",
+   "target": [
+    "result.r0",
+    "result.r1"
+   ]
+  },
+  {
+   "at": "bug@not",
+   "do": "pulse",
+   "target": "result"
+  },
+  {
+   "at": "fix",
+   "do": "unhighlight",
+   "target": [
+    "result.r0",
+    "result.r1",
+    "customers.r0",
+    "orders.r0",
+    "orders.r1"
+   ]
+  },
+  {
+   "at": "fix",
+   "do": "swap",
+   "target": "l2",
+   "text": "JOIN (SELECT cid, COUNT(*) n"
+  },
+  {
+   "at": "fix+0.3",
+   "do": "show",
+   "target": "l3"
+  },
+  {
+   "at": "fix@group",
+   "do": "highlight",
+   "target": "orders"
+  },
+  {
+   "at": "fix@group",
+   "do": "swap",
+   "target": "orders:label",
+   "text": "{{GROUP BY}} cid"
+  },
+  {
+   "at": "fix@customer",
+   "do": "swap",
+   "target": "orders.r0",
+   "text": "cid=1 n={{2}}"
+  },
+  {
+   "at": "fix@customer",
+   "do": "swap",
+   "target": "orders.r1",
+   "text": "cid=2 n=1"
+  },
+  {
+   "at": "fix@customer",
+   "do": "hide",
+   "target": "orders.r2",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@first",
+   "do": "pulse",
+   "target": [
+    "orders.r0",
+    "orders.r1"
+   ]
+  },
+  {
+   "at": "fix@so",
+   "do": "move",
+   "from": "customers.r1.right",
+   "to": "orders.r1.left",
+   "dur": 0.8
+  },
+  {
+   "at": "fix@one",
+   "do": "hide",
+   "target": "result.r2",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@one",
+   "do": "swap",
+   "target": "result.r0",
+   "text": "Asha n=2"
+  },
+  {
+   "at": "fix@one",
+   "do": "swap",
+   "target": "result.r1",
+   "text": "Ravi n=1"
+  },
+  {
+   "at": "fix@one+0.2",
+   "do": "move",
+   "from": "customers.r0.right",
+   "to": "orders.r0.left",
+   "dur": 0.6
+  },
+  {
+   "at": "+0.6",
+   "do": "move",
+   "from": "orders.r0.left",
+   "to": "result.r0.top",
+   "via": [
+    [
+     540,
+     1040
+    ]
+   ],
+   "dur": 0.6
+  },
+  {
+   "at": "fix@Then",
+   "do": "highlight",
+   "target": "result.r0"
+  },
+  {
+   "at": "fix@Then",
+   "do": "swap",
+   "target": "result:label",
+   "text": "COUNT(Asha) = {{1}}"
+  }
+ ]
+}

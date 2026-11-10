@@ -387,7 +387,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     p.add_argument("-i", "--input", required=True, type=Path, help="Input silent MP4")
     p.add_argument("-o", "--output", required=True, type=Path, help="Output MP4 path")
-    text = p.add_mutually_exclusive_group(required=True)
+    text = p.add_mutually_exclusive_group(required=False)
     text.add_argument("-t", "--text", help="Voiceover script text")
     text.add_argument("--text-file", type=Path, help="File containing the voiceover script")
     p.add_argument("--voice", default=DEFAULT_VOICE, help=f"edge-tts voice (default: {DEFAULT_VOICE})")
@@ -395,7 +395,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--pitch", default="+0Hz", help='edge-tts pitch, e.g. "-3Hz" or "+2Hz"')
     p.add_argument("--music", type=Path, default=DEFAULT_MUSIC, help="Music bed file (looped/trimmed)")
     p.add_argument("--no-music", action="store_true", help="Voice only; skip the music bed")
-    return p.parse_args(argv)
+    p.add_argument(
+        "--speech-file", type=Path,
+        help="Use this pre-synthesized speech file (mp3/wav) instead of running TTS. "
+             "render_diagram_reel.py uses it so word timings match the audio exactly.",
+    )
+    args = p.parse_args(argv)
+    if args.speech_file is None and args.text is None and args.text_file is None:
+        p.error("one of -t/--text, --text-file or --speech-file is required")
+    return args
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -412,7 +420,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Input not found: {input_path}", file=sys.stderr)
         return 1
 
-    text = args.text if args.text is not None else args.text_file.read_text(encoding="utf-8")
+    if args.text is not None:
+        text = args.text
+    elif args.text_file is not None:
+        text = args.text_file.read_text(encoding="utf-8")
+    else:
+        text = "(pre-synthesized speech)"
     text = text.strip()
     if not text:
         print("Voiceover text is empty.", file=sys.stderr)
@@ -435,8 +448,15 @@ def main(argv: list[str] | None = None) -> int:
 
     with tempfile.TemporaryDirectory(prefix="add_voiceover_") as td:
         tdir = Path(td)
-        raw_speech = tdir / "speech_raw.mp3"
-        engine = synthesize_speech(text, raw_speech, args.voice, args.rate, args.pitch)
+        if args.speech_file is not None:
+            raw_speech = args.speech_file.expanduser().resolve()
+            if not raw_speech.is_file():
+                print(f"Speech file not found: {raw_speech}", file=sys.stderr)
+                return 1
+            engine = "pre-synthesized file"
+        else:
+            raw_speech = tdir / "speech_raw.mp3"
+            engine = synthesize_speech(text, raw_speech, args.voice, args.rate, args.pitch)
         voice_wav = tdir / "speech.wav"
         to_wav_48k_stereo(raw_speech, voice_wav)
         speech_dur = probe_duration(voice_wav)

@@ -34,3 +34,11 @@ tools/.venv/bin/python tools/add_voiceover.py \
 ```
 
 Optional flags: `--voice en-US-GuyNeural`, `--rate +5%`, `--music path/to/bed.mp3`.
+
+Pre-synthesized speech (skips TTS; used by `render_diagram_reel.py`):
+
+```bash
+tools/.venv/bin/python tools/add_voiceover.py -i in.mp4 -o out.mp4 --speech-file speech.mp3
+```
+
+Diagram-style Reels: see `DIAGRAM_REEL_TEMPLATE.md`.
