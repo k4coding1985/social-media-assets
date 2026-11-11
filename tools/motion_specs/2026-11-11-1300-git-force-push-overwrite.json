@@ -64,5 +64,5 @@
   {"at": "fix@first", "do": "send", "path": ["l1", "l2", "l3", "l4"], "count": 4, "interval": 0.12, "dur": 0.6, "color": "cyan"}
  ],
  "end_card": {"segment": "follow", "line1": "FOLLOW", "line2": "{{@K4CODING}}", "line3": "one coding fix, every day"},
- "variants": {"facebook": {"chapters": {"hook": {"text": "WHO {{DELETED}} MY COMMIT?", "color": "red"}}, "cover_at": "why@commit+0.6"}}
+ "variants": {"facebook": {"chapters": {"hook": {"text": "{{LOST}} A COMMIT?", "color": "red"}}, "cover_at": "why@commit+0.6"}}
 }
