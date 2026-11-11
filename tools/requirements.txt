@@ -1,2 +1,4 @@
 edge-tts>=7.3.0
 gTTS>=2.5.0
+numpy
+pillow
