@@ -1,0 +1,590 @@
+{
+ "slug": "http-retry-idempotency-key",
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "retry",
+   "charged",
+   "twice",
+   "times out",
+   "POST",
+   "idempotency key",
+   "saved result"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "why@again+0.3",
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{DOUBLE}} CHARGED?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{TIMEOUT}} + RETRY",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{SAME}} POST TWICE",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "IDEMPOTENCY {{KEY}}",
+   "color": "purple"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your retry just charged the customer twice."
+  },
+  {
+   "id": "bug",
+   "text": "The app sends a payment request. The server charges the card, but the response times out on the way back, so the app retries."
+  },
+  {
+   "id": "why",
+   "text": "The server cannot tell a retry from a new order. Every POST looks fresh, so the same payment runs again."
+  },
+  {
+   "id": "fix",
+   "text": "Send an idempotency key with each payment. The server stores it, and when the same key comes back, it returns the saved result instead of charging again."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding."
+  }
+ ],
+ "elements": [
+  {
+   "id": "l1",
+   "type": "line",
+   "from": "app.bottom-240",
+   "to": "api.top-240",
+   "start_visible": true
+  },
+  {
+   "id": "l2",
+   "type": "line",
+   "from": "app.bottom-80",
+   "to": "api.top-80",
+   "start_visible": true
+  },
+  {
+   "id": "l3",
+   "type": "line",
+   "from": "app.bottom+80",
+   "to": "api.top+80",
+   "start_visible": true
+  },
+  {
+   "id": "l4",
+   "type": "line",
+   "from": "app.bottom+240",
+   "to": "api.top+240",
+   "start_visible": true
+  },
+  {
+   "id": "app",
+   "type": "window",
+   "x": 540,
+   "y": 480,
+   "w": 960,
+   "h": 200,
+   "title": "APP",
+   "icon": "laptop",
+   "tag": "CLIENT",
+   "status": "cyan",
+   "body": "payment: sending...",
+   "body_size": 52,
+   "hl": "yellow",
+   "start_visible": true
+  },
+  {
+   "id": "api",
+   "type": "window",
+   "x": 540,
+   "y": 830,
+   "w": 960,
+   "h": 200,
+   "title": "PAYMENTS API",
+   "icon": "server",
+   "tag": "POST",
+   "status": "cyan",
+   "body": "charges: 0",
+   "body_size": 52,
+   "start_visible": true
+  },
+  {
+   "id": "load",
+   "type": "bar",
+   "x": 540,
+   "y": 1050,
+   "w": 860,
+   "value": 0.1,
+   "threshold": 0.6,
+   "label": "CHARGES FOR ORDER 42",
+   "start_visible": true
+  },
+  {
+   "id": "code",
+   "type": "code",
+   "x": 540,
+   "y": 1258,
+   "w": 900,
+   "min_lines": 3,
+   "title": "pay.js",
+   "lines": [
+    "{{fetch}}('/pay', {",
+    "  method: 'POST', body })",
+    "// on timeout: {{retry}}"
+   ]
+  },
+  {
+   "id": "tmo",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "TIMEOUT",
+   "x": 540,
+   "y": 655,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "dup",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "CHARGED x2",
+   "x": 540,
+   "y": 655,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 655,
+   "r": 40,
+   "color": "cyan"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0.15,
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.7,
+   "color": "bad"
+  },
+  {
+   "at": "hook@retry",
+   "do": "show",
+   "target": "code",
+   "anim": "slide_up",
+   "dur": 0.45,
+   "type_dur": 1.1
+  },
+  {
+   "at": "hook@charged",
+   "do": "swap",
+   "target": "api",
+   "text": "charges: {{2}}"
+  },
+  {
+   "at": "hook@charged",
+   "do": "set",
+   "target": "load",
+   "value": 0.95,
+   "dur": 0.6
+  },
+  {
+   "at": "hook@customer",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "red",
+   "dur": 0.3,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@twice",
+   "do": "show",
+   "target": "dup",
+   "anim": "pop",
+   "dur": 0.35
+  },
+  {
+   "at": "hook@twice",
+   "do": "shake",
+   "target": "api",
+   "dur": 0.5
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": "dup",
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "swap",
+   "target": "api",
+   "text": "charges: 0"
+  },
+  {
+   "at": "bug:start",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "panel",
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "set",
+   "target": "load",
+   "value": 0.1,
+   "dur": 0.4
+  },
+  {
+   "at": "bug@sends",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2"
+   ],
+   "count": 2,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@request",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "bug@charges",
+   "do": "swap",
+   "target": "api",
+   "text": "charges: {{1}}"
+  },
+  {
+   "at": "bug@card",
+   "do": "set",
+   "target": "load",
+   "value": 0.5,
+   "dur": 0.6
+  },
+  {
+   "at": "bug@response",
+   "do": "send",
+   "path": [
+    "l3",
+    "l4"
+   ],
+   "reverse": true,
+   "count": 2,
+   "interval": 0.12,
+   "dur": 0.9,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@times",
+   "do": "show",
+   "target": "tmo",
+   "anim": "pop",
+   "dur": 0.35,
+   "sfx": "alert"
+  },
+  {
+   "at": "bug@times",
+   "do": "color",
+   "target": "app:status",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@back",
+   "do": "shake",
+   "target": "app",
+   "dur": 0.5
+  },
+  {
+   "at": "bug@retries",
+   "do": "hide",
+   "target": "tmo",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@retries",
+   "do": "swap",
+   "target": "app",
+   "text": "payment: {{retry}} #1"
+  },
+  {
+   "at": "bug@retries",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.1,
+   "dur": 0.6,
+   "color": "bad"
+  },
+  {
+   "at": "why@cannot",
+   "do": "color",
+   "target": "code",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@retry",
+   "do": "pulse",
+   "target": "app"
+  },
+  {
+   "at": "why@new",
+   "do": "pulse",
+   "target": "api"
+  },
+  {
+   "at": "why@post",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 8,
+   "interval": 0.08,
+   "dur": 0.5,
+   "color": "bad"
+  },
+  {
+   "at": "why@fresh",
+   "do": "swap",
+   "target": "api",
+   "text": "charges: {{2}}"
+  },
+  {
+   "at": "why@same",
+   "do": "set",
+   "target": "load",
+   "value": 0.95,
+   "dur": 0.6
+  },
+  {
+   "at": "why@payment",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "red",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@again",
+   "do": "show",
+   "target": "dup",
+   "anim": "pop",
+   "dur": 0.35
+  },
+  {
+   "at": "why@again",
+   "do": "shake",
+   "target": "api",
+   "dur": 0.5
+  },
+  {
+   "at": "fix@send",
+   "do": "hide",
+   "target": "dup",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@send",
+   "do": "swap",
+   "target": "code",
+   "type_dur": 1.3,
+   "lines": [
+    "{{fetch}}('/pay', { body,",
+    "  headers: { {{'Idempotency-Key'}}:",
+    "    order.id } })"
+   ]
+  },
+  {
+   "at": "fix@send",
+   "do": "color",
+   "target": [
+    "code",
+    "code:hl"
+   ],
+   "color": "purple",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@key",
+   "do": "send",
+   "path": "l1",
+   "count": 1,
+   "dur": 0.5,
+   "color": "purple",
+   "r": 12
+  },
+  {
+   "at": "fix@each",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "fix@payment",
+   "do": "pulse",
+   "target": "app"
+  },
+  {
+   "at": "fix@server",
+   "do": "pulse",
+   "target": "api"
+  },
+  {
+   "at": "fix@stores",
+   "do": "swap",
+   "target": "api",
+   "text": "key {{order-42}}: saved"
+  },
+  {
+   "at": "fix@stores",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "panel",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@same",
+   "do": "send",
+   "path": "l2",
+   "count": 1,
+   "dur": 0.5,
+   "color": "purple",
+   "r": 12
+  },
+  {
+   "at": "fix@returns",
+   "do": "send",
+   "path": [
+    "l3",
+    "l4"
+   ],
+   "reverse": true,
+   "count": 2,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "fix@saved",
+   "do": "swap",
+   "target": "api",
+   "text": "charges: {{1}}"
+  },
+  {
+   "at": "fix@saved",
+   "do": "set",
+   "target": "load",
+   "value": 0.5,
+   "dur": 0.6
+  },
+  {
+   "at": "fix@result",
+   "do": "swap",
+   "target": "app",
+   "text": "payment: {{ok}}"
+  },
+  {
+   "at": "fix@result",
+   "do": "color",
+   "target": [
+    "api:status",
+    "app:status"
+   ],
+   "color": "cyan",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@instead",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@charging",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW",
+  "line2": "{{@K4CODING}}",
+  "line3": "one coding fix, every day"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{RETRY}} = 2 CHARGES?",
+     "color": "red"
+    }
+   },
+   "cover_at": "bug@times+0.4"
+  }
+ }
+}
