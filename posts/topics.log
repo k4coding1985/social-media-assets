@@ -8,3 +8,4 @@
 2026-11-12 0900 http-retry-idempotency-key
 2026-11-12 1300 sql-join-duplicate-rows-sum
 2026-11-12 1900 git-reset-vs-revert
+2026-11-12 2100 javascript-var-loop-closure (9 PM slot test, no series)

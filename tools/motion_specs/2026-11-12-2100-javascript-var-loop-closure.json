@@ -1,0 +1,509 @@
+{
+ "slug": "javascript-var-loop-closure",
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "var",
+   "let",
+   "timeout",
+   "function scoped",
+   "one i",
+   "fresh binding",
+   "own value"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "why@three+0.5",
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{VAR}} LOOP BUG",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{TIMERS}} IN LOOP",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{FUNCTION}} SCOPE",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "USE {{LET}}",
+   "color": "purple"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Why does this loop print three, three, three?"
+  },
+  {
+   "id": "bug",
+   "text": "You loop with var i, and inside you set a timeout that logs i. You expect zero, one, two."
+  },
+  {
+   "id": "why",
+   "text": "But var is function scoped. All three callbacks share one i, and by the time the timers run, the loop has finished and i is three."
+  },
+  {
+   "id": "fix",
+   "text": "Use let instead. It creates a fresh binding for every iteration, so each callback keeps its own value, and you get zero, one, two."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding."
+  }
+ ],
+ "elements": [
+  {
+   "id": "l1",
+   "type": "line",
+   "from": "local.top-240",
+   "to": "remote.bottom-240",
+   "start_visible": true
+  },
+  {
+   "id": "l2",
+   "type": "line",
+   "from": "local.top-80",
+   "to": "remote.bottom-80",
+   "start_visible": true
+  },
+  {
+   "id": "l3",
+   "type": "line",
+   "from": "local.top+80",
+   "to": "remote.bottom+80",
+   "start_visible": true
+  },
+  {
+   "id": "l4",
+   "type": "line",
+   "from": "local.top+240",
+   "to": "remote.bottom+240",
+   "start_visible": true
+  },
+  {
+   "id": "remote",
+   "type": "window",
+   "x": 540,
+   "y": 525,
+   "w": 960,
+   "h": 260,
+   "title": "TIMERS",
+   "icon": "cpu",
+   "tag": "QUEUE",
+   "status": "cyan",
+   "body": "log(i) x {{3}}",
+   "body_size": 56,
+   "hl": "yellow",
+   "start_visible": true
+  },
+  {
+   "id": "local",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 760,
+   "h": 190,
+   "title": "CONSOLE",
+   "icon": "laptop",
+   "tag": "OUTPUT",
+   "status": "cyan",
+   "body": "{{3 3 3}}",
+   "body_size": 64,
+   "hl": "red",
+   "start_visible": true
+  },
+  {
+   "id": "code",
+   "type": "code",
+   "x": 540,
+   "y": 1225,
+   "w": 900,
+   "min_lines": 3,
+   "title": "loop.js",
+   "lines": [
+    "for ({{var}} i = 0; i < 3; i++)",
+    "  setTimeout(() => log(i))",
+    "// expect 0 1 2"
+   ]
+  },
+  {
+   "id": "conf",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "ONE SHARED i",
+   "x": 540,
+   "y": 740,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 740,
+   "r": 40,
+   "color": "cyan"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0.15,
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.7,
+   "color": "bad"
+  },
+  {
+   "at": "hook@loop",
+   "do": "show",
+   "target": "code",
+   "anim": "slide_up",
+   "dur": 0.45,
+   "type_dur": 1.1
+  },
+  {
+   "at": "hook@print",
+   "do": "shake",
+   "target": "local",
+   "dur": 0.5
+  },
+  {
+   "at": "hook@three",
+   "do": "color",
+   "target": [
+    "local",
+    "local:status"
+   ],
+   "color": "red",
+   "dur": 0.3,
+   "sfx": "alert"
+  },
+  {
+   "at": "bug@var",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "bug@var",
+   "do": "color",
+   "target": [
+    "local",
+    "local:status"
+   ],
+   "color": "panel",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@timeout",
+   "do": "pulse",
+   "target": "remote"
+  },
+  {
+   "at": "bug@logs",
+   "do": "send",
+   "path": [
+    "l2",
+    "l3"
+   ],
+   "count": 2,
+   "interval": 0.15,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@expect",
+   "do": "swap",
+   "target": "local",
+   "text": "expect 0 1 2"
+  },
+  {
+   "at": "bug@expect+0.15",
+   "do": "color",
+   "target": "local:hl",
+   "color": "cyan",
+   "dur": 0.3
+  },
+  {
+   "at": "why@function",
+   "do": "color",
+   "target": "code",
+   "color": "red",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@callbacks",
+   "do": "pulse",
+   "target": "remote"
+  },
+  {
+   "at": "why@share",
+   "do": "show",
+   "target": "conf",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "why@timers",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 12,
+   "interval": 0.08,
+   "dur": 0.5,
+   "color": "bad"
+  },
+  {
+   "at": "why@finished",
+   "do": "swap",
+   "target": "remote",
+   "text": "i = {{3}}"
+  },
+  {
+   "at": "why@finished+0.15",
+   "do": "color",
+   "target": [
+    "remote",
+    "remote:status",
+    "remote:hl"
+   ],
+   "color": "red",
+   "dur": 0.4
+  },
+  {
+   "at": "why@three",
+   "do": "swap",
+   "target": "local",
+   "text": "{{3 3 3}}"
+  },
+  {
+   "at": "why@three+0.15",
+   "do": "color",
+   "target": [
+    "local",
+    "local:status",
+    "local:hl"
+   ],
+   "color": "red",
+   "dur": 0.4
+  },
+  {
+   "at": "why@three",
+   "do": "shake",
+   "target": "local",
+   "dur": 0.5
+  },
+  {
+   "at": "fix@use",
+   "do": "hide",
+   "target": "conf",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@let",
+   "do": "swap",
+   "target": "code",
+   "type_dur": 1.2,
+   "lines": [
+    "for ({{let}} i = 0; i < 3; i++)",
+    "  setTimeout(() => log(i))",
+    "// new i each loop"
+   ]
+  },
+  {
+   "at": "fix@let",
+   "do": "color",
+   "target": [
+    "code",
+    "code:hl"
+   ],
+   "color": "purple",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@fresh",
+   "do": "swap",
+   "target": "remote",
+   "text": "i0 \u00b7 i1 \u00b7 {{i2}}"
+  },
+  {
+   "at": "fix@fresh",
+   "do": "color",
+   "target": [
+    "remote",
+    "remote:hl"
+   ],
+   "color": "purple",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@callback",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "purple"
+  },
+  {
+   "at": "fix@own",
+   "do": "pulse",
+   "target": "remote"
+  },
+  {
+   "at": "fix@get",
+   "do": "swap",
+   "target": "local",
+   "text": "0  1  2"
+  },
+  {
+   "at": "fix@get+0.15",
+   "do": "color",
+   "target": [
+    "local:hl",
+    "local:status",
+    "remote:status"
+   ],
+   "color": "cyan",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@get",
+   "do": "color",
+   "target": [
+    "local",
+    "remote"
+   ],
+   "color": "panel",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@zero",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": 2.6,
+   "do": "pulse",
+   "target": "local"
+  },
+  {
+   "at": 3.5,
+   "do": "send",
+   "path": [
+    "l1",
+    "l4"
+   ],
+   "count": 2,
+   "interval": 0.15,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@two",
+   "do": "pulse",
+   "target": "local"
+  },
+  {
+   "at": 10.8,
+   "do": "send",
+   "path": [
+    "l2",
+    "l3"
+   ],
+   "count": 2,
+   "interval": 0.15,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "fix@iteration",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": 26.0,
+   "do": "send",
+   "path": [
+    "l1",
+    "l4"
+   ],
+   "count": 2,
+   "interval": 0.15,
+   "dur": 0.5,
+   "color": "purple"
+  },
+  {
+   "at": "fix@two",
+   "do": "pulse",
+   "target": "local"
+  },
+  {
+   "at": 31.3,
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW",
+  "line2": "{{@K4CODING}}",
+  "line3": "one coding fix, every day"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "WHY {{3 3 3}}?",
+     "color": "red"
+    }
+   },
+   "cover_at": "fix@zero+0.6"
+  }
+ }
+}
