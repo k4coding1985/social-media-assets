@@ -1,0 +1,558 @@
+{
+ "slug": "sql-join-duplicate-rows-sum",
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "doubled",
+   "join",
+   "twice",
+   "SUM",
+   "subquery",
+   "once",
+   "correct"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "why@silently+0.2",
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "REVENUE {{DOUBLED}}?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{JOIN}} DUPLICATES",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "SUM COUNTS {{TWICE}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "{{GROUP}} FIRST",
+   "color": "purple"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your revenue report just doubled overnight."
+  },
+  {
+   "id": "bug",
+   "text": "You join orders to payments to show total revenue. One order has two payment rows, so the join returns that order twice."
+  },
+  {
+   "id": "why",
+   "text": "SUM counts every joined row. Each extra payment copies the order amount, so the total inflates silently."
+  },
+  {
+   "id": "fix",
+   "text": "Aggregate payments first in a subquery, then join one row per order. Now each order counts once, and the total is correct."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding."
+  }
+ ],
+ "elements": [
+  {
+   "id": "l1",
+   "type": "line",
+   "from": "app.bottom-240",
+   "to": "api.top-240",
+   "start_visible": true
+  },
+  {
+   "id": "l2",
+   "type": "line",
+   "from": "app.bottom-80",
+   "to": "api.top-80",
+   "start_visible": true
+  },
+  {
+   "id": "l3",
+   "type": "line",
+   "from": "app.bottom+80",
+   "to": "api.top+80",
+   "start_visible": true
+  },
+  {
+   "id": "l4",
+   "type": "line",
+   "from": "app.bottom+240",
+   "to": "api.top+240",
+   "start_visible": true
+  },
+  {
+   "id": "app",
+   "type": "window",
+   "x": 540,
+   "y": 480,
+   "w": 960,
+   "h": 200,
+   "title": "REVENUE REPORT",
+   "icon": "laptop",
+   "tag": "QUERY",
+   "status": "cyan",
+   "body": "total: $1,000",
+   "body_size": 52,
+   "hl": "yellow",
+   "start_visible": true
+  },
+  {
+   "id": "api",
+   "type": "window",
+   "x": 540,
+   "y": 830,
+   "w": 960,
+   "h": 200,
+   "title": "DATABASE",
+   "icon": "database",
+   "tag": "JOIN",
+   "status": "cyan",
+   "body": "rows: 1 per order",
+   "body_size": 52,
+   "start_visible": true
+  },
+  {
+   "id": "load",
+   "type": "bar",
+   "x": 540,
+   "y": 1050,
+   "w": 860,
+   "value": 0.4,
+   "threshold": 0.6,
+   "label": "REPORTED REVENUE",
+   "start_visible": true
+  },
+  {
+   "id": "code",
+   "type": "code",
+   "x": 540,
+   "y": 1258,
+   "w": 900,
+   "min_lines": 3,
+   "title": "report.sql",
+   "lines": [
+    "SELECT {{SUM}}(o.amount)",
+    "FROM orders o JOIN payments p",
+    "  ON p.order_id = o.id"
+   ]
+  },
+  {
+   "id": "tmo",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "DUPLICATE ROWS",
+   "x": 540,
+   "y": 655,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "dup",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "TOTAL x2",
+   "x": 540,
+   "y": 655,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 655,
+   "r": 40,
+   "color": "cyan"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0.15,
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.7,
+   "color": "bad"
+  },
+  {
+   "at": "hook@revenue",
+   "do": "show",
+   "target": "code",
+   "anim": "slide_up",
+   "dur": 0.45,
+   "type_dur": 1.1
+  },
+  {
+   "at": "hook@doubled",
+   "do": "swap",
+   "target": "app",
+   "text": "total: {{$2,000}}"
+  },
+  {
+   "at": "hook@doubled",
+   "do": "set",
+   "target": "load",
+   "value": 0.95,
+   "dur": 0.6
+  },
+  {
+   "at": "hook@doubled",
+   "do": "color",
+   "target": [
+    "app",
+    "app:status"
+   ],
+   "color": "red",
+   "dur": 0.3,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@overnight",
+   "do": "show",
+   "target": "dup",
+   "anim": "pop",
+   "dur": 0.35
+  },
+  {
+   "at": "hook@overnight",
+   "do": "shake",
+   "target": "app",
+   "dur": 0.5
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": "dup",
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "swap",
+   "target": "app",
+   "text": "total: $1,000"
+  },
+  {
+   "at": "bug:start",
+   "do": "color",
+   "target": [
+    "app",
+    "app:status"
+   ],
+   "color": "panel",
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "set",
+   "target": "load",
+   "value": 0.4,
+   "dur": 0.4
+  },
+  {
+   "at": "bug@join",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2"
+   ],
+   "count": 2,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@payments",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "bug@two",
+   "do": "swap",
+   "target": "api",
+   "text": "order 42: {{2 payments}}"
+  },
+  {
+   "at": "bug@rows",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@returns",
+   "do": "send",
+   "path": [
+    "l3",
+    "l4"
+   ],
+   "reverse": true,
+   "count": 4,
+   "interval": 0.1,
+   "dur": 0.8,
+   "color": "bad"
+  },
+  {
+   "at": "bug@twice",
+   "do": "show",
+   "target": "tmo",
+   "anim": "pop",
+   "dur": 0.35,
+   "sfx": "alert"
+  },
+  {
+   "at": "bug@twice",
+   "do": "shake",
+   "target": "api",
+   "dur": 0.5
+  },
+  {
+   "at": "why@counts",
+   "do": "hide",
+   "target": "tmo",
+   "dur": 0.3
+  },
+  {
+   "at": "why@counts",
+   "do": "color",
+   "target": "code",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@joined",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "reverse": true,
+   "count": 8,
+   "interval": 0.08,
+   "dur": 0.5,
+   "color": "bad"
+  },
+  {
+   "at": "why@copies",
+   "do": "swap",
+   "target": "app",
+   "text": "total: {{$2,000}}"
+  },
+  {
+   "at": "why@amount",
+   "do": "set",
+   "target": "load",
+   "value": 0.95,
+   "dur": 0.6
+  },
+  {
+   "at": "why@total",
+   "do": "color",
+   "target": [
+    "app",
+    "app:status"
+   ],
+   "color": "red",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@inflates",
+   "do": "show",
+   "target": "dup",
+   "anim": "pop",
+   "dur": 0.35
+  },
+  {
+   "at": "why@silently",
+   "do": "shake",
+   "target": "app",
+   "dur": 0.5
+  },
+  {
+   "at": "fix@aggregate",
+   "do": "hide",
+   "target": "dup",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@aggregate",
+   "do": "swap",
+   "target": "code",
+   "type_dur": 1.3,
+   "lines": [
+    "JOIN (SELECT order_id",
+    "  FROM payments {{GROUP BY}}",
+    "  order_id) p ON ..."
+   ]
+  },
+  {
+   "at": "fix@aggregate",
+   "do": "color",
+   "target": [
+    "code",
+    "code:hl"
+   ],
+   "color": "purple",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@subquery",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "fix@join",
+   "do": "swap",
+   "target": "api",
+   "text": "rows: {{1}} per order"
+  },
+  {
+   "at": "fix@join",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "panel",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@row",
+   "do": "send",
+   "path": [
+    "l3",
+    "l4"
+   ],
+   "reverse": true,
+   "count": 2,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "fix@counts",
+   "do": "swap",
+   "target": "app",
+   "text": "total: {{$1,000}}"
+  },
+  {
+   "at": "fix@once",
+   "do": "set",
+   "target": "load",
+   "value": 0.4,
+   "dur": 0.6
+  },
+  {
+   "at": "fix@once",
+   "do": "color",
+   "target": [
+    "api:status",
+    "app:status"
+   ],
+   "color": "cyan",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@correct",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@correct",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3",
+    "l4"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@orders",
+   "do": "pulse",
+   "target": "app"
+  },
+  {
+   "at": "bug@show",
+   "do": "pulse",
+   "target": "api"
+  },
+  {
+   "at": "bug@total",
+   "do": "pulse",
+   "target": "load"
+  },
+  {
+   "at": "fix@order",
+   "do": "pulse",
+   "target": "api"
+  },
+  {
+   "at": "fix@now",
+   "do": "pulse",
+   "target": "app"
+  },
+  {
+   "at": "fix@each",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "bug@one",
+   "do": "pulse",
+   "target": "api"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW",
+  "line2": "{{@K4CODING}}",
+  "line3": "one coding fix, every day"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{SUM}} IS WRONG?",
+     "color": "red"
+    }
+   },
+   "cover_at": "bug@twice+0.4"
+  }
+ }
+}
