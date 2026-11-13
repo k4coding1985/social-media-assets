@@ -12,7 +12,8 @@ modelled on the "What is a DDoS attack" reference, cut down to our ~30 s format.
 | y ~350 to 1410 | **Canvas**: dark UI windows `#1C1C24` with Mac dots, code windows (mono, purple keywords), white line-art icons, straight connection lines carrying cyan (ok) or red (bad) data dots, capacity bars (cyan, turning red past the threshold), TIMEOUT/DENIED stamps, ✓/✗ badges |
 | y ~1444 | Word-synced captions (Inter 40 px, keywords tinted). On by default, `"captions": {"enabled": false}` or `--no-captions` turns them off |
 | bottom-right, y 1536 | Small `@k4coding` watermark |
-| last ≤1.45 s | End card: `FOLLOW @K4CODING` in the marker font |
+| y ~178 | Optional **series tag** pill (e.g. `SQL BUGS #4`) above the chapter title, on screen from frame 0, set with `"series"` |
+| last ≤1.45 s | End card: `FOLLOW @K4CODING` in the marker font, or `FOLLOW FOR #<N+1>` when `"series"` is set |
 
 Colour meaning: `red` #FF5B5B for errors, `yellow` #FFB74D for terms, `orange` #F48120 or `purple` #9D7BFF for the fix/tool, `cyan` #42D3A5 for ok/normal, `bad` #FF4B4B for bad data dots and an overloaded bar.
 Other palette names: `white`, `grey`, `dim`, `line`, `panel`, `green` (= cyan). Any `#RRGGBB` also works.
@@ -22,7 +23,7 @@ whoosh for chapter changes and `slide_*` shows, pop for `pop` shows and when dot
 
 ## Rules lint checks
 
-- 60-90 voiceover words, with `hook`, `bug`, `why`, `fix` and `follow` segments. The last segment must be `Follow K four coding.`
+- 60-90 voiceover words, with `hook`, `bug`, `why`, `fix` and `follow` segments. The last segment must be `Follow K four coding.` (series Reels: `Follow K four coding for part <N+1>.`, number spelled as a word).
 - Duration 25-40 s (aim ~30). End card ≤1.5 s.
 - A chapter title on frame 0, plus at least one `start_visible` element. The first animation must come by 0.3 s.
 - No gap of more than 2 s without something new moving or appearing.
@@ -61,6 +62,7 @@ A full render takes about 30 s on 8 cores. The first run creates `tools/.venv` (
   "voiceover": [ {"id": "hook", "text": "..."}, ..., {"id": "follow", "text": "Follow K four coding."} ],
   "elements": [ ... ],
   "timeline": [ ... ],
+  "series": {"label": "SQL Bugs", "number": 4, "color": "yellow"},   // optional: tag pill + "FOLLOW FOR #5" end card; optional "y" (178), "size" (34)
   "end_card": {"segment": "follow", "line1": "FOLLOW", "line2": "{{@K4CODING}}", "line3": "one concept, one diagram, daily"},
   "variants": {"facebook": {"chapters": {"hook": {"text": "{{101 QUERIES}} PER PAGE?", "color": "red"}}, "cover_at": "bug@queries+0.8"}}
 }

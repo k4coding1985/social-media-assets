@@ -809,6 +809,31 @@ def draw_chapter(c: Ctx, scene: Scene, t, fe):
             c.text((W / 2, y0 + i * size * 1.12), L, "marker", size, PALETTE["white"], "ma", hl=ch_["hl"], upper=True)
 
 
+def series_info(spec):
+    """Optional numbered series: {"series": {"label": "SQL BUGS", "number": 4, "color": "yellow"}}."""
+    se = spec.get("series")
+    if not se or not se.get("label"):
+        return None
+    return {"label": str(se["label"]).upper(), "number": int(se.get("number", 1)),
+            "color": se.get("color", "yellow"), "y": float(se.get("y", 178)), "size": int(se.get("size", 34))}
+
+
+def draw_series_tag(c: Ctx, scene: Scene, fe):
+    """Small pill tag (e.g. 'SQL BUGS #4') above the chapter title, on screen from frame 0."""
+    se = series_info(scene.spec)
+    if not se:
+        return
+    txt = f"{se['label']} #{se['number']}"
+    col_ = color(se["color"])
+    tw = text_width(txt, "sans", se["size"], "ExtraBold")
+    h = se["size"] + 22
+    y = se["y"]
+    c.set((W / 2, y), 1, 0, 0, fe)
+    c.rrect(W / 2 - tw / 2 - 26, y - h / 2, W / 2 + tw / 2 + 26, y + h / 2, h / 2,
+            fill=PALETTE["panel"], outline=col_, width=3)
+    c.text((W / 2, y), txt, "sans", se["size"], col_, "mm", "ExtraBold")
+
+
 def render_frame(scene: Scene, t: float, show_captions=True):
     img = Image.new("RGB", (W * SS, H * SS), BG)
     c = Ctx(ImageDraw.Draw(img))
@@ -826,6 +851,7 @@ def render_frame(scene: Scene, t: float, show_captions=True):
             if a > 0.01:
                 draw_element(c, scene, e, t, a * fe, s, dx, dy)
         draw_chapter(c, scene, t, fe)
+        draw_series_tag(c, scene, fe)
     c.set((0, 0), 1, 0, 0, 1)
     wm = scene.spec.get("watermark", "@k4coding")
     if wm:
@@ -847,7 +873,10 @@ def render_frame(scene: Scene, t: float, show_captions=True):
     if t >= scene.end_start:
         ea = ease((t - scene.end_start - 0.1) / 0.3)
         if ea > 0.01:
-            end = scene.spec.get("end_card", {})
+            end = dict(scene.spec.get("end_card", {}))
+            se = series_info(scene.spec)
+            if se and "line1" not in end:
+                end["line1"] = f"FOLLOW FOR #{se['number'] + 1}"
             c.set((W / 2, 860), 0.85 + 0.15 * ease_back(clamp((t - scene.end_start - 0.1) / 0.35)), 0, 0, ea)
             draw_icon(c, "user", W / 2, 700, 150, PALETTE["white"])
             c.ellipse(W / 2 + 70, 640, 30, fill=PALETTE["purple"])
@@ -922,6 +951,9 @@ def lint(spec, scene: Scene, total):
             warn.append(f"voiceover has no '{need}' segment")
     if segs and "follow k four coding" not in segs[-1]["text"].lower():
         warn.append("last segment should be 'Follow K four coding.'")
+    se = series_info(spec)
+    if se and segs and "for part" not in segs[-1]["text"].lower():
+        warn.append("series reel: last segment should be 'Follow K four coding for part <N+1>.'")
     if not 25 <= total <= 40:
         warn.append(f"duration {total:.1f}s (target 25-40s, aim ~30)")
     if total - scene.end_start > 1.6:

@@ -1,0 +1,547 @@
+{
+ "slug": "sql-lost-update-race-condition",
+ "series": {
+  "label": "SQL Bugs",
+  "number": 1,
+  "color": "yellow"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "stock",
+   "atomic",
+   "overwrites",
+   "one statement",
+   "rows affected",
+   "select for update",
+   "race"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "why@overwrites+0.5",
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{SOLD}} TWICE?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{RACE}} CONDITION",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "NOT {{ATOMIC}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "ONE {{UPDATE}}",
+   "color": "purple"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Why did two customers buy the last item?"
+  },
+  {
+   "id": "bug",
+   "text": "Two requests read stock equals one at the same time. Both see one, both subtract, both write zero."
+  },
+  {
+   "id": "why",
+   "text": "Read, then write, is not atomic. The second update silently overwrites the first, so you sold two items but stock only dropped by one."
+  },
+  {
+   "id": "fix",
+   "text": "Do it in one statement. Update stock minus one where stock is greater than zero, and check the rows affected. Or lock the row with select for update."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part two."
+  }
+ ],
+ "elements": [
+  {
+   "id": "la",
+   "type": "line",
+   "from": "reqa.bottom",
+   "to": "db.top-200",
+   "start_visible": true
+  },
+  {
+   "id": "lb",
+   "type": "line",
+   "from": "reqb.bottom",
+   "to": "db.top+200",
+   "start_visible": true
+  },
+  {
+   "id": "reqa",
+   "type": "window",
+   "x": 290,
+   "y": 480,
+   "w": 480,
+   "h": 200,
+   "title": "ORDER A",
+   "icon": "user",
+   "status": "cyan",
+   "body": "stock = {{1}}",
+   "body_size": 50,
+   "hl": "cyan",
+   "start_visible": true
+  },
+  {
+   "id": "reqb",
+   "type": "window",
+   "x": 790,
+   "y": 480,
+   "w": 480,
+   "h": 200,
+   "title": "ORDER B",
+   "icon": "user",
+   "status": "cyan",
+   "body": "stock = {{1}}",
+   "body_size": 50,
+   "hl": "cyan",
+   "start_visible": true
+  },
+  {
+   "id": "db",
+   "type": "window",
+   "x": 540,
+   "y": 880,
+   "w": 800,
+   "h": 200,
+   "title": "DATABASE",
+   "icon": "database",
+   "tag": "ITEMS",
+   "status": "cyan",
+   "body": "stock: {{1}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "start_visible": true
+  },
+  {
+   "id": "sold",
+   "type": "counter",
+   "x": 540,
+   "y": 1035,
+   "font": "mono",
+   "weight": "Medium",
+   "upper": false,
+   "size": 48,
+   "value": 0,
+   "format": "sold: {n}",
+   "color": "white",
+   "start_visible": true
+  },
+  {
+   "id": "code",
+   "type": "code",
+   "x": 540,
+   "y": 1250,
+   "w": 960,
+   "min_lines": 2,
+   "title": "checkout.sql",
+   "lines": [
+    "x = {{SELECT}} stock  -- 1",
+    "{{UPDATE}} SET stock = x - 1"
+   ]
+  },
+  {
+   "id": "lost",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "LOST UPDATE",
+   "x": 540,
+   "y": 680,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 680,
+   "r": 40,
+   "color": "cyan"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0.15,
+   "do": "send",
+   "path": [
+    "la",
+    "lb"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.7,
+   "color": "cyan"
+  },
+  {
+   "at": "hook@two",
+   "do": "pulse",
+   "target": [
+    "reqa",
+    "reqb"
+   ]
+  },
+  {
+   "at": "hook@buy",
+   "do": "set",
+   "target": "sold",
+   "value": 2,
+   "dur": 0.4
+  },
+  {
+   "at": "hook@last",
+   "do": "color",
+   "target": [
+    "db",
+    "db:status"
+   ],
+   "color": "red",
+   "dur": 0.3,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@item",
+   "do": "shake",
+   "target": "db",
+   "dur": 0.5
+  },
+  {
+   "at": "bug:start",
+   "do": "set",
+   "target": "sold",
+   "value": 0,
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "color",
+   "target": [
+    "db",
+    "db:status"
+   ],
+   "color": "panel",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@read",
+   "do": "send",
+   "path": [
+    "la",
+    "lb"
+   ],
+   "reverse": true,
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@stock",
+   "do": "show",
+   "target": "code",
+   "anim": "slide_up",
+   "dur": 0.45,
+   "type_dur": 1.1
+  },
+  {
+   "at": "bug@same",
+   "do": "pulse",
+   "target": [
+    "reqa",
+    "reqb"
+   ]
+  },
+  {
+   "at": "bug@see",
+   "do": "color",
+   "target": [
+    "reqa:hl",
+    "reqb:hl"
+   ],
+   "color": "yellow",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@subtract",
+   "do": "swap",
+   "target": [
+    "reqa",
+    "reqb"
+   ],
+   "text": "1 - 1 = {{0}}"
+  },
+  {
+   "at": "bug@write",
+   "do": "send",
+   "path": [
+    "la",
+    "lb"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "bad"
+  },
+  {
+   "at": "bug@zero",
+   "do": "swap",
+   "target": "db",
+   "text": "stock: {{0}}"
+  },
+  {
+   "at": "why@read",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "why@atomic",
+   "do": "show",
+   "target": "lost",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@atomic",
+   "do": "color",
+   "target": [
+    "code"
+   ],
+   "color": "red",
+   "dur": 0.4
+  },
+  {
+   "at": "why@second",
+   "do": "send",
+   "path": "lb",
+   "count": 3,
+   "interval": 0.1,
+   "dur": 0.5,
+   "color": "bad"
+  },
+  {
+   "at": "why@overwrites",
+   "do": "color",
+   "target": [
+    "db",
+    "db:status",
+    "db:hl"
+   ],
+   "color": "red",
+   "dur": 0.4
+  },
+  {
+   "at": "why@overwrites",
+   "do": "shake",
+   "target": "db",
+   "dur": 0.5
+  },
+  {
+   "at": "why@sold",
+   "do": "set",
+   "target": "sold",
+   "value": 2,
+   "dur": 0.4
+  },
+  {
+   "at": "why@sold",
+   "do": "color",
+   "target": "sold",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@dropped",
+   "do": "pulse",
+   "target": "db"
+  },
+  {
+   "at": "fix@statement",
+   "do": "hide",
+   "target": "lost",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@statement",
+   "do": "set",
+   "target": "sold",
+   "value": 0,
+   "dur": 0.3
+  },
+  {
+   "at": "fix@statement",
+   "do": "color",
+   "target": [
+    "sold"
+   ],
+   "color": "white",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@update",
+   "do": "swap",
+   "target": "code",
+   "type_dur": 1.4,
+   "lines": [
+    "{{UPDATE}} SET stock = stock - 1",
+    "{{WHERE}} stock > 0"
+   ]
+  },
+  {
+   "at": "fix@update",
+   "do": "color",
+   "target": [
+    "code",
+    "code:hl"
+   ],
+   "color": "purple",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@update",
+   "do": "color",
+   "target": [
+    "db",
+    "db:status"
+   ],
+   "color": "panel",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@greater",
+   "do": "send",
+   "path": "la",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "purple"
+  },
+  {
+   "at": "fix@zero",
+   "do": "swap",
+   "target": "reqa",
+   "text": "{{1 row}} -> sold"
+  },
+  {
+   "at": "fix@zero",
+   "do": "swap",
+   "target": "db",
+   "text": "stock: {{0}}"
+  },
+  {
+   "at": "fix@zero",
+   "do": "color",
+   "target": [
+    "reqa:hl",
+    "db:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@check",
+   "do": "send",
+   "path": "lb",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "purple"
+  },
+  {
+   "at": "fix@rows",
+   "do": "swap",
+   "target": "reqb",
+   "text": "{{0 rows}}: out"
+  },
+  {
+   "at": "fix@rows",
+   "do": "color",
+   "target": "reqb:hl",
+   "color": "orange",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@affected",
+   "do": "set",
+   "target": "sold",
+   "value": 1,
+   "dur": 0.4
+  },
+  {
+   "at": "fix@affected",
+   "do": "color",
+   "target": "sold",
+   "color": "cyan",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@lock",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@select",
+   "do": "pulse",
+   "target": "db"
+  },
+  {
+   "at": 33.0,
+   "do": "send",
+   "path": [
+    "la",
+    "lb"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "reqa",
+    "reqb"
+   ]
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line2": "{{@K4CODING}}",
+  "line3": "SQL Bugs, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{2 ORDERS}}, 1 ITEM?",
+     "color": "red"
+    }
+   },
+   "cover_at": "fix@lock+0.6"
+  }
+ }
+}
