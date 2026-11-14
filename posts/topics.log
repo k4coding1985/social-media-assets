@@ -12,3 +12,4 @@
 2026-11-13 1300 SQL Bugs #1 sql-lost-update-race-condition
 2026-11-13 1800 Git Mistakes #1 git-detached-head-lost-commits
 2026-11-13 2100 JS Gotchas #1 javascript-event-loop-settimeout-vs-promise
+2026-11-14 1300 Backend Basics #1 python-requests-no-timeout

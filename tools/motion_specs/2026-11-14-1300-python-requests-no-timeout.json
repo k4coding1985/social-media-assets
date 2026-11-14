@@ -1,0 +1,591 @@
+{
+ "slug": "python-requests-no-timeout",
+ "series": {
+  "label": "Backend Basics",
+  "number": 1,
+  "color": "orange"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "timeout",
+   "forever",
+   "worker",
+   "workers",
+   "requests",
+   "fail fast",
+   "stuck"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "why@stuck+0.5",
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "API {{FROZEN}}?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "NO {{TIMEOUT}}",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "WORKERS {{STUCK}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "ADD A {{TIMEOUT}}",
+   "color": "purple"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your API froze because of one slow call."
+  },
+  {
+   "id": "bug",
+   "text": "Your Python code calls a payment service with requests dot get, and passes no timeout."
+  },
+  {
+   "id": "why",
+   "text": "Requests has no default timeout. If that service hangs, your worker waits forever. Every new request grabs another worker, until all workers are stuck and the whole API stops."
+  },
+  {
+   "id": "fix",
+   "text": "Always pass a timeout, like three comma ten. Three seconds to connect, ten to read. Catch the timeout error and fail fast."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part two."
+  }
+ ],
+ "elements": [
+  {
+   "id": "l1",
+   "type": "line",
+   "from": "api.bottom-200",
+   "to": "pay.top-200",
+   "start_visible": true
+  },
+  {
+   "id": "l2",
+   "type": "line",
+   "from": "api.bottom",
+   "to": "pay.top",
+   "start_visible": true
+  },
+  {
+   "id": "l3",
+   "type": "line",
+   "from": "api.bottom+200",
+   "to": "pay.top+200",
+   "start_visible": true
+  },
+  {
+   "id": "api",
+   "type": "window",
+   "x": 540,
+   "y": 470,
+   "w": 860,
+   "h": 200,
+   "title": "YOUR API",
+   "icon": "server",
+   "tag": "FLASK",
+   "status": "cyan",
+   "body": "status: {{200 OK}}",
+   "body_size": 52,
+   "hl": "cyan",
+   "start_visible": true
+  },
+  {
+   "id": "pay",
+   "type": "window",
+   "x": 540,
+   "y": 820,
+   "w": 860,
+   "h": 200,
+   "title": "PAYMENT API",
+   "icon": "globe",
+   "status": "cyan",
+   "body": "reply: {{120 ms}}",
+   "body_size": 52,
+   "hl": "cyan",
+   "start_visible": true
+  },
+  {
+   "id": "bar",
+   "type": "bar",
+   "x": 540,
+   "y": 1010,
+   "w": 860,
+   "h": 52,
+   "value": 0.2,
+   "threshold": 0.7,
+   "label": "WORKERS BUSY",
+   "label_right": "",
+   "start_visible": true
+  },
+  {
+   "id": "code",
+   "type": "code",
+   "x": 540,
+   "y": 1250,
+   "w": 960,
+   "min_lines": 2,
+   "title": "pay.py",
+   "lines": [
+    "r = {{requests}}.get(url)",
+    "# no timeout set"
+   ]
+  },
+  {
+   "id": "hang",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "HANGING",
+   "x": 540,
+   "y": 645,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 645,
+   "r": 40,
+   "color": "cyan"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0.15,
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.7,
+   "color": "cyan"
+  },
+  {
+   "at": "hook@froze",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "red",
+   "dur": 0.3,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@froze",
+   "do": "set",
+   "target": "bar",
+   "value": 1.0,
+   "dur": 0.5
+  },
+  {
+   "at": "hook@slow",
+   "do": "shake",
+   "target": "api",
+   "dur": 0.5
+  },
+  {
+   "at": "hook@call",
+   "do": "swap",
+   "target": "api",
+   "text": "status: {{FROZEN}}"
+  },
+  {
+   "at": "bug:start",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "panel",
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "set",
+   "target": "bar",
+   "value": 0.2,
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "swap",
+   "target": "api",
+   "text": "status: {{200 OK}}"
+  },
+  {
+   "at": "bug@calls",
+   "do": "send",
+   "path": "l2",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@payment",
+   "do": "pulse",
+   "target": "pay"
+  },
+  {
+   "at": "bug@requests",
+   "do": "show",
+   "target": "code",
+   "anim": "slide_up",
+   "dur": 0.45,
+   "type_dur": 1.1
+  },
+  {
+   "at": "bug@timeout",
+   "do": "color",
+   "target": "code:hl",
+   "color": "yellow",
+   "dur": 0.3
+  },
+  {
+   "at": "why@default",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "why@hangs",
+   "do": "color",
+   "target": [
+    "pay",
+    "pay:status",
+    "pay:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@hangs",
+   "do": "swap",
+   "target": "pay",
+   "text": "reply: {{...}}"
+  },
+  {
+   "at": "why@worker",
+   "do": "send",
+   "path": "l1",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "bad"
+  },
+  {
+   "at": "why@forever",
+   "do": "show",
+   "target": "hang",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@forever",
+   "do": "set",
+   "target": "bar",
+   "value": 0.45,
+   "dur": 0.4
+  },
+  {
+   "at": "why@another",
+   "do": "send",
+   "path": [
+    "l2",
+    "l3"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "bad"
+  },
+  {
+   "at": "why@another",
+   "do": "set",
+   "target": "bar",
+   "value": 0.75,
+   "dur": 0.5
+  },
+  {
+   "at": "why@stuck",
+   "do": "set",
+   "target": "bar",
+   "value": 1.0,
+   "dur": 0.4
+  },
+  {
+   "at": "why@stuck",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status",
+    "api:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@stops",
+   "do": "swap",
+   "target": "api",
+   "text": "status: {{FROZEN}}"
+  },
+  {
+   "at": "why@stops",
+   "do": "shake",
+   "target": "api",
+   "dur": 0.5
+  },
+  {
+   "at": "fix@timeout",
+   "do": "hide",
+   "target": "hang",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@timeout",
+   "do": "swap",
+   "target": "code",
+   "type_dur": 1.4,
+   "lines": [
+    "r = requests.get(url,",
+    "    {{timeout}}=(3, 10))"
+   ]
+  },
+  {
+   "at": "fix@timeout",
+   "do": "color",
+   "target": [
+    "code",
+    "code:hl"
+   ],
+   "color": "purple",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@connect",
+   "do": "send",
+   "path": "l1",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "purple"
+  },
+  {
+   "at": "fix@read",
+   "do": "swap",
+   "target": "pay",
+   "text": "gave up: {{10 s}}"
+  },
+  {
+   "at": "fix@read",
+   "do": "color",
+   "target": [
+    "pay",
+    "pay:status",
+    "pay:hl"
+   ],
+   "color": "orange",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@catch",
+   "do": "set",
+   "target": "bar",
+   "value": 0.2,
+   "dur": 0.5
+  },
+  {
+   "at": "fix@catch",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status",
+    "api:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@catch",
+   "do": "swap",
+   "target": "api",
+   "text": "status: {{503 fast}}"
+  },
+  {
+   "at": "fix@fast",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "follow:start",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3"
+   ],
+   "count": 4,
+   "interval": 0.12,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "why@waits",
+   "do": "pulse",
+   "target": "pay"
+  },
+  {
+   "at": "why@every",
+   "do": "pulse",
+   "target": "api"
+  },
+  {
+   "at": "why@new",
+   "do": "send",
+   "path": "l3",
+   "count": 2,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "bad"
+  },
+  {
+   "at": "why@request",
+   "do": "set",
+   "target": "bar",
+   "value": 0.6,
+   "dur": 0.4
+  },
+  {
+   "at": "fix@like",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "fix@three",
+   "do": "color",
+   "target": "code:hl",
+   "color": "orange",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@comma",
+   "do": "send",
+   "path": "l2",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "purple"
+  },
+  {
+   "at": "fix@ten",
+   "do": "color",
+   "target": "code:hl",
+   "color": "purple",
+   "dur": 0.3
+  },
+  {
+   "at": "why@timeout",
+   "do": "color",
+   "target": "code:hl",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@service",
+   "do": "send",
+   "path": "l2",
+   "count": 2,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "hook@call+0.1",
+   "do": "color",
+   "target": "api:hl",
+   "color": "red",
+   "dur": 0.2
+  },
+  {
+   "at": "why@hangs+0.1",
+   "do": "color",
+   "target": "pay:hl",
+   "color": "red",
+   "dur": 0.2
+  },
+  {
+   "at": "why@stops+0.1",
+   "do": "color",
+   "target": "api:hl",
+   "color": "red",
+   "dur": 0.2
+  },
+  {
+   "at": "fix@read+0.1",
+   "do": "color",
+   "target": "pay:hl",
+   "color": "orange",
+   "dur": 0.2
+  },
+  {
+   "at": "fix@catch+0.1",
+   "do": "color",
+   "target": "api:hl",
+   "color": "cyan",
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start+0.1",
+   "do": "color",
+   "target": "api:hl",
+   "color": "cyan",
+   "dur": 0.2
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line2": "{{@K4CODING}}",
+  "line3": "Backend Basics, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{1 SLOW}} CALL",
+     "color": "red"
+    }
+   },
+   "cover_at": "fix@fast+0.6"
+  }
+ }
+}
