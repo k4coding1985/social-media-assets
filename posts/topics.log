@@ -15,3 +15,4 @@
 2026-11-14 1300 Backend Basics #1 python-requests-no-timeout
 2026-11-14 1800 SQL Bugs #2 sql-n-plus-one-queries
 2026-11-14 2100 Git Mistakes #2 git-committed-env-secret
+2026-11-15 1300 JS Gotchas #2 javascript-promise-all-vs-allsettled

@@ -1,0 +1,636 @@
+{
+ "slug": "javascript-promise-all-vs-allsettled",
+ "series": {
+  "label": "JS Gotchas",
+  "number": 2,
+  "color": "yellow"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "promise all",
+   "rejects",
+   "fails fast",
+   "all settled",
+   "fulfilled",
+   "rejected"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "bug@rejects+0.6",
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{ALL}} DATA GONE?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{PROMISE.ALL}}",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{FAILS}} FAST",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "{{ALLSETTLED}}",
+   "color": "purple"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "One failed request wiped all your data?"
+  },
+  {
+   "id": "bug",
+   "text": "Your API loads users, orders and prices with Promise all. Users and orders succeed. Prices times out. Promise all rejects at once, and both good results are lost."
+  },
+  {
+   "id": "why",
+   "text": "Promise all fails fast. The first rejection wins, and you never get the values that did resolve."
+  },
+  {
+   "id": "fix",
+   "text": "If partial data is fine, use Promise all settled. Each result has a status, fulfilled or rejected, so you render what worked."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part three."
+  }
+ ],
+ "elements": [
+  {
+   "id": "l1",
+   "type": "line",
+   "from": "api.bottom",
+   "to": "users.top",
+   "start_visible": true
+  },
+  {
+   "id": "l2",
+   "type": "line",
+   "from": "api.bottom",
+   "to": "orders.top",
+   "start_visible": true
+  },
+  {
+   "id": "l3",
+   "type": "line",
+   "from": "api.bottom",
+   "to": "prices.top",
+   "start_visible": true
+  },
+  {
+   "id": "api",
+   "type": "window",
+   "x": 540,
+   "y": 500,
+   "w": 560,
+   "h": 200,
+   "title": "API",
+   "icon": "server",
+   "status": "cyan",
+   "body": "{{Promise.all}}",
+   "body_size": 50,
+   "hl": "yellow",
+   "start_visible": true
+  },
+  {
+   "id": "users",
+   "type": "window",
+   "x": 190,
+   "y": 880,
+   "w": 320,
+   "h": 190,
+   "title": "USERS",
+   "status": "cyan",
+   "body": "...",
+   "body_size": 46,
+   "hl": "cyan",
+   "start_visible": true,
+   "title_size": 30
+  },
+  {
+   "id": "orders",
+   "type": "window",
+   "x": 540,
+   "y": 880,
+   "w": 320,
+   "h": 190,
+   "title": "ORDERS",
+   "status": "cyan",
+   "body": "...",
+   "body_size": 46,
+   "hl": "cyan",
+   "start_visible": true,
+   "title_size": 30
+  },
+  {
+   "id": "prices",
+   "type": "window",
+   "x": 890,
+   "y": 880,
+   "w": 320,
+   "h": 190,
+   "title": "PRICES",
+   "status": "cyan",
+   "body": "...",
+   "body_size": 46,
+   "hl": "red",
+   "start_visible": true,
+   "title_size": 30
+  },
+  {
+   "id": "out",
+   "type": "text",
+   "x": 540,
+   "y": 1060,
+   "text": "page: loading",
+   "size": 46,
+   "font": "mono",
+   "upper": false,
+   "color": "white",
+   "hl": "red",
+   "start_visible": true
+  },
+  {
+   "id": "code",
+   "type": "code",
+   "x": 540,
+   "y": 1260,
+   "w": 960,
+   "min_lines": 2,
+   "title": "api.js",
+   "lines": [
+    "const r = await",
+    "  {{Promise.all}}([u, o, p])"
+   ]
+  },
+  {
+   "id": "stamp",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "REJECTED",
+   "x": 540,
+   "y": 690,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 690,
+   "r": 40,
+   "color": "cyan"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0.15,
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3"
+   ],
+   "count": 6,
+   "interval": 0.1,
+   "dur": 0.6,
+   "color": "cyan"
+  },
+  {
+   "at": "hook@failed",
+   "do": "color",
+   "target": [
+    "prices",
+    "prices:status"
+   ],
+   "color": "red",
+   "dur": 0.3,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@failed",
+   "do": "swap",
+   "target": "prices",
+   "text": "{{ERROR}}"
+  },
+  {
+   "at": "hook@wiped",
+   "do": "swap",
+   "target": "out",
+   "text": "page: {{error}}"
+  },
+  {
+   "at": "hook@data",
+   "do": "shake",
+   "target": "out",
+   "dur": 0.5
+  },
+  {
+   "at": "bug:start",
+   "do": "swap",
+   "target": "out",
+   "text": "page: loading"
+  },
+  {
+   "at": "bug:start",
+   "do": "swap",
+   "target": "prices",
+   "text": "..."
+  },
+  {
+   "at": "bug:start",
+   "do": "color",
+   "target": [
+    "prices",
+    "prices:status"
+   ],
+   "color": "panel",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@loads",
+   "do": "show",
+   "target": "code",
+   "anim": "slide_up",
+   "dur": 0.45,
+   "type_dur": 1.2
+  },
+  {
+   "at": "bug@users",
+   "do": "send",
+   "path": "l1",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@orders",
+   "do": "send",
+   "path": "l2",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@prices",
+   "do": "send",
+   "path": "l3",
+   "count": 3,
+   "interval": 0.12,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@succeed",
+   "do": "swap",
+   "target": "users",
+   "text": "{{200 OK}}"
+  },
+  {
+   "at": "bug@succeed",
+   "do": "swap",
+   "target": "orders",
+   "text": "{{200 OK}}"
+  },
+  {
+   "at": "bug@succeed",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2"
+   ],
+   "reverse": true,
+   "count": 4,
+   "interval": 0.1,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "bug@times",
+   "do": "swap",
+   "target": "prices",
+   "text": "{{TIMEOUT}}"
+  },
+  {
+   "at": "bug@times",
+   "do": "color",
+   "target": [
+    "prices",
+    "prices:status"
+   ],
+   "color": "red",
+   "dur": 0.3,
+   "sfx": "alert"
+  },
+  {
+   "at": "bug@rejects",
+   "do": "send",
+   "path": "l3",
+   "reverse": true,
+   "count": 3,
+   "interval": 0.1,
+   "dur": 0.5,
+   "color": "bad"
+  },
+  {
+   "at": "bug@rejects",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "bug@results",
+   "do": "show",
+   "target": "stamp",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "bug@results",
+   "do": "swap",
+   "target": "users",
+   "text": "lost"
+  },
+  {
+   "at": "bug@results",
+   "do": "swap",
+   "target": "orders",
+   "text": "lost"
+  },
+  {
+   "at": "bug@lost",
+   "do": "swap",
+   "target": "out",
+   "text": "page: {{error}}"
+  },
+  {
+   "at": "bug@lost+0.3",
+   "do": "shake",
+   "target": "out",
+   "dur": 0.5
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": "stamp",
+   "dur": 0.3
+  },
+  {
+   "at": "why@fast",
+   "do": "pulse",
+   "target": "api"
+  },
+  {
+   "at": "why@first",
+   "do": "send",
+   "path": "l3",
+   "reverse": true,
+   "count": 2,
+   "interval": 0.1,
+   "dur": 0.4,
+   "color": "bad"
+  },
+  {
+   "at": "why@rejection",
+   "do": "pulse",
+   "target": "prices"
+  },
+  {
+   "at": "why@values",
+   "do": "color",
+   "target": [
+    "users",
+    "users:status",
+    "orders",
+    "orders:status"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@resolve",
+   "do": "shake",
+   "target": [
+    "users",
+    "orders"
+   ],
+   "dur": 0.4
+  },
+  {
+   "at": "fix@partial",
+   "do": "color",
+   "target": [
+    "users",
+    "users:status",
+    "orders",
+    "orders:status"
+   ],
+   "color": "panel",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@settled",
+   "do": "swap",
+   "target": "code",
+   "type_dur": 1.2,
+   "lines": [
+    "const r = await",
+    "  {{Promise.allSettled}}([u, o, p])"
+   ]
+  },
+  {
+   "at": "fix@settled",
+   "do": "color",
+   "target": [
+    "code",
+    "code:hl"
+   ],
+   "color": "purple",
+   "dur": 0.4
+  },
+  {
+   "at": "fix@settled",
+   "do": "swap",
+   "target": "api",
+   "text": "{{allSettled}}"
+  },
+  {
+   "at": "fix@settled",
+   "do": "color",
+   "target": [
+    "api",
+    "api:status",
+    "api:hl"
+   ],
+   "color": "purple",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@status",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3"
+   ],
+   "reverse": true,
+   "count": 6,
+   "interval": 0.1,
+   "dur": 0.5,
+   "color": "cyan"
+  },
+  {
+   "at": "fix@fulfilled",
+   "do": "swap",
+   "target": "users",
+   "text": "{{fulfilled}}"
+  },
+  {
+   "at": "fix@fulfilled",
+   "do": "swap",
+   "target": "orders",
+   "text": "{{fulfilled}}"
+  },
+  {
+   "at": "fix@rejected",
+   "do": "swap",
+   "target": "prices",
+   "text": "{{rejected}}"
+  },
+  {
+   "at": "fix@render",
+   "do": "swap",
+   "target": "out",
+   "text": "page: users + orders"
+  },
+  {
+   "at": "fix@render",
+   "do": "color",
+   "target": [
+    "users",
+    "users:status",
+    "orders",
+    "orders:status"
+   ],
+   "color": "cyan",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@worked",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "users",
+    "orders"
+   ]
+  },
+  {
+   "at": "bug@with",
+   "do": "pulse",
+   "target": "api"
+  },
+  {
+   "at": "bug@with+0.9",
+   "do": "pulse",
+   "target": "code"
+  },
+  {
+   "at": "bug@rejects+1.0",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2"
+   ],
+   "reverse": true,
+   "count": 3,
+   "interval": 0.1,
+   "dur": 0.4,
+   "color": "bad"
+  },
+  {
+   "at": "bug@both",
+   "do": "color",
+   "target": [
+    "users",
+    "users:status",
+    "orders",
+    "orders:status"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@data",
+   "do": "pulse",
+   "target": [
+    "users",
+    "orders"
+   ]
+  },
+  {
+   "at": "fix@use",
+   "do": "send",
+   "path": [
+    "l1",
+    "l2",
+    "l3"
+   ],
+   "count": 3,
+   "interval": 0.1,
+   "dur": 0.4,
+   "color": "purple"
+  },
+  {
+   "at": "fix@result",
+   "do": "pulse",
+   "target": "api"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line2": "{{@K4CODING}}",
+  "line3": "JS Gotchas, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{1 FAIL}} = 0 DATA",
+     "color": "red"
+    }
+   },
+   "cover_at": "fix@worked+0.6"
+  }
+ }
+}
