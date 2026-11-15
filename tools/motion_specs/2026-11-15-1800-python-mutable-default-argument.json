@@ -1,0 +1,582 @@
+{
+ "slug": "python-mutable-default-argument",
+ "series": {
+  "label": "Backend Basics",
+  "number": 2,
+  "color": "purple"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "remembers",
+   "cache",
+   "once",
+   "shares",
+   "None",
+   "fresh",
+   "zero",
+   "yes",
+   "no"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@fresh+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "PYTHON {{REMEMBERS}}?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "DEVS {{BLAME CACHE}}",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "CREATED {{ONCE}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "DEFAULT TO {{NONE}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@Three",
+   "text": "{{0}} LEAKED DATA",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "YES OR {{NO}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your Python function remembers data from the last call?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs blame the cache here."
+  },
+  {
+   "id": "why",
+   "text": "But default arguments are created once, when the function is defined, so every call shares the same list."
+  },
+  {
+   "id": "fix",
+   "text": "Default to None, then create a new list inside the function. Three calls, three fresh lists, zero leaked data."
+  },
+  {
+   "id": "bait",
+   "text": "Have you hit this bug before? Comment yes or no."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part three."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "Call 2 got call 1's {{data}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs blame {{cache}}",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 50,
+   "min_lines": 3,
+   "title": "python",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "add('pen') -> ['pen']",
+    "add('cup') -> {{['pen','cup']}}",
+    "{{# pen leaked into call 2}}"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "ONE SHARED LIST",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "FRESH LIST EVERY CALL",
+   "icon": "database",
+   "status": "cyan",
+   "body": "add('cup') -> {{['cup']}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "Hit this {{bug}}?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{YES}}",
+   "body_size": 72,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{NO}}",
+   "body_size": 72,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@remembers",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@data",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@last",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "hook@call",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@cache",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@cache",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "bug@here",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.15,
+   "lines": [
+    "def add(item, {{cart=[]}}):",
+    "    cart.append(item)",
+    "    return cart"
+   ]
+  },
+  {
+   "at": "why@created",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@once",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@shares",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "why@shares",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix@Default",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.2,
+   "lines": [
+    "def add(item, {{cart=None}}):"
+   ]
+  },
+  {
+   "at": "fix@Default",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@None",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@create",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@new",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 0.7,
+   "lines": [
+    "def add(item, {{cart=None}}):",
+    "  {{if cart is None: cart = []}}",
+    "  cart.append(item)"
+   ]
+  },
+  {
+   "at": "fix@function",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@function",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Three",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@fresh",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@zero",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@hit",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@bug",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@before",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@yes",
+   "do": "pulse",
+   "target": "yesbox"
+  },
+  {
+   "at": "bait@no",
+   "do": "pulse",
+   "target": "nobox"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 23.5,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox",
+    "baitq"
+   ]
+  },
+  {
+   "at": "why@function",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@defined",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "why@every",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.4
+  },
+  {
+   "at": "why@same",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "why@list",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@data",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "fix@leaked",
+   "do": "pulse",
+   "target": "restored"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #3",
+  "line2": "{{@K4CODING}}",
+  "line3": "Backend Basics, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{LEAKED}} DATA BUG?",
+     "color": "red"
+    }
+   },
+   "cover_at": "fix@fresh+0.6"
+  }
+ }
+}
