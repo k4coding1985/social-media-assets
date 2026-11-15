@@ -17,3 +17,4 @@
 2026-11-14 2100 Git Mistakes #2 git-committed-env-secret
 2026-11-15 1300 JS Gotchas #2 javascript-promise-all-vs-allsettled
 2026-11-15 1800 Backend Basics #2 python-mutable-default-argument
+2026-11-15 2100 SQL Bugs #3 sql-not-in-null-returns-zero-rows
