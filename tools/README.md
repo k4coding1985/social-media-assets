@@ -42,4 +42,5 @@ tools/.venv/bin/python tools/add_voiceover.py -i in.mp4 -o out.mp4 --speech-file
 ```
 
 Diagram-style Reels: see `DIAGRAM_REEL_TEMPLATE.md`.
-Motion-graphics Reels (current IG/FB style, marker chapter titles + UI windows + data dots + SFX): see `MOTION_REEL_TEMPLATE.md` and `render_motion_reel.py`.
+Motion-graphics Reels (marker chapter titles + UI windows + data dots + SFX): see `MOTION_REEL_TEMPLATE.md` and `render_motion_reel.py`.
+Viral Reels (the Instagram/Facebook standard from 15 Nov 2026 — 7-beat hook, comment bait, hook-style loop end card): see `VIRAL_REEL_TEMPLATE.md` and `render_viral_reel.py`.

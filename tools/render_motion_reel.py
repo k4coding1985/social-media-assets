@@ -638,6 +638,24 @@ def draw_element(c: Ctx, scene: Scene, e, t, a, s, dx, dy):
         tsz = e.get("title_size", 46)
         tw = text_width(title, "marker", tsz)
         tx = x - tw / 2 + (32 if icon else 0)
+        # Mac dots end at x0+107. On narrow windows a centred title can sit
+        # on top of them; shift (and shrink if needed) only when it would collide
+        # so wide-window layouts stay unchanged.
+        if title:
+            dots_right = x0 + 38 + 2 * 30 + 9
+            min_left = dots_right + 16
+            left = (tx - 74) if icon else tx  # icon drawn at tx-46, size 56
+            if left < min_left:
+                tx += min_left - left
+            max_right = x1 - (100 if e.get("tag") else 24)
+            if tx + tw > max_right:
+                avail = max_right - ((min_left + 74) if icon else min_left)
+                if avail > 24 and tw > 0:
+                    tsz = max(28, int(tsz * avail / tw))
+                    tw = text_width(title, "marker", tsz)
+                tx = (min_left + 74) if icon else min_left
+                if tx + tw > max_right:
+                    tx = max_right - tw
         if icon:
             draw_icon(c, icon, tx - 46, y0 + hh / 2, 56, PALETTE["white"], 3.2)
         for txt, ta in scene.text(e["id"] + ":title", title, t):
@@ -649,8 +667,12 @@ def draw_element(c: Ctx, scene: Scene, e, t, a, s, dx, dy):
                 c.ellipse(x1 - 66 + i * 24, y0 + hh / 2, 8, fill=sc)
         for txt, ta in scene.text(e["id"], e.get("body", ""), t):
             if txt:
+                # Honour color events on id:hl (was a static hl, so status
+                # words such as "{{200 OK}}" stayed cyan/green when the spec
+                # turned them red).
+                hl = scene.col(e["id"] + ":hl", e.get("hl", "purple"), t)
                 c.text((x, y0 + hh + (h - hh) / 2), txt, e.get("body_font", "mono"), e.get("body_size", 44),
-                       PALETTE["white"], "mm", "Medium", hl=color(e.get("hl", "purple")), a=ta)
+                       PALETTE["white"], "mm", "Medium", hl=hl, a=ta)
     elif typ == "code":
         w, h = e["w"], e["h"]
         x0, y0, x1, y1 = x - w / 2, y - h / 2, x + w / 2, y + h / 2
@@ -834,7 +856,7 @@ def draw_series_tag(c: Ctx, scene: Scene, fe):
     c.text((W / 2, y), txt, "sans", se["size"], col_, "mm", "ExtraBold")
 
 
-def render_frame(scene: Scene, t: float, show_captions=True):
+def render_frame(scene: Scene, t: float, show_captions=True, *, scale=True):
     img = Image.new("RGB", (W * SS, H * SS), BG)
     c = Ctx(ImageDraw.Draw(img))
     fe = 1 - ease((t - scene.end_start) / 0.25) if t >= scene.end_start else 1.0
@@ -888,6 +910,8 @@ def render_frame(scene: Scene, t: float, show_captions=True):
             sub = end.get("line3", "one concept, one diagram, daily")
             if sub:
                 c.text((W / 2, 1100), sub, "sans", 40, PALETTE["grey"], "mm", "SemiBold")
+    if not scale:
+        return img
     return img.resize((W, H), Image.LANCZOS)
 
 

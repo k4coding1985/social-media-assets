@@ -1,5 +1,11 @@
 # Motion Reel template (`render_motion_reel.py`)
 
+**From 15 Nov 2026, daily Instagram/Facebook Reels use the viral template**
+(`render_viral_reel.py`, see `VIRAL_REEL_TEMPLATE.md` and
+`tools/examples/viral-git-branch-rescue.json`). That wrapper supersedes this
+document for new Reels. This file remains the engine and lint reference the
+viral tool still builds on (canvas, series tag, timeline, element types).
+
 The Instagram/Facebook Reel style from 11 Nov 2026 is a motion-graphics explainer
 modelled on the "What is a DDoS attack" reference, cut down to our ~30 s format.
 
@@ -80,7 +86,7 @@ A voiceover segment can also take `"caption": "override text"` or `"caption": fa
 ### Element types (all positions are centre x/y in 1080x1920 px)
 | type | keys |
 |---|---|
-| `window` | `w h title icon tag status body body_size body_font hl border header_h title_size`. A marker-font title sits in the header with the Mac dots. `tag` is the small grey label on the right with 2 status dots (colour target `id:status`). `body` is a centred mono line, with `{{x}}` in `hl` colour (default purple). Colour target `id` sets the border (`panel` means none). Swap target `id` sets the body. |
+| `window` | `w h title icon tag status body body_size body_font hl border header_h title_size`. A marker-font title sits in the header with the Mac dots. `tag` is the small grey label on the right with 2 status dots (colour target `id:status`). `body` is a centred mono line, with `{{x}}` in `hl` colour (default purple; colour target `id:hl` animates it). Colour target `id` sets the border (`panel` means none). Swap target `id` sets the body. Narrow-window titles are nudged clear of the Mac dots; wide windows stay centred. |
 | `code` | `w lines[] size(44) min_lines title hl border(purple) autotype(true)`. Mac dots, mono lines, `{{kw}}` in `hl` colour (target `id:hl`). It types itself in when shown. `swap` with `lines` retypes it. |
 | `bar` | `w h(52) value(0-1) threshold(0.7) label label_right ok_color bad_color marker(true)`. It fills cyan and blends to red past the threshold. Animate it with `set`. |
 | `counter` | `value format("{n} queries") format_one font size align color upper`. Animate it with `set` (it counts up or down). |
