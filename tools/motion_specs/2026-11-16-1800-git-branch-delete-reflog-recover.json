@@ -1,0 +1,545 @@
+{
+ "slug": "2026-11-16-1800-git-branch-delete-reflog-recover",
+ "series": {
+  "label": "Git Mistakes",
+  "number": 3,
+  "color": "orange"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "deleted",
+   "branch",
+   "panic",
+   "reflog",
+   "rescue",
+   "five seconds",
+   "reflog rescue",
+   "re-pull",
+   "origin"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@rescue+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "DELETED THE {{BRANCH}}?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{PANIC}}",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{GONE}} FROM LOG",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "RUN {{REFLOG}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@back",
+   "text": "BACK IN {{5 SECONDS}}",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "{{REFLOG}} OR RE-PULL?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "You deleted the branch and lost a week of work?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs panic here."
+  },
+  {
+   "id": "why",
+   "text": "But Git never forgets."
+  },
+  {
+   "id": "fix",
+   "text": "Run git reflog, find your last commit, then git branch rescue with that hash. Your work is back in five seconds."
+  },
+  {
+   "id": "bait",
+   "text": "Reflog rescue, or re-pull from origin? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part four."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "A week of work... {{gone}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{panic}} here",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 50,
+   "min_lines": 3,
+   "title": "terminal",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "git {{branch -D}} feature/login",
+    "Deleted branch feature/login",
+    "(was {{3f9a2c1}})"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "NOT IN LOG",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "BRANCH RESTORED",
+   "icon": "database",
+   "status": "cyan",
+   "body": "rescue -> {{3f9a2c1}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "{{Reflog}} or {{re-pull}}?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{REFLOG}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{RE-PULL}}",
+   "body_size": 56,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@deleted",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@lost",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@week",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "hook@work",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@panic",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@panic",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "bug@here",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.15,
+   "lines": [
+    "git {{log}} --oneline",
+    "8a1c4e2 (main) merge",
+    "{{(no feature/login)}}"
+   ]
+  },
+  {
+   "at": "why@Git",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@never",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@forgets",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "why@forgets",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix@Run",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.2,
+   "lines": [
+    "git {{reflog}}",
+    "{{3f9a2c1}} HEAD@{1}: commit: login"
+   ]
+  },
+  {
+   "at": "fix@Run",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@find",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@commit",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@then",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 0.7,
+   "lines": [
+    "git {{reflog}}",
+    "{{3f9a2c1}} HEAD@{1}: commit: login",
+    "git {{branch rescue}} 3f9a2c1"
+   ]
+  },
+  {
+   "at": "fix@hash",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@hash",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@back",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@five",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@seconds",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@Reflog",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@rescue",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@origin",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@answer",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 23.5,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox",
+    "baitq"
+   ]
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #4",
+  "line2": "{{@K4CODING}}",
+  "line3": "Git Mistakes, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{GONE}} FOR GOOD?",
+     "color": "red"
+    }
+   },
+   "cover_at": "fix@rescue+0.4"
+  }
+ }
+}
