@@ -1,0 +1,513 @@
+{
+ "slug": "viral-js-gotchas-3-floating-point-money",
+ "series": {
+  "label": "JS Gotchas",
+  "number": 3,
+  "color": "yellow"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "floating",
+   "point",
+   "money",
+   "cents",
+   "integer",
+   "decimal",
+   "library",
+   "exact"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@exact+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "TOTAL IS NOT {{0.3}}",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{TRUST}} IT",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "BINARY {{FLOATS}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "USE {{INTEGER CENTS}}",
+   "color": "cyan"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@exact",
+   "text": "{{EXACT}} EVERY TIME",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "CENTS OR {{DECIMAL}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Zero point one plus zero point two is not point three?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs trust it here."
+  },
+  {
+   "id": "why",
+   "text": "JavaScript stores decimals as binary floats, so money math drifts."
+  },
+  {
+   "id": "fix",
+   "text": "Store integer cents. Math dot round of price times one hundred, add, then divide to display. Always exact."
+  },
+  {
+   "id": "bait",
+   "text": "Integer cents, or a decimal library? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part four."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "Your total is {{wrong}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{trust}} it",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 50,
+   "min_lines": 3,
+   "title": "node",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "const total = {{0.1 + 0.2}}",
+    "console.log(total)",
+    "{{0.30000000000000004}}"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "BINARY FLOAT",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "EXACT TOTAL",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{30}} cents = {{0.30}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "{{Integer cents}}, or a {{decimal library}}?",
+   "font": "marker",
+   "size": 40,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{CENTS}}",
+   "body_size": 60,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{DECIMAL}}",
+   "body_size": 60,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@plus",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@two",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@not",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "hook@three",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@trust",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@here",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.2,
+   "lines": [
+    "const total = {{0.1 + 0.2}}",
+    "console.log(total)",
+    "{{0.30000000000000004}}"
+   ]
+  },
+  {
+   "at": "why@binary",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@decimals",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@money",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "why@drifts",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "why@drifts",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.2,
+   "lines": [
+    "const a = Math.round(0.1 * 100)",
+    "const b = Math.round(0.2 * 100)",
+    "{{a + b}}  // 30"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@cents",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Math",
+   "do": "pulse",
+   "target": "ok"
+  },
+  {
+   "at": "fix@hundred",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@add",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@cents",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@display",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@exact",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@exact",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@cents",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@integer",
+   "do": "pulse",
+   "target": "yesbox"
+  },
+  {
+   "at": "bait@decimal",
+   "do": "pulse",
+   "target": "nobox"
+  },
+  {
+   "at": "bait@library",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #4",
+  "line2": "{{@K4CODING}}",
+  "line3": "JS Gotchas, one fix at a time",
+  "fade": 0.7
+ },
+ "variants": {
+  "facebook": {
+   "cover_at": "why@binary+0.5",
+   "chapters": {
+    "hook": {
+     "text": "MONEY MATH IS {{WRONG}}"
+    }
+   }
+  }
+ }
+}
