@@ -1,0 +1,600 @@
+{
+ "slug": "sql-offset-pagination-keyset",
+ "series": {
+  "label": "SQL Bugs",
+  "number": 4,
+  "color": "cyan"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "OFFSET",
+   "page",
+   "10000",
+   "slower",
+   "keyset",
+   "last id",
+   "same speed",
+   "prod"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@Page+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "PAGE {{10000}}\nTIMED OUT?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MORE {{INDEXES}}? NO",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "OFFSET {{DISCARDS}} ROWS",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "USE {{KEYSET}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@Page",
+   "text": "PAGE 10000 = {{PAGE 1}}",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "OFFSET OR {{KEYSET}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Page ten thousand timed out?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs add more indexes here."
+  },
+  {
+   "id": "why",
+   "text": "But OFFSET scans and throws away every earlier row, so later pages get slower."
+  },
+  {
+   "id": "fix",
+   "text": "Use keyset pagination. Where id is greater than the last id, limit twenty. It seeks straight to the page, so page ten thousand loads like page one."
+  },
+  {
+   "id": "bait",
+   "text": "Offset or keyset in prod? Comment which one."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part five."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 560,
+   "text": "Page {{10000}} never loads",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs add {{indexes}}",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 50,
+   "min_lines": 3,
+   "title": "postgres",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "SELECT * FROM posts ORDER BY id",
+    "{{LIMIT 20 OFFSET 199980}}",
+    "-> {{TIMED OUT}}"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "SCANS 199,980 ROWS",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "SEEK, NO SCAN",
+   "icon": "database",
+   "status": "cyan",
+   "body": "page 10000 -> {{same speed}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "{{OFFSET}} or {{KEYSET}}?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{OFFSET}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{KEYSET}}",
+   "body_size": 56,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.15,
+   "lines": [
+    "{{OFFSET 199980}}",
+    "scan 199,980 rows",
+    "{{drop them}}, return 20"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": 23.5,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox",
+    "baitq"
+   ]
+  },
+  {
+   "at": "hook@Page",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@thousand",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@thousand",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "hook@out",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug@indexes",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@here",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why@OFFSET",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@throws",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@away",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@every",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "why@slower",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix@Use",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "WHERE {{id > :last_id}}"
+   ]
+  },
+  {
+   "at": "fix@Use",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@keyset",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Where",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 0.8,
+   "lines": [
+    "WHERE {{id > :last_id}}",
+    "ORDER BY id",
+    "LIMIT 20"
+   ]
+  },
+  {
+   "at": "fix@seeks",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@seeks",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Page",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@loads",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@like",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "fix@one",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait@Offset",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@keyset",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@prod",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@which",
+   "do": "pulse",
+   "target": "yesbox"
+  },
+  {
+   "at": "bait@one",
+   "do": "pulse",
+   "target": "nobox"
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "why@scans",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@earlier",
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": "fix@limit",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@It",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@pagination",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@greater",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@last",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@twenty",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@seeks",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@later",
+   "do": "pulse",
+   "target": "term"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #5",
+  "line2": "{{@K4CODING}}",
+  "line3": "SQL Bugs, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "chapters": {
+    "hook": {
+     "text": "{{PAGE 10000}} DEAD?",
+     "color": "red"
+    }
+   },
+   "cover_at": "fix@Page+0.6"
+  }
+ }
+}
