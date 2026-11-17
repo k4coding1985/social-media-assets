@@ -1,0 +1,518 @@
+{
+ "slug": "2026-11-17-1700-kubernetes-dns-ndots-linkedin",
+ "watermark": "",
+ "series": {
+  "label": "Kubernetes Gotchas",
+  "number": 1,
+  "color": "purple"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "DNS",
+   "ndots",
+   "search domain",
+   "trailing dot",
+   "dnsConfig",
+   "first"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@trailing+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "EXTRA {{DNS}} LOOKUPS?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{MISS}} THIS",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "DEFAULT {{NDOTS:5}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "ADD A {{TRAILING DOT}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@Now",
+   "text": "{{REAL NAME}} FIRST",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "DOT OR {{DNSCONFIG}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your pod looks up one external API, and DNS sends extra queries first?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs never check this."
+  },
+  {
+   "id": "why",
+   "text": "Kubernetes sets n dots five. A name with fewer than five dots is tried with each cluster search domain before the real name."
+  },
+  {
+   "id": "fix",
+   "text": "Add a trailing dot to make the name fully qualified, or lower n dots in the pod's DNS config. Now the real name is tried first."
+  },
+  {
+   "id": "bait",
+   "text": "Trailing dot or DNS config? Comment which one you use."
+  },
+  {
+   "id": "follow",
+   "text": "Follow me for one DevOps fix every day."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "One name... {{extra queries}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{never check}}",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "pod dns queries",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "api.example.com{{.default.svc...}}",
+    "api.example.com{{.svc.cluster...}}",
+    "api.example.com{{.cluster.local}}"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "SEARCHED FIRST",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "FQDN",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{real name first}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "Which {{fix}} do you use?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{DOT}}",
+   "body_size": 72,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{CONFIG}}",
+   "body_size": 64,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@looks",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@API",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@extra",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@check",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.1,
+   "lines": [
+    "# /etc/resolv.conf",
+    "search {{3 cluster domains}}",
+    "options {{ndots:5}}"
+   ]
+  },
+  {
+   "at": "why@five",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@fewer",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@search",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@real",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "host: api.example.com{{.}}",
+    "",
+    ""
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@qualified",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@lower",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "dnsConfig:",
+    "  options:",
+    "  - {name: ndots, value: {{\"2\"}}}"
+   ]
+  },
+  {
+   "at": "fix@config",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@Now",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@real",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@first",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@dot",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@use",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow@DevOps",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox",
+    "baitq"
+   ]
+  },
+  {
+   "at": 4.8,
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": 11.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 13.0,
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": 14.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 18.6,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 21.6,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 28.4,
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 31.8,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": 34.3,
+   "do": "pulse",
+   "target": "baitq"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW ME",
+  "line2": "{{1 DEVOPS FIX DAILY}}",
+  "line3": "Kubernetes gotchas, one fix at a time"
+ }
+}
