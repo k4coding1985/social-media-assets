@@ -1,0 +1,527 @@
+{
+ "slug": "backend-basics-3-fstring-sql-injection",
+ "series": {
+  "label": "Backend Basics",
+  "number": 3,
+  "color": "cyan"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "f-string",
+   "injection",
+   "database",
+   "parameterized",
+   "tuple",
+   "data",
+   "ORM",
+   "raw",
+   "sql"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@tuple+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "ONE {{F-STRING}}, WHOLE DB",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{WRITE}} THIS",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "INPUT BECOMES {{SQL}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "USE {{%S}} PARAMS",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@stopped",
+   "text": "INPUT STAYS {{DATA}}",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "RAW SQL OR {{ORM}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "One f-string, and your whole database is exposed?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs write this."
+  },
+  {
+   "id": "why",
+   "text": "An f-string pastes user input into your SQL, so attackers rewrite the query."
+  },
+  {
+   "id": "fix",
+   "text": "Pass the value separately: cur dot execute, percent s, then user id in a tuple. The driver sends data, not code. Injection stopped."
+  },
+  {
+   "id": "bait",
+   "text": "Raw parameterized SQL, or an ORM? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part four."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "Every row... {{leaked}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{write}} this",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "app.py",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "cur.execute(",
+    "{{f\"SELECT * FROM acct WHERE id={uid}\"}}",
+    ")"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "INJECTABLE",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "INPUT = DATA",
+   "icon": "database",
+   "status": "cyan",
+   "body": "id = {{$1}} bound",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "Raw SQL or an {{ORM}}?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{RAW SQL}}",
+   "body_size": 60,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{ORM}}",
+   "body_size": 60,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@string",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@whole",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@database",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "hook@exposed",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@devs",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@this",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": [
+    "term",
+    "gone"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "why@pastes",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@attacker",
+   "do": "shake",
+   "target": "gone",
+   "dur": 0.45
+  },
+  {
+   "at": "why@rewrite",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.2
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.4,
+   "lines": [
+    "cur.execute(",
+    "\"SELECT * FROM acct WHERE id={{%s}}\",",
+    "({{uid}},))"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "green",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@separately",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@execute",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@percent",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@tuple",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@data",
+   "do": "pulse",
+   "target": "ok"
+  },
+  {
+   "at": "fix@stopped",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@stopped",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@Raw",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@parameterized",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@ORM",
+   "do": "pulse",
+   "target": "nobox"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@answer",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 7.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 16.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 18.4,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 21.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 25.4,
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 8.6,
+   "do": "pulse",
+   "target": "gone"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #4",
+  "line2": "{{@K4CODING}}",
+  "line3": "Backend Basics, one fix at a time",
+  "fade": 0.7
+ },
+ "variants": {
+  "facebook": {
+   "cover_at": "why@attacker+0.3",
+   "chapters": {
+    "hook": {
+     "text": "DB LEAKED BY {{ONE LINE}}"
+    }
+   }
+  }
+ }
+}
