@@ -1,0 +1,549 @@
+{
+  "slug": "2026-11-17-2100-postgres-bpchar-index-reindex",
+  "series": {
+    "label": "SQL Bugs",
+    "number": 5,
+    "color": "cyan"
+  },
+  "voice": {
+    "name": "en-IN-NeerjaExpressiveNeural",
+    "rate": "+5%",
+    "pitch": "+0Hz"
+  },
+  "captions": {
+    "enabled": true,
+    "keywords": [
+      "index",
+      "wrong rows",
+      "bpchar",
+      "reindex",
+      "varchar",
+      "text",
+      "char"
+    ],
+    "keyword_color": "yellow",
+    "max_chars": 30
+  },
+  "cover_at": "fix@REINDEX+0.4",
+  "tail": 2.5,
+  "chapters": [
+    {
+      "id": "hook",
+      "text": "INDEX: {{WRONG ROWS}}?",
+      "color": "red"
+    },
+    {
+      "id": "bug",
+      "at": "bug:start",
+      "text": "DEVS {{BLAME}} THE QUERY",
+      "color": "yellow"
+    },
+    {
+      "id": "why",
+      "at": "why:start",
+      "text": "{{BPCHAR}} NO LENGTH",
+      "color": "red"
+    },
+    {
+      "id": "fix",
+      "at": "fix:start",
+      "text": "UPDATE, THEN {{REINDEX}}",
+      "color": "purple"
+    },
+    {
+      "id": "payoff",
+      "at": "fix@Char",
+      "text": "{{REINDEX}} BPCHAR",
+      "color": "cyan"
+    },
+    {
+      "id": "bait",
+      "at": "bait:start",
+      "text": "CHAR OR {{TEXT}}?",
+      "color": "yellow"
+    }
+  ],
+  "voiceover": [
+    {
+      "id": "hook",
+      "text": "Your index returned wrong rows?"
+    },
+    {
+      "id": "bug",
+      "text": "Most devs blame the query here."
+    },
+    {
+      "id": "why",
+      "text": "The culprit can be bpchar with no length. B-tree deduplication could make index-only scans wrong."
+    },
+    {
+      "id": "fix",
+      "text": "November's update turns it off. Update, then REINDEX. Char with a length is safe. New columns? Use VARCHAR or TEXT."
+    },
+    {
+      "id": "bait",
+      "text": "Still using CHAR, or on TEXT? Comment your answer."
+    },
+    {
+      "id": "follow",
+      "text": "Follow K four coding for part six."
+    }
+  ],
+  "elements": [
+    {
+      "id": "sub",
+      "type": "text",
+      "x": 540,
+      "y": 420,
+      "text": "Index scan... {{wrong}} rows",
+      "font": "sans",
+      "size": 52,
+      "weight": "ExtraBold",
+      "color": "white",
+      "hl": "red",
+      "upper": true,
+      "start_visible": true
+    },
+    {
+      "id": "panic",
+      "type": "text",
+      "x": 540,
+      "y": 780,
+      "text": "Not the {{query}}",
+      "font": "sans",
+      "size": 56,
+      "weight": "ExtraBold",
+      "color": "white",
+      "hl": "red",
+      "upper": true
+    },
+    {
+      "id": "term",
+      "type": "code",
+      "x": 540,
+      "y": 860,
+      "w": 1020,
+      "size": 44,
+      "min_lines": 3,
+      "title": "postgres",
+      "hl": "red",
+      "border": "red",
+      "lines": [
+        "code {{bpchar}} NOT NULL",
+        "CREATE INDEX ON t (code);",
+        "-- index-only scan: {{wrong rows}}"
+      ],
+      "start_visible": true
+    },
+    {
+      "id": "xmark",
+      "type": "badge",
+      "kind": "x",
+      "x": 540,
+      "y": 520,
+      "r": 56,
+      "color": "red"
+    },
+    {
+      "id": "gone",
+      "type": "badge",
+      "kind": "stamp",
+      "text": "DEDUP BUG",
+      "x": 540,
+      "y": 520,
+      "size": 44,
+      "color": "red"
+    },
+    {
+      "id": "ok",
+      "type": "badge",
+      "kind": "check",
+      "x": 540,
+      "y": 500,
+      "r": 48,
+      "color": "cyan",
+      "label": "Do this instead",
+      "label_size": 44
+    },
+    {
+      "id": "restored",
+      "type": "window",
+      "x": 540,
+      "y": 920,
+      "w": 900,
+      "h": 220,
+      "title": "AFTER UPDATING",
+      "icon": "database",
+      "status": "cyan",
+      "body": "{{REINDEX}} bpchar B-trees",
+      "body_size": 48,
+      "hl": "cyan",
+      "border": "cyan"
+    },
+    {
+      "id": "baitq",
+      "type": "text",
+      "x": 540,
+      "y": 620,
+      "text": "Still using {{CHAR}}?",
+      "font": "marker",
+      "size": 64,
+      "weight": "ExtraBold",
+      "color": "white",
+      "hl": "yellow",
+      "upper": true
+    },
+    {
+      "id": "yesbox",
+      "type": "window",
+      "x": 330,
+      "y": 980,
+      "w": 380,
+      "h": 220,
+      "title": "",
+      "body": "{{CHAR}}",
+      "body_size": 72,
+      "hl": "yellow",
+      "border": "yellow",
+      "status": "yellow"
+    },
+    {
+      "id": "nobox",
+      "type": "window",
+      "x": 750,
+      "y": 980,
+      "w": 380,
+      "h": 220,
+      "title": "",
+      "body": "{{TEXT}}",
+      "body_size": 72,
+      "hl": "cyan",
+      "border": "cyan",
+      "status": "cyan"
+    }
+  ],
+  "timeline": [
+    {
+      "at": 0,
+      "do": "type",
+      "target": "term",
+      "dur": 0.01
+    },
+    {
+      "at": 0.15,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 0.15,
+      "do": "color",
+      "target": [
+        "term",
+        "term:hl"
+      ],
+      "color": "red",
+      "dur": 0.25,
+      "sfx": "alert"
+    },
+    {
+      "at": "hook@returned",
+      "do": "shake",
+      "target": "term",
+      "dur": 0.45
+    },
+    {
+      "at": "hook@wrong",
+      "do": "pulse",
+      "target": "sub"
+    },
+    {
+      "at": "bug:start",
+      "do": "hide",
+      "target": [
+        "sub",
+        "term"
+      ],
+      "dur": 0.2
+    },
+    {
+      "at": "bug:start",
+      "do": "show",
+      "target": [
+        "xmark",
+        "panic"
+      ],
+      "anim": "pop",
+      "dur": 0.4,
+      "sfx": "whoosh",
+      "stagger": 0.08
+    },
+    {
+      "at": "bug@blame",
+      "do": "pulse",
+      "target": "xmark"
+    },
+    {
+      "at": "bug@query",
+      "do": "pulse",
+      "target": "panic"
+    },
+    {
+      "at": "why:start",
+      "do": "hide",
+      "target": [
+        "xmark",
+        "panic"
+      ],
+      "dur": 0.25
+    },
+    {
+      "at": "why:start",
+      "do": "show",
+      "target": "term",
+      "anim": "slide_up",
+      "dur": 0.4
+    },
+    {
+      "at": "why:start",
+      "do": "color",
+      "target": [
+        "term",
+        "term:hl"
+      ],
+      "color": "red",
+      "dur": 0.3
+    },
+    {
+      "at": "why@bpchar",
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": "why@deduplication",
+      "do": "show",
+      "target": "gone",
+      "anim": "pop",
+      "dur": 0.4,
+      "sfx": "alert"
+    },
+    {
+      "at": "why@wrong",
+      "do": "shake",
+      "target": "term",
+      "dur": 0.5
+    },
+    {
+      "at": "why@wrong",
+      "do": "pulse",
+      "target": "gone"
+    },
+    {
+      "at": "fix:start",
+      "do": "hide",
+      "target": "gone",
+      "dur": 0.25
+    },
+    {
+      "at": "fix@Update",
+      "do": "swap",
+      "target": "term",
+      "type_dur": 1.0,
+      "lines": [
+        "{{REINDEX}} INDEX t_code_idx;",
+        "-- new columns: {{TEXT}}"
+      ]
+    },
+    {
+      "at": "fix@Update",
+      "do": "color",
+      "target": [
+        "term",
+        "term:hl"
+      ],
+      "color": "cyan",
+      "dur": 0.35
+    },
+    {
+      "at": "fix@REINDEX",
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": "fix@Char",
+      "do": "show",
+      "target": "ok",
+      "anim": "pop",
+      "dur": 0.4,
+      "sfx": "ding"
+    },
+    {
+      "at": "fix@VARCHAR",
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": "fix@Char",
+      "do": "show",
+      "target": "restored",
+      "anim": "slide_up",
+      "dur": 0.45
+    },
+    {
+      "at": "bait:start",
+      "do": "hide",
+      "target": [
+        "ok",
+        "term",
+        "restored"
+      ],
+      "dur": 0.25
+    },
+    {
+      "at": "bait:start",
+      "do": "show",
+      "target": "baitq",
+      "anim": "pop",
+      "dur": 0.4
+    },
+    {
+      "at": "bait@Still",
+      "do": "show",
+      "target": [
+        "yesbox",
+        "nobox"
+      ],
+      "anim": "slide_up",
+      "dur": 0.4,
+      "stagger": 0.1
+    },
+    {
+      "at": "bait@CHAR",
+      "do": "pulse",
+      "target": "yesbox"
+    },
+    {
+      "at": "bait@TEXT",
+      "do": "pulse",
+      "target": "nobox"
+    },
+    {
+      "at": "bait@Comment",
+      "do": "pulse",
+      "target": [
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": "follow:start",
+      "do": "pulse",
+      "target": [
+        "baitq",
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": "follow@coding",
+      "do": "pulse",
+      "target": [
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": "follow@part",
+      "do": "pulse",
+      "target": "baitq"
+    },
+    {
+      "at": "fix@Char",
+      "do": "hide",
+      "target": "term",
+      "dur": 0.3
+    },
+    {
+      "at": 7.8,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 9.0,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 10.4,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 11.4,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 15.2,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 16.2,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 17.6,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 19.8,
+      "do": "pulse",
+      "target": "restored"
+    },
+    {
+      "at": 21.0,
+      "do": "pulse",
+      "target": "restored"
+    },
+    {
+      "at": 22.2,
+      "do": "pulse",
+      "target": "restored"
+    },
+    {
+      "at": 23.4,
+      "do": "pulse",
+      "target": "restored"
+    },
+    {
+      "at": 24.6,
+      "do": "pulse",
+      "target": "baitq"
+    },
+    {
+      "at": 29.4,
+      "do": "pulse",
+      "target": "baitq"
+    }
+  ],
+  "end_card": {
+    "segment": "follow",
+    "line1": "FOLLOW FOR #6",
+    "line2": "{{@K4CODING}}",
+    "line3": "SQL Bugs, one fix at a time",
+    "fade": 0.7
+  },
+  "variants": {
+    "facebook": {
+      "chapters": {
+        "hook": {
+          "text": "BAD {{INDEX}} ROWS?",
+          "color": "red"
+        }
+      },
+      "cover_at": "bait@Still+0.6"
+    }
+  }
+}
