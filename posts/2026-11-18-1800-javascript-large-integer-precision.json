@@ -1,0 +1,538 @@
+{
+ "slug": "viral-js-large-integer-precision",
+ "series": {
+  "label": "JS Gotchas",
+  "number": 4,
+  "color": "yellow"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "rounded",
+   "ID",
+   "precision",
+   "BigInt",
+   "strings",
+   "digits",
+   "comment",
+   "Number"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "why@silently+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "THIS {{ID}} JUST ROUNDED",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{MISS}} IT",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{PRECISION}} LOST",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "USE {{STRINGS}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@survives",
+   "text": "{{ZERO}} DIGITS LOST",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "STRING OR {{BIGINT}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your ID just rounded itself in JavaScript?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs miss this."
+  },
+  {
+   "id": "why",
+   "text": "Above Number dot MAX SAFE INTEGER, a double cannot store every whole number, so the last digits silently change."
+  },
+  {
+   "id": "fix",
+   "text": "Send IDs as strings, or use BigInt. Then the exact value survives, every single digit. Zero digits lost."
+  },
+  {
+   "id": "bait",
+   "text": "String IDs, or BigInt? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part five."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "ID changed... {{rounded}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{miss}} it",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 50,
+   "min_lines": 3,
+   "title": "node",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "const id = {{9007199254740993}}",
+    "console.log(id)",
+    "{{9007199254740992}} // wrong"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "ROUNDED",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "EXACT ID",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{0}} digits lost",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "String IDs or {{BigInt}}?",
+   "font": "marker",
+   "size": 60,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{STRING}}",
+   "body_size": 64,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{BigInt}}",
+   "body_size": 64,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@ID",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@rounded",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@JavaScript",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@devs",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@miss",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "Number.MAX_SAFE_INTEGER",
+    "// {{9007199254740991}} = 2^53 - 1",
+    "above it: {{rounds}}"
+   ]
+  },
+  {
+   "at": "why@double",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@silently",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@change",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix@Send",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.2,
+   "lines": [
+    "const id = {{'9007199254740993'}}",
+    "// or BigInt:",
+    "{{9007199254740993n}}"
+   ]
+  },
+  {
+   "at": "fix@Send",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@BigInt",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@strings",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@survives",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@survives",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@digit",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "fix@Zero",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@BigInt",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@answer",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 7.6,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 10.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 11.3,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 17.9,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 19.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 21.2,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 23.4,
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": 16.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 25.0,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #5",
+  "line2": "{{@K4CODING}}",
+  "line3": "JS Gotchas, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "cover_at": "fix@survives+0.5",
+   "chapters": {
+    "hook": {
+     "text": "{{BIG IDS}} BREAK JS"
+    }
+   }
+  }
+ }
+}
