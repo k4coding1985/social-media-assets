@@ -1,0 +1,531 @@
+{
+ "slug": "2026-11-18-1700-kubernetes-job-backofflimit-linkedin",
+ "watermark": "",
+ "series": {
+  "label": "Kubernetes Gotchas",
+  "number": 2,
+  "color": "purple"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "backoffLimit",
+   "six",
+   "activeDeadlineSeconds",
+   "deadline",
+   "retries",
+   "fail fast"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@deadline+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "JOB {{STILL RETRYING}}?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{MISS}} THIS",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{6 RETRIES}} DEFAULT",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "SET A {{DEADLINE}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@wins",
+   "text": "{{DEADLINE}} WINS",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "FAIL FAST OR {{RETRY}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your Kubernetes Job is broken, and it keeps retrying for minutes?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs never set this."
+  },
+  {
+   "id": "why",
+   "text": "By default, backoff limit is six. Failed pods are recreated with an exponential delay, ten, twenty, forty seconds, capped at ten minutes."
+  },
+  {
+   "id": "fix",
+   "text": "Set a lower backoff limit to fail fast, and add active deadline seconds to cap the total runtime. The deadline wins over retries."
+  },
+  {
+   "id": "bait",
+   "text": "Fail fast or retry more? Comment which one you pick."
+  },
+  {
+   "id": "follow",
+   "text": "Follow me for one DevOps fix every day."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "One bug... {{6 retries}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{never set this}}",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "kubectl get pods",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "migrate-x7k2  {{Error}}",
+    "migrate-p9q4  {{Error}}",
+    "migrate-b3m8  {{Error}}"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "UP TO 10 MIN DELAY",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "activeDeadlineSeconds",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{deadline beats retries}}",
+   "body_size": 50,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "{{Fail fast}} or retry?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{FAST}}",
+   "body_size": 72,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{RETRY}}",
+   "body_size": 64,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@Job",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@broken",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@retrying",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@set",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.1,
+   "lines": [
+    "spec:",
+    "  {{backoffLimit: 6}}  # default",
+    "  # delay 10s, 20s, 40s ... 10m"
+   ]
+  },
+  {
+   "at": "why@six",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@Failed",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@exponential",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@capped",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "spec:",
+    "  backoffLimit: {{2}}",
+    ""
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@fast",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@active",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "spec:",
+    "  backoffLimit: {{2}}",
+    "  activeDeadlineSeconds: {{600}}"
+   ]
+  },
+  {
+   "at": "fix@seconds",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@wins",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@over",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@retries",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@retry",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@pick",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow@DevOps",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox",
+    "baitq"
+   ]
+  },
+  {
+   "at": "why@twenty",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 4.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 6.0,
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": 11.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 17.2,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 23.6,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 25.0,
+   "do": "pulse",
+   "target": "ok"
+  },
+  {
+   "at": 33.2,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": 35.5,
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 36.5,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW ME",
+  "line2": "{{1 DEVOPS FIX DAILY}}",
+  "line3": "Kubernetes gotchas, one fix at a time"
+ }
+}
