@@ -1,0 +1,566 @@
+{
+ "slug": "backend-basics-4-float-paise-decimal",
+ "series": {
+  "label": "Backend Basics",
+  "number": 4,
+  "color": "cyan"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "paise",
+   "float",
+   "Decimal",
+   "1998",
+   "1999",
+   "integer",
+   "rupees",
+   "money"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@exact+1.2",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{PAISA}} DISAPPEARED?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{TRUST}} IT",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "FLOAT IS {{APPROX}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "USE {{DECIMAL}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@exact",
+   "text": "EXACT {{1999}} PAISE",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "DECIMAL OR {{INT}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Charged nineteen ninety nine rupees, stored one thousand nine ninety eight paise?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs trust float."
+  },
+  {
+   "id": "why",
+   "text": "Floats are binary approximations, so int of nineteen point nine nine times one hundred drops a paisa."
+  },
+  {
+   "id": "fix",
+   "text": "Use Decimal with a string, or store integer paise. Now it is exact."
+  },
+  {
+   "id": "bait",
+   "text": "Decimal, or integer paise? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part five."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "19.99 rupees = {{1998}} paise",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs trust {{float}}",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "billing.py",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "amt = 19.99",
+    "paise = {{int(amt * 100)}}",
+    "# 1998"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "1 PAISA LOST",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "EXACT",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{1999}} paise",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "{{Decimal}} or integer paise?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{DECIMAL}}",
+   "body_size": 60,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{INT PAISE}}",
+   "body_size": 50,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@paise",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@nineteen",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@thousand",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "hook@paise",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@Most",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@float",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": [
+    "term",
+    "gone"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "why@approximations",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@drops",
+   "do": "shake",
+   "target": "gone",
+   "dur": 0.45
+  },
+  {
+   "at": "why@paisa",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.2
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.4,
+   "lines": [
+    "amt = {{Decimal('19.99')}}",
+    "paise = int(amt * 100)",
+    "# 1999"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "green",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@decimal",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@string",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@integer",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@exact",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Now",
+   "do": "pulse",
+   "target": "ok"
+  },
+  {
+   "at": "fix@exact",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@exact",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@Decimal",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@integer",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@paise",
+   "do": "pulse",
+   "target": "nobox"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@answer",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 7.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 16.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 18.4,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 21.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 25.4,
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 8.6,
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": 2.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 2.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 11.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 13.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 14.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 19.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 22.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 10.3,
+   "do": "pulse",
+   "target": "gone"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #5",
+  "line2": "{{@K4CODING}}",
+  "line3": "Backend Basics, one fix at a time",
+  "fade": 0.7
+ },
+ "variants": {
+  "facebook": {
+   "cover_at": "why@drops+0.3",
+   "chapters": {
+    "hook": {
+     "text": "FLOAT ATE {{1 PAISA}}"
+    }
+   }
+  }
+ }
+}
