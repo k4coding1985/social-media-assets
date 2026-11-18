@@ -1,0 +1,513 @@
+{
+ "slug": "viral-git-clean-dry-run",
+ "series": {
+  "label": "Git Mistakes",
+  "number": 4,
+  "color": "orange"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "clean",
+   "untracked",
+   "gone",
+   "dry run",
+   "dash",
+   "wiped",
+   "comment",
+   "alias"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@dry+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{GIT CLEAN}} WIPED IT?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{PANIC}}",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "NO {{UNDO}} IN GIT",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "DRY RUN {{FIRST}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@Looks",
+   "text": "{{ZERO}} FILES LOST",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "DRY RUN OR {{-I}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "You ran git clean and your files vanished?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs panic here."
+  },
+  {
+   "id": "why",
+   "text": "Untracked files were never committed, so Git cannot bring them back."
+  },
+  {
+   "id": "fix",
+   "text": "Run git clean dash f d n first. It is a dry run, so it only lists what would go. Looks right? Then delete, or use dash i to pick."
+  },
+  {
+   "id": "bait",
+   "text": "Dry run first, or alias to dash i? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part five."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "Untracked files... {{gone}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{panic}} here",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 50,
+   "min_lines": 3,
+   "title": "terminal",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "git {{clean -fd}}",
+    "Removing notes.txt",
+    "Removing {{.env.local}}"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "NO UNDO",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "NOTHING DELETED",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{0}} files lost",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "Dry run or {{-i}}?",
+   "font": "marker",
+   "size": 60,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{-n}} DRY",
+   "body_size": 64,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{-i}} ASK",
+   "body_size": 64,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@clean",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@files",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@vanished",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@panic",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@here",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "git {{clean -fd}}",
+    "Removing {{.env.local}}",
+    "git reflog  # no trace"
+   ]
+  },
+  {
+   "at": "why@committed",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@cannot",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@back",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix@Run",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.2,
+   "lines": [
+    "git clean {{-fdn}}",
+    "Would remove notes.txt",
+    "Would remove .env.local"
+   ]
+  },
+  {
+   "at": "fix@Run",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@first",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@dry",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@lists",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Looks",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@Looks",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@delete",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "fix@pick",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@Dry",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@alias",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@answer",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 16.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 25.0,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #5",
+  "line2": "{{@K4CODING}}",
+  "line3": "Git Mistakes, one fix at a time"
+ },
+ "variants": {
+  "facebook": {
+   "cover_at": "why@cannot+0.5",
+   "chapters": {
+    "hook": {
+     "text": "FILES GONE, {{NO UNDO}}"
+    }
+   }
+  }
+ }
+}
