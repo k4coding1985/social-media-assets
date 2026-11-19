@@ -1,0 +1,541 @@
+{
+ "slug": "2026-11-19-1700-docker-json-file-log-rotation-linkedin",
+ "watermark": "",
+ "series": {
+  "label": "Docker Gotchas",
+  "number": 3,
+  "color": "purple"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "max-size",
+   "unlimited",
+   "daemon.json",
+   "rotation",
+   "new containers",
+   "disk"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@thirty+0.4",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "DISK {{100% FULL}}?",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "IT'S {{CONTAINER LOGS}}",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{NO ROTATION}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "SET {{MAX-SIZE}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@thirty",
+   "text": "{{30 MB}} CAP",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "DAEMON OR {{PER APP}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your Docker host disk is full, and nothing looks wrong?"
+  },
+  {
+   "id": "bug",
+   "text": "Check the container logs."
+  },
+  {
+   "id": "why",
+   "text": "The default json file driver keeps logs with no size limit. Every line your app prints stays on disk until the disk fills."
+  },
+  {
+   "id": "fix",
+   "text": "In daemon dot json, set max size ten megabytes and max file three. That caps each container near thirty megabytes. Restart Docker, then recreate your containers."
+  },
+  {
+   "id": "bait",
+   "text": "Daemon default or per app setting? Comment which one you use."
+  },
+  {
+   "id": "follow",
+   "text": "Follow me for one DevOps fix every day."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "Disk... {{100% used}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "It's the {{container logs}}",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "df -h /var/lib/docker",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "/dev/sda1  {{100%}}",
+    "app-json.log  {{38G}}",
+    "no space left on device"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "DEFAULT: UNLIMITED",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "log rotation",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{10m x 3 files}}",
+   "body_size": 50,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "{{Daemon}} or per app?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{DAEMON}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{PER APP}}",
+   "body_size": 56,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@Docker",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@full",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@wrong",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@logs",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.1,
+   "lines": [
+    "\"log-driver\": \"json-file\"",
+    "{{max-size: -1}} # unlimited",
+    "# grows until disk fills"
+   ]
+  },
+  {
+   "at": "why@limit",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@line",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "why@stays",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@fills",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "\"log-opts\": {",
+    "  \"max-size\": {{\"10m\"}}",
+    ""
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@megabytes",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@three",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "\"log-opts\": {",
+    "  \"max-size\": {{\"10m\"}},",
+    "  \"max-file\": {{\"3\"}} }"
+   ]
+  },
+  {
+   "at": "fix@thirty",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@Restart",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@recreate",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@containers",
+   "do": "pulse",
+   "target": "restored"
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@app",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@use",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow@DevOps",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox",
+    "baitq"
+   ]
+  },
+  {
+   "at": "why@disk",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 4.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 6.0,
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": 11.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 17.2,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 23.6,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 25.0,
+   "do": "pulse",
+   "target": "ok"
+  },
+  {
+   "at": 33.2,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": 35.5,
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 36.5,
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": 8.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 22.3,
+   "do": "pulse",
+   "target": "term"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW ME",
+  "line2": "{{1 DEVOPS FIX DAILY}}",
+  "line3": "Docker gotchas, one fix at a time"
+ }
+}
