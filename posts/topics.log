@@ -30,3 +30,4 @@
 2026-11-18 2100 Backend Basics #4 python-float-paise-decimal-or-integer-paise
 2026-11-19 1300 SQL Bugs #6 postgres-lower-email-expression-index-seq-scan
 2026-11-19 1800 Git Mistakes #5 git-stash-drop-recover-fsck-unreachable-stash-apply
+2026-11-19 2100 JS Gotchas #5 javascript-json-stringify-undefined-date-null-iso-reviver

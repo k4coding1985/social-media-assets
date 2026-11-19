@@ -1,0 +1,557 @@
+{
+  "slug": "viral-js-json-stringify-undefined-date",
+  "series": {
+    "label": "JS Gotchas",
+    "number": 5,
+    "color": "yellow"
+  },
+  "voice": {
+    "name": "en-IN-NeerjaExpressiveNeural",
+    "rate": "+5%",
+    "pitch": "+0Hz"
+  },
+  "captions": {
+    "enabled": true,
+    "keywords": [
+      "undefined",
+      "date",
+      "string",
+      "null",
+      "iso",
+      "reviver",
+      "vanished",
+      "json",
+      "library"
+    ],
+    "keyword_color": "yellow",
+    "max_chars": 30
+  },
+  "cover_at": "fix@Store+0.4",
+  "tail": 2.5,
+  "chapters": [
+    {
+      "id": "hook",
+      "text": "{{FIELD}} JUST\nVANISHED",
+      "color": "red"
+    },
+    {
+      "id": "bug",
+      "at": "bug:start",
+      "text": "MOST DEVS {{MISS}} IT",
+      "color": "yellow"
+    },
+    {
+      "id": "why",
+      "at": "why:start",
+      "text": "DATE BECOMES {{STRING}}",
+      "color": "red"
+    },
+    {
+      "id": "fix",
+      "at": "fix:start",
+      "text": "{{NULL}} OR {{ISO}}",
+      "color": "purple"
+    },
+    {
+      "id": "payoff",
+      "at": "fix@Nothing",
+      "text": "ZERO {{LOST}} FIELDS",
+      "color": "cyan"
+    },
+    {
+      "id": "bait",
+      "at": "bait:start",
+      "text": "ISO OR {{LIBRARY}}?",
+      "color": "yellow"
+    }
+  ],
+  "voiceover": [
+    {
+      "id": "hook",
+      "text": "You saved an object as JSON and a field just vanished?"
+    },
+    {
+      "id": "bug",
+      "text": "Most devs miss this."
+    },
+    {
+      "id": "why",
+      "text": "JSON dot stringify drops undefined, and turns a Date into a string."
+    },
+    {
+      "id": "fix",
+      "text": "Use null for empty values. Store dates as ISO strings, and rebuild them with a reviver in JSON dot parse. Nothing gets lost."
+    },
+    {
+      "id": "bait",
+      "text": "ISO strings, or a date library? Comment your answer."
+    },
+    {
+      "id": "follow",
+      "text": "Follow K four coding for part six."
+    }
+  ],
+  "elements": [
+    {
+      "id": "sub",
+      "type": "text",
+      "x": 540,
+      "y": 520,
+      "text": "Your field... {{gone}}?",
+      "font": "sans",
+      "size": 52,
+      "weight": "ExtraBold",
+      "color": "white",
+      "hl": "red",
+      "upper": true,
+      "start_visible": true
+    },
+    {
+      "id": "panic",
+      "type": "text",
+      "x": 540,
+      "y": 780,
+      "text": "Most devs {{miss}} it",
+      "font": "sans",
+      "size": 56,
+      "weight": "ExtraBold",
+      "color": "white",
+      "hl": "red",
+      "upper": true
+    },
+    {
+      "id": "term",
+      "type": "code",
+      "x": 540,
+      "y": 860,
+      "w": 1020,
+      "size": 50,
+      "min_lines": 3,
+      "title": "terminal",
+      "hl": "red",
+      "border": "red",
+      "lines": [
+        "{{JSON.stringify}}(user)",
+        "// {\"name\":\"Ann\"}",
+        "// {{age}} vanished"
+      ],
+      "start_visible": true
+    },
+    {
+      "id": "xmark",
+      "type": "badge",
+      "kind": "x",
+      "x": 540,
+      "y": 520,
+      "r": 56,
+      "color": "red"
+    },
+    {
+      "id": "gone",
+      "type": "badge",
+      "kind": "stamp",
+      "text": "UNDEFINED GONE",
+      "x": 540,
+      "y": 520,
+      "size": 44,
+      "color": "red"
+    },
+    {
+      "id": "ok",
+      "type": "badge",
+      "kind": "check",
+      "x": 540,
+      "y": 500,
+      "r": 48,
+      "color": "cyan",
+      "label": "Do this instead",
+      "label_size": 44
+    },
+    {
+      "id": "restored",
+      "type": "window",
+      "x": 540,
+      "y": 920,
+      "w": 900,
+      "h": 220,
+      "title": "DATA KEPT",
+      "icon": "database",
+      "status": "cyan",
+      "body": "age {{null}}, date {{ISO}}",
+      "body_size": 48,
+      "hl": "cyan",
+      "border": "cyan"
+    },
+    {
+      "id": "baitq",
+      "type": "text",
+      "x": 540,
+      "y": 620,
+      "text": "ISO or {{library}}?",
+      "font": "marker",
+      "size": 60,
+      "color": "white",
+      "hl": "yellow",
+      "upper": true
+    },
+    {
+      "id": "yesbox",
+      "type": "window",
+      "x": 330,
+      "y": 980,
+      "w": 380,
+      "h": 220,
+      "title": "",
+      "body": "{{ISO}}",
+      "body_size": 56,
+      "hl": "cyan",
+      "border": "cyan",
+      "status": "cyan"
+    },
+    {
+      "id": "nobox",
+      "type": "window",
+      "x": 750,
+      "y": 980,
+      "w": 380,
+      "h": 220,
+      "title": "",
+      "body": "{{LIBRARY}}",
+      "body_size": 56,
+      "hl": "yellow",
+      "border": "yellow",
+      "status": "yellow"
+    }
+  ],
+  "timeline": [
+    {
+      "at": 0,
+      "do": "type",
+      "target": "term",
+      "dur": 0.01
+    },
+    {
+      "at": 0.15,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 0.15,
+      "do": "color",
+      "target": [
+        "term",
+        "term:hl"
+      ],
+      "color": "red",
+      "dur": 0.25,
+      "sfx": "alert"
+    },
+    {
+      "at": "hook@saved",
+      "do": "shake",
+      "target": "term",
+      "dur": 0.45
+    },
+    {
+      "at": "hook@field",
+      "do": "pulse",
+      "target": "sub"
+    },
+    {
+      "at": "hook@vanished",
+      "do": "color",
+      "target": "sub",
+      "color": "red",
+      "dur": 0.3
+    },
+    {
+      "at": "bug:start",
+      "do": "hide",
+      "target": [
+        "sub",
+        "term"
+      ],
+      "dur": 0.2
+    },
+    {
+      "at": "bug:start",
+      "do": "show",
+      "target": [
+        "xmark",
+        "panic"
+      ],
+      "anim": "pop",
+      "dur": 0.4,
+      "sfx": "whoosh",
+      "stagger": 0.08
+    },
+    {
+      "at": "bug@miss",
+      "do": "pulse",
+      "target": "xmark"
+    },
+    {
+      "at": "bug@this",
+      "do": "pulse",
+      "target": "panic"
+    },
+    {
+      "at": "why:start",
+      "do": "hide",
+      "target": [
+        "xmark",
+        "panic"
+      ],
+      "dur": 0.25
+    },
+    {
+      "at": "why:start",
+      "do": "show",
+      "target": "term",
+      "anim": "slide_up",
+      "dur": 0.4
+    },
+    {
+      "at": "why:start",
+      "do": "swap",
+      "target": "term",
+      "type_dur": 1.0,
+      "lines": [
+        "{{new Date()}}",
+        "stringify gives a {{string}}",
+        "parse: not a Date"
+      ]
+    },
+    {
+      "at": "why@drops",
+      "do": "color",
+      "target": [
+        "term",
+        "term:hl"
+      ],
+      "color": "red",
+      "dur": 0.3
+    },
+    {
+      "at": "why@Date",
+      "do": "show",
+      "target": "gone",
+      "anim": "pop",
+      "dur": 0.4,
+      "sfx": "alert"
+    },
+    {
+      "at": "why@string",
+      "do": "shake",
+      "target": "term",
+      "dur": 0.5
+    },
+    {
+      "at": "fix:start",
+      "do": "hide",
+      "target": "gone",
+      "dur": 0.25
+    },
+    {
+      "at": "fix@Use",
+      "do": "swap",
+      "target": "term",
+      "type_dur": 1.2,
+      "lines": [
+        "age: {{null}}",
+        "at: d.{{toISOString()}}"
+      ]
+    },
+    {
+      "at": "fix@Use",
+      "do": "color",
+      "target": [
+        "term",
+        "term:hl"
+      ],
+      "color": "cyan",
+      "dur": 0.35
+    },
+    {
+      "at": "fix@empty",
+      "do": "show",
+      "target": "ok",
+      "anim": "pop",
+      "dur": 0.4,
+      "sfx": "ding"
+    },
+    {
+      "at": "fix@values",
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": "fix@reviver",
+      "do": "swap",
+      "target": "term",
+      "type_dur": 0.8,
+      "lines": [
+        "age: {{null}}",
+        "at: d.{{toISOString()}}",
+        "JSON.parse(s, {{reviver}})"
+      ]
+    },
+    {
+      "at": "fix@parse",
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": "fix@Nothing",
+      "do": "hide",
+      "target": [
+        "ok",
+        "term"
+      ],
+      "dur": 0.3
+    },
+    {
+      "at": "fix@Nothing",
+      "do": "show",
+      "target": "restored",
+      "anim": "slide_up",
+      "dur": 0.45
+    },
+    {
+      "at": "fix@lost",
+      "do": "pulse",
+      "target": "restored"
+    },
+    {
+      "at": "bait:start",
+      "do": "hide",
+      "target": "restored",
+      "dur": 0.25
+    },
+    {
+      "at": "bait:start",
+      "do": "show",
+      "target": "baitq",
+      "anim": "pop",
+      "dur": 0.4
+    },
+    {
+      "at": "bait@or",
+      "do": "show",
+      "target": [
+        "yesbox",
+        "nobox"
+      ],
+      "anim": "slide_up",
+      "dur": 0.4,
+      "stagger": 0.1
+    },
+    {
+      "at": "bait@library",
+      "do": "pulse",
+      "target": "baitq"
+    },
+    {
+      "at": "bait@Comment",
+      "do": "pulse",
+      "target": [
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": "bait@answer",
+      "do": "pulse",
+      "target": "baitq"
+    },
+    {
+      "at": "follow:start",
+      "do": "pulse",
+      "target": [
+        "baitq",
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": "follow@coding",
+      "do": "pulse",
+      "target": [
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": "follow@part",
+      "do": "pulse",
+      "target": "baitq"
+    },
+    {
+      "at": 25.0,
+      "do": "pulse",
+      "target": [
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": 11.0,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 15.7,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 21.6,
+      "do": "pulse",
+      "target": [
+        "yesbox",
+        "nobox"
+      ]
+    },
+    {
+      "at": "fix@Store",
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 4.9,
+      "do": "pulse",
+      "target": "xmark"
+    },
+    {
+      "at": 7.4,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 8.9,
+      "do": "pulse",
+      "target": "term"
+    },
+    {
+      "at": 17.0,
+      "do": "pulse",
+      "target": "term"
+    }
+  ],
+  "end_card": {
+    "segment": "follow",
+    "line1": "FOLLOW FOR #6",
+    "line2": "{{@K4CODING}}",
+    "line3": "JS Gotchas, one fix at a time"
+  },
+  "variants": {
+    "facebook": {
+      "cover_at": "why@Date+0.5",
+      "chapters": {
+        "hook": {
+          "text": "{{JSON}} DROPS YOUR {{DATA}}"
+        }
+      }
+    }
+  }
+}
