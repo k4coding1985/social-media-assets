@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """K4Coding 2D explainer Reel renderer (spec-driven).
 
-Flat 2D motion graphics (PIL + ffmpeg) over real licensed photos, Chatterbox
-voice (ref_am_michael), voice only. See tools/TWO_D_REEL_TEMPLATE.md.
+Flat 2D motion graphics (PIL + ffmpeg) with built-in flat vector illustrations
+(NO photos: specs with a photo/image are rejected), Chatterbox voice
+(ref_am_michael), voice only. See tools/TWO_D_REEL_TEMPLATE.md.
 
   CB=/workspace/ingress/work/tts2/cbvenv/bin/python
   $CB tools/render_2d_reel.py spec.json --out-dir OUT                 # Instagram variant
@@ -14,6 +15,8 @@ import argparse, copy, fcntl, hashlib, json, math, os, re, subprocess, sys, time
 from multiprocessing import Pool
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import flat_illustrations as FLAT
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FONTS = os.path.join(HERE, 'fonts')
@@ -24,7 +27,20 @@ W, H, FPS, SR = 1080, 1920, 30, 24000
 WHITE = (255, 255, 255); INK = (20, 30, 45); AMBER = (255, 200, 87); RED = (230, 57, 70)
 GREEN = (61, 220, 151); CYAN = (80, 200, 255)
 PALETTE = ['#1F3A5F', '#0E4D64', '#4A2C6B', '#17408B', '#7A2E4D', '#1E6F5C', '#3D4F7C', '#2F4858']
-BANNED = re.compile(r'illustrat', re.I)
+BANNED = re.compile(r'illustrat', re.I)   # banned in ON-SCREEN text (the spec key "illustration" is fine)
+IMG_EXT = re.compile(r'\.(jpe?g|png|webp|gif|bmp|tiff?|heic|avif)\b', re.I)
+PHOTO_KEYS = {'photo', 'photos', 'image', 'images', 'img', 'picture', 'background_image', 'bg_image'}
+def lint_no_photos(obj, where='spec'):
+    """Fail if the spec references any photo / raster image. 2D Reels use flat illustrations only."""
+    errs = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k.lower() in PHOTO_KEYS: errs.append(f'{where}.{k}: photos/images are not allowed (use "illustration")')
+            errs += lint_no_photos(v, f'{where}.{k}')
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj): errs += lint_no_photos(v, f'{where}[{i}]')
+    elif isinstance(obj, str) and IMG_EXT.search(obj): errs.append(f'{where}: image file reference {obj!r} not allowed')
+    return errs
 
 def F(w, s): return ImageFont.truetype(os.path.join(FONTS, f'Poppins-{w}.ttf'), int(s))
 def MONO(s):
@@ -178,7 +194,12 @@ def load_spec(path, variant):
         ov = copy.deepcopy(ov); sc_ov = ov.pop('scenes', {})
         spec.update(ov)
         for s in spec['scenes']:
-            if s['id'] in sc_ov: s.update(sc_ov[s['id']])
+            if s['id'] in sc_ov:
+                o = sc_ov[s['id']]
+                if 'voice' in o and 'caption' not in o: s.pop('caption', None)   # caption must follow the new voice line
+                s.update(o)
+    errs = lint_no_photos(spec)
+    if errs: sys.exit('NO-PHOTO lint failed:\n  ' + '\n  '.join(errs))
     spec['_base'] = base
     for k in ('title', 'hook', 'series', 'question'):
         if k in spec and BANNED.search(str(spec[k])): sys.exit(f'banned word in {k}')
@@ -187,11 +208,12 @@ def load_spec(path, variant):
             if BANNED.search(str(s.get(k, ''))): sys.exit(f'banned word "illustrative" on screen in scene {s["id"]}.{k}')
         for t in s.get('tags', []):
             if BANNED.search(t): sys.exit('banned word in tag')
-        if s.get('photo'):
-            ph = s['photo']; ph['path'] = os.path.join(base, ph['path'])
-            mp = re.sub(r'\.(jpg|jpeg|png)$', '.json', ph['path'])
-            if not ph.get('credit') and os.path.exists(mp): ph['credit'] = json.load(open(mp))['credit']
-            if not ph.get('credit'): sys.exit(f'scene {s["id"]}: photo needs a credit (use tools/fetch_photo.py)')
+        ill = s.get('illustration')
+        if ill is not None:
+            typ = ill if isinstance(ill, str) else ill.get('type')
+            if typ not in FLAT.TYPES: sys.exit(f'scene {s["id"]}: unknown illustration {typ!r}; use one of {FLAT.TYPES}')
+            for c in ([] if isinstance(ill, str) else ill.get('chips', [])):
+                if BANNED.search(c if isinstance(c, str) else c.get('text', '')): sys.exit('banned word in chip')
     return spec
 
 def build_timeline(spec, voice, fake):
@@ -227,7 +249,7 @@ class Reel:
 
     # ---- assets per scene
     def prep(self, s, i):
-        a = {}; typ = s.get('type', 'photo')
+        a = {}; typ = s.get('type', 'scene'); typ = 'scene' if typ == 'photo' else typ
         a['bg'] = hexrgb(s.get('bg', PALETTE[i % len(PALETTE)]))
         bgim = Image.new('RGBA', (W, H), a['bg'] + (255,))
         wm = s.get('watermark', self.spec.get('watermark', ''))
@@ -243,16 +265,11 @@ class Reel:
         if s.get('sub'): a['sub'] = multiline(s['sub'], F('Medium', 38), (255, 255, 255, 225), W - 120, 1.15)
         a['icon'] = icon(s.get('icon', 'code'), tuple(int(c * .8) for c in self.accent) if s.get('icon_color') is None else hexrgb(s['icon_color']), 150)
         has_code = bool(s.get('code'))
-        if s.get('photo'):
-            ph = s['photo']; size = (940, 340) if has_code else (960, 640)
-            if typ in ('question', 'end'): size = (760, 420)
-            src = Image.open(ph['path']).convert('RGB')
-            zoom = 1.16; big = (int(size[0] * zoom), int(size[1] * zoom))
-            sc = max(big[0] / src.width, big[1] / src.height); src = src.resize((int(src.width * sc) + 1, int(src.height * sc) + 1), Image.LANCZOS)
-            fx, fy = ph.get('focus', [0.5, 0.5]); x = int((src.width - big[0]) * fx); y = int((src.height - big[1]) * fy)
-            a['photo_src'] = src.crop((x, y, x + big[0], y + big[1])); a['photo_size'] = size
-            a['photo_shadow'] = shadow_for((size[0] + 20, size[1] + 20))
-            a['credit'] = text_layer(ph['credit'], F('Medium', 22), (255, 255, 255, 220), pad=2)
+        if s.get('illustration') is not None:
+            size = (940, 360) if has_code else (960, 620)
+            if typ in ('question', 'end'): size = (800, 440)
+            a['panel_size'] = size; a['panel_items'] = FLAT.build(s['illustration'], size[0], size[1], self.accent)
+            a['panel_base'] = self.panel_base(size, a['bg']); a['panel_shadow'] = shadow_for(size, r=34, alpha=90)
         if has_code: a['code'] = self.prep_code(s['code'])
         if typ == 'question':
             q = s.get('question', self.spec.get('question', ''))
@@ -267,6 +284,18 @@ class Reel:
             a['follow_icon'] = icon('follow', RED, 120)
             a['hook_small'] = multiline(self.spec['hook'], fit_font(self.spec['hook'], 'ExtraBold', 64, W - 160, 2, 44), WHITE, W - 160, 1.08, 'center')
         return a
+
+    def panel_base(self, size, bg):
+        w, h = size; k = 3; im = Image.new('RGBA', (w * k, h * k), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+        fill = tuple(int(c * 0.62 + 8) for c in bg)
+        d.rounded_rectangle([0, 0, w * k - 1, h * k - 1], 34 * k, fill=fill + (255,))
+        ov = Image.new('RGBA', im.size, (0, 0, 0, 0)); o = ImageDraw.Draw(ov)   # translucent decor, composited (not overwritten)
+        for i in range(0, w * k, 46 * k):           # flat dot grid
+            for j in range(0, h * k, 46 * k): o.ellipse([i + 20 * k, j + 20 * k, i + 25 * k, j + 25 * k], fill=(255, 255, 255, 26))
+        o.ellipse([w * k * .72, -h * k * .35, w * k * 1.15, h * k * .4], fill=(255, 255, 255, 18))
+        o.rounded_rectangle([0, 0, w * k - 1, h * k - 1], 34 * k, outline=(255, 255, 255, 70), width=3 * k)
+        im.alpha_composite(Image.composite(ov, Image.new('RGBA', im.size, (0, 0, 0, 0)), im.getchannel('A')))
+        return im.resize(size, Image.LANCZOS)
 
     def prep_code(self, c):
         lines = c['lines']; f = None
@@ -318,26 +347,19 @@ class Reel:
         self.tc_series = pill(s.get('series', '').upper(), F('ExtraBold', 46), INK, self.accent + (255,), padx=34, pady=14) if s.get('series') else None
 
     # ---- frame drawing
-    def draw_photo(self, c, a, s, t, cx, cy):
-        size = a['photo_size']; mo = s.get('motion', 'popin'); sd = 0.55
-        zoom = 1.0 + 0.12 * clamp(t / 7.0); src = a['photo_src']
-        cwid, chei = int(src.width / 1.16 * (1.16 / zoom)), int(src.height / 1.16 * (1.16 / zoom))
-        drift = s['photo'].get('pan', [0.5, 0.5])
-        x0 = int((src.width - cwid) * drift[0]); y0 = int((src.height - chei) * drift[1])
-        crop = src.crop((x0, y0, x0 + cwid, y0 + chei)).resize(size, Image.BILINEAR)
-        card = Image.new('RGBA', (size[0] + 20, size[1] + 20), (0, 0, 0, 0)); card.paste((255, 255, 255, 255), (0, 0) + card.size, rr_mask(card.size, 26))
-        card.paste(crop, (10, 10), rr_mask(size, 18))
-        p = t / sd; scale, ang, dx, alpha = 1.0, -1.6, 0, clamp(t / 0.15)
+    def draw_panel(self, c, a, s, t, cx, cy):
+        size = a['panel_size']; mo = s.get('motion', 'popin'); sd = 0.55
+        panel = a['panel_base'].copy(); FLAT.draw(panel, a['panel_items'], t)
+        p = t / sd; scale, ang, dx, alpha = 1.0, -1.2, 0, clamp(t / 0.15)
         if mo == 'popin': scale = 0.55 + 0.45 * back(p)
         elif mo == 'slide': dx = (1 - eo3(p)) * 900
-        elif mo == 'rotate': ang = -1.6 + (1 - back(p)) * 14; scale = 0.8 + 0.2 * eo3(p)
-        elif mo == 'kenburns': scale = 0.96 + 0.04 * eo3(p); alpha = clamp(t / 0.35)
-        bob = math.sin(t * 1.5) * 5
-        paste_t(c, a['photo_shadow'], cx + dx, cy + 14 + bob, scale, ang, alpha * 0.9)
-        paste_t(c, card, cx + dx, cy + bob, scale, ang, alpha)
+        elif mo == 'rotate': ang = -1.2 + (1 - back(p)) * 14; scale = 0.8 + 0.2 * eo3(p)
+        elif mo in ('zoom', 'kenburns'): scale = 0.9 + 0.1 * eo3(p) + 0.03 * clamp(t / 6); alpha = clamp(t / 0.3)
+        bob = math.sin(t * 1.5) * 4
+        paste_t(c, a['panel_shadow'], cx + dx, cy + 16 + bob, scale, ang, alpha * 0.9)
+        paste_t(c, panel, cx + dx, cy + bob, scale, ang, alpha)
         ib = back((t - 0.45) / 0.4)
-        paste_t(c, a['icon'], cx - size[0] / 2 + 40 + dx, cy - size[1] / 2 + 20 + bob, ib, math.sin(t * 2.2) * 5 + (1 - clamp((t - 0.45) / 0.4)) * -70)
-        paste_t(c, a['credit'], cx, cy + size[1] / 2 + 34, 1, 0, clamp((t - 0.6) / 0.4))
+        paste_t(c, a['icon'], cx - size[0] / 2 + 34 + dx, cy - size[1] / 2 + 16 + bob, ib, math.sin(t * 2.2) * 5 + (1 - clamp((t - 0.45) / 0.4)) * -70)
 
     def draw_code(self, c, cd, t, cx, cy):
         p = eo3((t - cd['appear']) / 0.5)
@@ -383,24 +405,24 @@ class Reel:
         return y
 
     def scene_frame(self, k, t_abs):
-        sc = self.scenes[k]; s = sc['s']; a = sc['a']; t = t_abs - sc['st']; typ = s.get('type', 'photo')
+        sc = self.scenes[k]; s = sc['s']; a = sc['a']; t = t_abs - sc['st']; typ = s.get('type', 'scene'); typ = 'scene' if typ == 'photo' else typ
         c = a['bgim'].copy()
-        if typ == 'photo':
+        if typ == 'scene':
             y = self.header(c, a, t); has_code = 'code' in a
-            if 'photo_src' in a:
-                ph = a['photo_size']; cy = max(y + 30, 460 if has_code else 500) + ph[1] / 2
-                self.draw_photo(c, a, s, t, W / 2, cy); y = cy + ph[1] / 2 + 60
+            if 'panel_items' in a:
+                ph = a['panel_size']; cy = max(y + 40, 470 if has_code else 500) + ph[1] / 2
+                self.draw_panel(c, a, s, t, W / 2, cy); y = cy + ph[1] / 2 + 40
             if has_code:
                 cd = a['code']; cy = min(max(y + 10, 880) + cd['size'][1] / 2, 1385 - cd['size'][1] / 2); self.draw_code(c, cd, t, W / 2, cy)
         elif typ == 'question':
             y = self.header(c, a, t)
-            if 'photo_src' in a: self.draw_photo(c, a, s, t, W / 2, 640); qy = 1000
+            if 'panel_items' in a: self.draw_panel(c, a, s, t, W / 2, 640); qy = 1000
             else: paste_t(c, a['icon'], W / 2, 560, 1.5 * back(t / 0.45), math.sin(t * 3) * 8); qy = 860
             paste_t(c, a['q'], W / 2, qy, back((t - 0.1) / 0.45))
             wob = math.sin(t * 5) * 3; yy = qy + a['q'].height / 2 + 120
             paste_t(c, a['yes'], W / 2 - 170, yy, back((t - 0.5) / 0.4), wob); paste_t(c, a['no'], W / 2 + 170, yy, back((t - 0.65) / 0.4), -wob)
         elif typ == 'end':
-            if 'photo_src' in a: self.draw_photo(c, a, s, t, W / 2, 560)
+            if 'panel_items' in a: self.draw_panel(c, a, s, t, W / 2, 560)
             paste_t(c, a['hook_small'], W / 2, 900, 1, 0, clamp(t / 0.3))
             paste_t(c, a['follow'], W / 2, 1090, back((t - 0.1) / 0.45) * (1 + 0.03 * math.sin(t * 6)))
             fy = 1090 + a['follow'].height / 2 + 90
@@ -462,14 +484,12 @@ class Reel:
         return img.convert('RGB')
 
     def cover(self, out):
-        s = self.spec; sc = next((x for x in self.scenes if 'photo_src' in x['a']), None)
+        s = self.spec; sc = next((x for x in self.scenes if 'panel_items' in x['a']), None)
         c = Image.new('RGBA', (W, H), hexrgb(s.get('cover_bg', '#12233B')) + (255,))
         if sc:
-            a = sc['a']; src = a['photo_src']; size = (980, 760)
-            sc_ = max(size[0] / src.width, size[1] / src.height); im = src.resize((int(src.width * sc_) + 1, int(src.height * sc_) + 1), Image.LANCZOS)
-            x = (im.width - size[0]) // 2; y = (im.height - size[1]) // 2; im = im.crop((x, y, x + size[0], y + size[1]))
-            card = Image.new('RGBA', (size[0] + 24, size[1] + 24), (0, 0, 0, 0)); card.paste((255, 255, 255, 255), (0, 0) + card.size, rr_mask(card.size, 30)); card.paste(im, (12, 12), rr_mask(size, 20))
-            paste_t(c, shadow_for(card.size), W / 2, 1290, 1, -3); paste_t(c, card, W / 2, 1270, 1, -3)
+            a = sc['a']; size = (980, 760); panel = self.panel_base(size, a['bg'])
+            FLAT.draw(panel, FLAT.build(s.get('cover_illustration', sc['s']['illustration']), size[0], size[1], self.accent), 30.0)
+            paste_t(c, shadow_for(size, r=34), W / 2, 1290, 1, -2); paste_t(c, panel, W / 2, 1270, 1, -2)
             paste_t(c, a['icon'], W / 2 - 430, 900, 1.1, 0)
         t = s['title']; f = fit_font(t, 'Black', 130, W - 120, 4, 64)
         tl = multiline(t, f, WHITE, W - 120, 1.05, 'center', stroke=6, stroke_fill=(8, 14, 26))
@@ -515,14 +535,8 @@ def main():
     def ts(x): return f'{int(x // 3600):02d}:{int(x % 3600 // 60):02d}:{int(x % 60):02d},{int(round((x % 1) * 1000)) % 1000:03d}'
     open(os.path.join(a.out_dir, slug + '.srt'), 'w').write('\n'.join(f"{i + 1}\n{ts(c['st'])} --> {ts(c['en'])}\n{' '.join(w for w, _, _ in c['words'])}\n" for i, c in enumerate(r.caps)))
     # credits
-    cr = [f"{spec.get('series', '')} {spec['title']}".strip(), '', 'Photos (Wikimedia Commons):']
-    for sc in spec['scenes']:
-        if sc.get('photo'):
-            mp = re.sub(r'\.(jpg|jpeg|png)$', '.json', sc['photo']['path'])
-            m = json.load(open(mp)) if os.path.exists(mp) else {}
-            line = f"- {sc['photo']['credit']}" + (f" — {m.get('page')}" if m.get('page') else '') + (f" ({m.get('license_url')})" if m.get('license_url') else '')
-            if line not in cr: cr.append(line)
-    cr += ['', 'Voice: Chatterbox TTS (Resemble AI, MIT), reference voice ref_am_michael. Voice only, no music.', 'Fonts: Poppins, JetBrains Mono (SIL OFL 1.1).']
+    cr = [f"{spec.get('series', '')} {spec['title']}".strip(), '', 'Graphics: built-in flat 2D vector illustrations drawn in PIL (tools/flat_illustrations.py). No photos used.']
+    cr += ['Voice: Chatterbox TTS (Resemble AI, MIT), reference voice ref_am_michael. Voice only, no music.', 'Fonts: Poppins, JetBrains Mono (SIL OFL 1.1).']
     open(os.path.join(a.out_dir, slug + '-credits.txt'), 'w').write('\n'.join(cr) + '\n')
     r.cover(os.path.join(a.out_dir, slug + '-cover.jpg'))
     if a.preview or a.preview_only:

@@ -46,6 +46,7 @@ def main():
     per = []
     for L, sc in zip(tl, spec['scenes']):
         seg = pcm[int(max(0, L['start'] - 0.1) * 16000):int((L['end'] + 0.15) * 16000)]
+        z = np.zeros(8000, np.float32); seg = np.concatenate([z, seg, z])   # silence pad: Whisper can drop speech at a clip edge
         h = ' '.join(x.text.strip() for x in m.transcribe(seg, language='en', beam_size=5)[0])
         rr = difflib.SequenceMatcher(None, norm(sc['voice']), norm(h)).ratio()
         per.append(dict(id=L['id'], ratio=round(rr, 2), heard=h))
@@ -61,7 +62,13 @@ def main():
     diffs = np.abs(arr[:, msk, :] - ref_px[msk][:, :3][None]).mean(axis=(1, 2))
     res['badge_frames'] = int(n); res['badge_worst_diff'] = round(float(diffs.max()), 1); res['badge_every_frame'] = bool((diffs < 30).all()); ok &= res['badge_every_frame']
     # banned on-screen words (all on-screen text comes from the spec)
-    texts = [spec.get(k, '') for k in ('title', 'hook', 'series', 'question')] + [str(s.get(k, '')) for s in spec['scenes'] for k in ('headline', 'sub', 'caption', 'voice', 'code', 'tags', 'question')]
+    texts = [spec.get(k, '') for k in ('title', 'hook', 'series', 'question')] + [str(s.get(k, '')) for s in spec['scenes'] for k in ('headline', 'sub', 'caption', 'voice', 'code', 'tags', 'question', 'illustration')]
     res['no_illustrative_text'] = not any(re.search('illustrat', t, re.I) for t in texts) and 'illustrat' not in hyp.lower(); ok &= res['no_illustrative_text']
+    # no photos: spec lint + the engine opens no image except the K4 badge
+    import render_2d_reel as R2
+    lint = R2.lint_no_photos(json.load(open(a.spec))); res['no_photo_lint_errors'] = lint
+    src = open(os.path.join(HERE, 'render_2d_reel.py')).read() + open(os.path.join(HERE, 'flat_illustrations.py')).read()
+    res['engine_image_opens'] = src.count('Image.open(')
+    res['no_photos'] = not lint and res['engine_image_opens'] == 1; ok &= res['no_photos']
     res['PASS'] = bool(ok); json.dump(res, open(a.mp4 + '.qa.json', 'w'), indent=1); print(json.dumps(res, indent=1)); sys.exit(0 if ok else 1)
 if __name__ == '__main__': main()

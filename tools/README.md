@@ -45,4 +45,4 @@ Diagram-style Reels: see `DIAGRAM_REEL_TEMPLATE.md`.
 Motion-graphics Reels (marker chapter titles + UI windows + data dots + SFX): see `MOTION_REEL_TEMPLATE.md` and `render_motion_reel.py`.
 Viral Reels (the Instagram/Facebook standard from 15 Nov 2026 — 7-beat hook, comment bait, hook-style loop end card): see `VIRAL_REEL_TEMPLATE.md` and `render_viral_reel.py`.
 
-2D explainer Reels (the Instagram/Facebook standard from 20 Nov 2026, 6 PM IST — flat 2D motion graphics over licensed photos, Chatterbox voice, no music): see `TWO_D_REEL_TEMPLATE.md`, `render_2d_reel.py`, `run_2d_reel.sh`, `fetch_photo.py`, `qa_2d_reel.py`.
+2D explainer Reels (the Instagram/Facebook standard from 20 Nov 2026, 6 PM IST — flat 2D motion graphics with built-in vector illustrations, no photos, Chatterbox voice, no music): see `TWO_D_REEL_TEMPLATE.md`, `render_2d_reel.py`, `flat_illustrations.py`, `run_2d_reel.sh`, `qa_2d_reel.py`.
