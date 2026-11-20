@@ -1,0 +1,170 @@
+{
+ "slug": "sql-count-column-skips-nulls",
+ "series": "SQL Bugs #7",
+ "next": 8,
+ "handle": "@K4CODING",
+ "title": "COUNT(column) skips NULLs",
+ "hook": "COUNT SAID 40. THE TABLE HAS 50.",
+ "accent": "#FFC857",
+ "watermark": "NULL",
+ "topic_card": 1.8,
+ "question": "Has COUNT ever fooled you?",
+ "fact_source": "https://www.postgresql.org/docs/current/functions-aggregate.html (count(*) = number of input rows; count(\"any\") = rows where the input value is not null)",
+ "voice": {
+  "ref": "/workspace/ingress/work/tts2/ref_am_michael.wav",
+  "exaggeration": 0.45,
+  "cfg_weight": 0.4,
+  "seed": 900
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": "#1F3A5F",
+   "icon": "database",
+   "motion": "popin",
+   "tags": [
+    "THE BUG"
+   ],
+   "headline": "Your COUNT is missing rows",
+   "sub": "users table: 50 rows. COUNT(phone): 40.",
+   "photo": {
+    "path": "photos/tech-rack.jpg",
+    "focus": [
+     0.5,
+     0.4
+    ]
+   },
+   "voice": "Your count says forty users, but the table has fifty rows?",
+   "caption": "Your COUNT says 40 users, but the table has 50 rows?"
+  },
+  {
+   "id": "why",
+   "bg": "#7A2E4D",
+   "icon": "bug",
+   "motion": "slide",
+   "tags": [
+    "WHY",
+    "POSTGRESQL"
+   ],
+   "headline": "COUNT(column) skips NULLs",
+   "photo": {
+    "path": "photos/wmf-servers.jpg"
+   },
+   "code": {
+    "file": "report.sql",
+    "lines": [
+     "SELECT COUNT(phone)",
+     "FROM users;",
+     "-- 40: ten phones are NULL"
+    ],
+    "bad": [
+     0
+    ],
+    "mark_at": 1.6,
+    "stamp": {
+     "text": "40, NOT 50",
+     "color": "red"
+    }
+   },
+   "voice": "Count of a column only counts rows where that value is not null. Ten users have no phone, so they vanish.",
+   "caption": "COUNT of a column only counts rows where that value is not NULL. Ten users have no phone, so they vanish."
+  },
+  {
+   "id": "fix",
+   "bg": "#1E6F5C",
+   "icon": "check",
+   "motion": "rotate",
+   "tags": [
+    "THE FIX"
+   ],
+   "headline": "Count rows with COUNT(*)",
+   "photo": {
+    "path": "photos/laptop.jpg"
+   },
+   "code": {
+    "file": "report.sql",
+    "lines": [
+     "SELECT COUNT(*)",
+     "FROM users;",
+     "-- 50: every row"
+    ],
+    "good": [
+     0
+    ],
+    "mark_at": 1.2,
+    "stamp": {
+     "text": "50",
+     "color": "green"
+    }
+   },
+   "voice": "To count rows, use count star. Keep count of a column only when you want the non-null values.",
+   "caption": "To count rows, use COUNT(*). Keep COUNT of a column only when you want the non-NULL values."
+  },
+  {
+   "id": "payoff",
+   "bg": "#17408B",
+   "icon": "database",
+   "motion": "kenburns",
+   "tags": [
+    "PRO TIP"
+   ],
+   "headline": "See the gap in one query",
+   "photo": {
+    "path": "photos/racks.jpg"
+   },
+   "code": {
+    "file": "report.sql",
+    "lines": [
+     "SELECT COUNT(*)     AS total,",
+     "       COUNT(phone) AS with_phone",
+     "FROM users;  -- 50 | 40"
+    ],
+    "good": [
+     0,
+     1
+    ],
+    "mark_at": 1.4
+   },
+   "voice": "Select count star and count phone side by side, and the gap is your missing data.",
+   "caption": "Select COUNT(*) and COUNT(phone) side by side, and the gap is your missing data."
+  },
+  {
+   "id": "bait",
+   "type": "question",
+   "bg": "#4A2C6B",
+   "icon": "question",
+   "tags": [
+    "YOUR TURN"
+   ],
+   "voice": "Has count ever fooled you? Comment yes or no.",
+   "caption": "Has COUNT ever fooled you? Comment YES or NO."
+  },
+  {
+   "id": "follow",
+   "type": "end",
+   "bg": "#12233B",
+   "icon": "follow",
+   "photo": {
+    "path": "photos/tech-rack.jpg",
+    "focus": [
+     0.5,
+     0.4
+    ]
+   },
+   "voice": "Follow K four coding for part eight.",
+   "caption": "Follow K4Coding for part 8."
+  }
+ ],
+ "variants": {
+  "facebook": {
+   "title": "Why COUNT(phone) hides 10 users",
+   "hook": "40 USERS? YOUR TABLE HAS 50.",
+   "scenes": {
+    "hook": {
+     "voice": "Your report says forty users. The table has fifty. Where did ten go?",
+     "headline": "Ten users just vanished"
+    }
+   }
+  }
+ }
+}

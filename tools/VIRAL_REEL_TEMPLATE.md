@@ -1,5 +1,7 @@
 # Viral Reel template (`render_viral_reel.py`)
 
+> **Superseded from Fri 20 Nov 2026, 6 PM IST** by the 2D explainer template: see `TWO_D_REEL_TEMPLATE.md` / `render_2d_reel.py`. Kept for reference and older Reels.
+
 From **15 Nov 2026** this is the standard for daily Instagram and Facebook
 Reels. It supersedes the motion-graphics template (`MOTION_REEL_TEMPLATE.md`,
 `render_motion_reel.py`) for those posts. The viral tool still *reuses* the
