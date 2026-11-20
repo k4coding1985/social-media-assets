@@ -1,0 +1,553 @@
+{
+ "slug": "2026-11-20-1700-terraform-import-block-linkedin",
+ "watermark": "",
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "import",
+   "plan",
+   "pull request",
+   "apply",
+   "state"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@preview+0.3",
+ "tail": 1.8,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "STOP {{IMPORT}} BY HAND",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{NO REVIEW}}",
+   "color": "red"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{NO RECORD}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "USE AN {{IMPORT}} BLOCK",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@preview",
+   "text": "{{PLAN}} FIRST",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "BLOCK OR {{CLI}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Still running terraform import by hand?"
+  },
+  {
+   "id": "bug",
+   "text": "That command changes your state with no review."
+  },
+  {
+   "id": "why",
+   "text": "Nothing in your code records it, and nobody sees it in a pull request."
+  },
+  {
+   "id": "fix",
+   "text": "Write an import block instead. Set to, the resource address, and id, the cloud ID. Run terraform plan to preview one to import. No resource block yet? Add generate config out to draft one. Then apply."
+  },
+  {
+   "id": "bait",
+   "text": "Import block or CLI command? Comment which one your team uses."
+  },
+  {
+   "id": "follow",
+   "text": "Follow me for one DevOps fix every day."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 430,
+   "text": "Stop {{terraform import}} by hand",
+   "font": "sans",
+   "size": 44,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "terminal",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "$ terraform import \\",
+    "  {{aws_instance.legacy}} \\",
+    "  i-abcd1234"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 560,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 760,
+   "text": "State changed. {{No review.}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "NOT IN THE PR",
+   "x": 540,
+   "y": 560,
+   "size": 48,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 520,
+   "r": 48,
+   "color": "cyan",
+   "label": "Reviewable in a PR",
+   "label_size": 44
+  },
+  {
+   "id": "plan",
+   "type": "window",
+   "x": 540,
+   "y": 1240,
+   "w": 960,
+   "h": 200,
+   "title": "terraform plan",
+   "status": "cyan",
+   "body": "{{1 to import}}, 0 to add",
+   "body_size": 46,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "gen",
+   "type": "code",
+   "x": 540,
+   "y": 900,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "no resource block yet?",
+   "hl": "purple",
+   "border": "purple",
+   "lines": [
+    "$ terraform plan \\",
+    "  {{-generate-config-out=}}",
+    "  <new file>.tf   # then apply"
+   ]
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 560,
+   "text": "{{Import block}} or CLI?",
+   "font": "marker",
+   "size": 50,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 880,
+   "w": 380,
+   "h": 200,
+   "title": "",
+   "body": "{{BLOCK}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 880,
+   "w": 380,
+   "h": 200,
+   "title": "",
+   "body": "{{CLI}}",
+   "body_size": 56,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  },
+  {
+   "id": "follow",
+   "type": "text",
+   "x": 540,
+   "y": 1110,
+   "text": "Follow me for {{one DevOps fix}} every day",
+   "font": "sans",
+   "size": 44,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "cyan",
+   "upper": false
+  },
+  {
+   "id": "tags",
+   "type": "text",
+   "x": 540,
+   "y": 1240,
+   "text": "{{#Terraform #InfrastructureAsCode #DevOps}}",
+   "font": "sans",
+   "size": 44,
+   "weight": "Bold",
+   "color": "white",
+   "hl": "purple",
+   "upper": false
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@terraform",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@hand",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@review",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "# main.tf",
+    "{{# nothing here}}",
+    "# no trace of the import"
+   ]
+  },
+  {
+   "at": "why@records",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@nobody",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@request",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.0,
+   "lines": [
+    "import {",
+    "  {{to = aws_instance.legacy}}",
+    "  {{id = \"i-abcd1234\"}}  }"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@address",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@cloud",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@preview",
+   "do": "show",
+   "target": [
+    "ok",
+    "plan"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding",
+   "stagger": 0.1
+  },
+  {
+   "at": "fix@yet",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@generate",
+   "do": "show",
+   "target": "gen",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@apply",
+   "do": "pulse",
+   "target": [
+    "gen",
+    "plan"
+   ]
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": [
+    "gen",
+    "plan"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@CLI",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@uses",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "show",
+   "target": [
+    "follow",
+    "tags"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "follow@DevOps",
+   "do": "pulse",
+   "target": [
+    "follow",
+    "tags"
+   ]
+  },
+  {
+   "at": 1.5,
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "follow@every+0.8",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@every+1.8",
+   "do": "pulse",
+   "target": "tags"
+  },
+  {
+   "at": 13.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 14.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 19.2,
+   "do": "pulse",
+   "target": "plan"
+  },
+  {
+   "at": 22.4,
+   "do": "pulse",
+   "target": "gen"
+  },
+  {
+   "at": 26.8,
+   "do": "pulse",
+   "target": "gen"
+  },
+  {
+   "at": 27.8,
+   "do": "pulse",
+   "target": "plan"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW ME",
+  "line2": "{{1 DEVOPS FIX DAILY}}",
+  "line3": "#Terraform #InfrastructureAsCode #DevOps"
+ }
+}
