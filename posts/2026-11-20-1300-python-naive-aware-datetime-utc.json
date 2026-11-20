@@ -1,0 +1,581 @@
+{
+ "slug": "backend-basics-5-naive-aware-datetime-utc",
+ "series": {
+  "label": "Backend Basics",
+  "number": 5,
+  "color": "cyan"
+ },
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "UTC",
+   "IST",
+   "naive",
+   "aware",
+   "datetime",
+   "TypeError",
+   "timezone",
+   "zone"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@Now+1.2",
+ "tail": 2.5,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "IST JUST {{SHIFTED}} 5:30",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "MOST DEVS {{MIX}} THEM",
+   "color": "yellow"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "NAIVE HAS NO {{ZONE}}",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "STORE {{UTC}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@Now",
+   "text": "{{ZERO}} SHIFT",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "{{UTC}} OR LOCAL {{IST}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your server time just shifted five thirty?"
+  },
+  {
+   "id": "bug",
+   "text": "Most devs mix naive and aware datetimes."
+  },
+  {
+   "id": "why",
+   "text": "Subtract them and Python raises a TypeError, because naive time has no zone."
+  },
+  {
+   "id": "fix",
+   "text": "Store UTC with datetime dot now of timezone dot utc. Convert to I S T only for display. Now every hour matches."
+  },
+  {
+   "id": "bait",
+   "text": "Store U T C, or local I S T? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "text": "Follow K four coding for part six."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 420,
+   "text": "datetime.now() = {{naive}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 780,
+   "text": "Most devs {{mix}} them",
+   "font": "sans",
+   "size": 56,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "events.py",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "start = {{datetime.now()}}",
+    "end = datetime.now(timezone.utc)",
+    "end - start  # {{TypeError}}"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 520,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "TYPEERROR",
+   "x": 540,
+   "y": 520,
+   "size": 44,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 500,
+   "r": 48,
+   "color": "cyan",
+   "label": "Do this instead",
+   "label_size": 44
+  },
+  {
+   "id": "restored",
+   "type": "window",
+   "x": 540,
+   "y": 920,
+   "w": 900,
+   "h": 220,
+   "title": "UTC STORED",
+   "icon": "database",
+   "status": "cyan",
+   "body": "{{UTC}} + 5:30 = IST",
+   "body_size": 48,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 620,
+   "text": "Store {{UTC}}, or local {{IST}}?",
+   "font": "marker",
+   "size": 64,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{UTC}}",
+   "body_size": 60,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 980,
+   "w": 380,
+   "h": 220,
+   "title": "",
+   "body": "{{LOCAL IST}}",
+   "body_size": 44,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@shifted",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "hook@server",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@thirty",
+   "do": "color",
+   "target": "sub",
+   "color": "red",
+   "dur": 0.3
+  },
+  {
+   "at": "hook@shifted",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@Most",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "bug@naive",
+   "do": "pulse",
+   "target": "panic"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": [
+    "term",
+    "gone"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "why@TypeError",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@zone",
+   "do": "shake",
+   "target": "gone",
+   "dur": 0.45
+  },
+  {
+   "at": "why@naive",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.2
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1.4,
+   "lines": [
+    "ts = {{datetime.now(timezone.utc)}}",
+    "ist = ts.astimezone({{IST}})",
+    "# {{+5:30}} only for display"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "green",
+   "dur": 0.3
+  },
+  {
+   "at": "fix@Store",
+   "do": "show",
+   "target": "ok",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding"
+  },
+  {
+   "at": "fix@timezone",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Convert",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@Now",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@display",
+   "do": "pulse",
+   "target": "ok"
+  },
+  {
+   "at": "fix@Now",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@Now",
+   "do": "show",
+   "target": "restored",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": "restored",
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@Store",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@local",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "bait@answer",
+   "do": "pulse",
+   "target": "nobox"
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@answer",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "pulse",
+   "target": [
+    "baitq",
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@coding",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@part",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 7.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 16.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 18.4,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 21.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 25.4,
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": 8.6,
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": 2.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 2.8,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 11.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 13.0,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 14.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 19.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 22.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 10.3,
+   "do": "pulse",
+   "target": "gone"
+  },
+  {
+   "at": 5.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 23.6,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 27.8,
+   "do": "pulse",
+   "target": "baitq"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW FOR #6",
+  "line2": "{{@K4CODING}}",
+  "line3": "Backend Basics, one fix at a time",
+  "fade": 0.7
+ },
+ "variants": {
+  "facebook": {
+   "cover_at": "why@zone+0.3",
+   "chapters": {
+    "hook": {
+     "text": "NAIVE TIME {{BROKE}} IT"
+    }
+   }
+  }
+ }
+}
