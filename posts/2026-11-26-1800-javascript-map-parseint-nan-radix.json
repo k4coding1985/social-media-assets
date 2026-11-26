@@ -1,0 +1,243 @@
+{
+ "slug": "javascript-map-parseint-nan-radix",
+ "series": "JS GOTCHAS #6",
+ "next": 7,
+ "handle": "@K4CODING",
+ "title": "Why map(parseInt) returns NaN",
+ "hook": "\"1\",\"2\",\"3\" BECAME 1, NaN, NaN",
+ "accent": "#FFC857",
+ "watermark": "JS",
+ "topic_card": 1.8,
+ "question": "Number() or parseInt(str, 10)?",
+ "fact_source": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map#using_parseint_with_map (['1','2','3'].map(parseInt) gives [1, NaN, NaN]; map passes element, index, array and parseInt takes the index as radix; fix: map((str) => parseInt(str, 10)) or map(Number))",
+ "voice": {
+  "ref": "/workspace/ingress/work/tts2/ref_am_michael.wav",
+  "exaggeration": 0.45,
+  "cfg_weight": 0.4,
+  "seed": 900
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": "#1F3A5F",
+   "icon": "code",
+   "motion": "popin",
+   "tags": [
+    "THE BUG"
+   ],
+   "headline": "map(parseInt) broke your array",
+   "sub": "Expected [1, 2, 3]. Got [1, NaN, NaN].",
+   "voice": "You map parse int over the strings one, two, three, and get one, then not a number, twice?",
+   "caption": "You map parseInt over \"1\", \"2\", \"3\" and get 1, then NaN, twice?",
+   "illustration": {
+    "type": "terminal",
+    "title": "node",
+    "lines": [
+     "$ node",
+     "> ['1','2','3']",
+     "    .map(parseInt)",
+     "[ 1, NaN, NaN ]"
+    ],
+    "chips": [
+     {
+      "text": "EXPECTED 1,2,3",
+      "color": "cyan"
+     },
+     {
+      "text": "GOT NaN",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "why",
+   "bg": "#7A2E4D",
+   "icon": "bug",
+   "motion": "slide",
+   "tags": [
+    "WHY",
+    "MDN"
+   ],
+   "headline": "map passes the index as radix",
+   "code": {
+    "file": "app.js",
+    "lines": [
+     "['1','2','3'].map(parseInt)",
+     "// parseInt('2', 1) -> NaN",
+     "// parseInt('3', 2) -> NaN"
+    ],
+    "bad": [
+     0
+    ],
+    "mark_at": 1.6,
+    "stamp": {
+     "text": "INDEX = RADIX",
+     "color": "red"
+    }
+   },
+   "voice": "Map also passes the index, and parse int reads it as the radix. So two in base one is not a number.",
+   "caption": "map also passes the index, and parseInt reads it as the radix. So \"2\" in base 1 is NaN.",
+   "illustration": {
+    "type": "laptop",
+    "ok": false,
+    "chips": [
+     {
+      "text": "RADIX 1, 2",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fix",
+   "bg": "#1E6F5C",
+   "icon": "check",
+   "motion": "rotate",
+   "tags": [
+    "THE FIX"
+   ],
+   "headline": "Pass one argument only",
+   "code": {
+    "file": "app.js",
+    "lines": [
+     "arr.map(Number)",
+     "arr.map(s => parseInt(s, 10))"
+    ],
+    "good": [
+     0,
+     1
+    ],
+    "mark_at": 1.2,
+    "stamp": {
+     "text": "[1, 2, 3]",
+     "color": "green"
+    }
+   },
+   "voice": "Use map with Number, or an arrow function that calls parse int with radix ten.",
+   "caption": "Use map(Number), or an arrow function that calls parseInt with radix 10.",
+   "illustration": {
+    "type": "laptop",
+    "ok": true,
+    "chips": [
+     {
+      "text": "RADIX 10",
+      "color": "green"
+     }
+    ]
+   },
+   "seed": 1234
+  },
+  {
+   "id": "payoff",
+   "bg": "#17408B",
+   "icon": "code",
+   "motion": "zoom",
+   "tags": [
+    "PAYOFF"
+   ],
+   "headline": "3 of 3 values correct",
+   "code": {
+    "file": "app.js",
+    "lines": [
+     "['1','2','3'].map(Number)",
+     "// [1, 2, 3]"
+    ],
+    "good": [
+     1
+    ],
+    "mark_at": 1.4
+   },
+   "voice": "Now you get one, two, three. Three of three values right, not one.",
+   "caption": "Now you get 1, 2, 3. Three of three values right, not one.",
+   "illustration": {
+    "type": "terminal",
+    "title": "node",
+    "lines": [
+     "> arr.map(Number)",
+     "[ 1, 2, 3 ]"
+    ],
+    "chips": [
+     {
+      "text": "3 / 3 OK",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bait",
+   "type": "question",
+   "bg": "#4A2C6B",
+   "icon": "question",
+   "tags": [
+    "YOUR TURN"
+   ],
+   "voice": "Which do you use: Number, or parse int with radix ten? Comment your answer.",
+   "caption": "Which do you use: Number(), or parseInt with radix 10? Comment your answer.",
+   "yes": "NUMBER",
+   "no": "PARSEINT"
+  },
+  {
+   "id": "follow",
+   "type": "end",
+   "bg": "#12233B",
+   "icon": "follow",
+   "voice": "Follow K four coding for part seven.",
+   "caption": "Follow K4Coding for part 7.",
+   "illustration": {
+    "type": "terminal",
+    "title": "node",
+    "lines": [
+     "$ node",
+     "> ['1','2','3']",
+     "    .map(parseInt)",
+     "[ 1, NaN, NaN ]"
+    ],
+    "chips": [
+     {
+      "text": "EXPECTED 1,2,3",
+      "color": "cyan"
+     },
+     {
+      "text": "GOT NaN",
+      "color": "red"
+     }
+    ]
+   }
+  }
+ ],
+ "variants": {
+  "facebook": {
+   "title": "Fix: map(parseInt) gives NaN in JavaScript",
+   "hook": "PARSEINT TURNED 2 AND 3 INTO NaN?",
+   "scenes": {
+    "hook": {
+     "voice": "Parse int works on every string, until you put it inside map. Then two and three come back as not a number.",
+     "caption": "parseInt works on every string, until you put it inside map. Then \"2\" and \"3\" come back as NaN.",
+     "headline": "parseInt + map = NaN"
+    }
+   }
+  }
+ },
+ "cover_illustration": {
+  "type": "terminal",
+  "title": "node",
+  "lines": [
+   "$ node",
+   "> ['1','2','3']",
+   "    .map(parseInt)",
+   "[ 1, NaN, NaN ]"
+  ],
+  "chips": [
+   {
+    "text": "EXPECTED 1,2,3",
+    "color": "cyan"
+   },
+   {
+    "text": "GOT NaN",
+    "color": "red"
+   }
+  ]
+ }
+}
