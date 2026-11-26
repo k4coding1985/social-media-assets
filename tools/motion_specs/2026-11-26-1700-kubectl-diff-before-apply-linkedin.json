@@ -1,0 +1,543 @@
+{
+ "slug": "2026-11-26-1700-kubectl-diff-before-apply-linkedin",
+ "watermark": "",
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "kubectl diff",
+   "apply",
+   "exit code",
+   "server",
+   "CI"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@server+0.3",
+ "tail": 1.8,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{BLIND}} APPLY",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{NO PREVIEW}}",
+   "color": "red"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{SURPRISE}} CHANGES",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "RUN {{KUBECTL DIFF}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@server",
+   "text": "{{SEE}} IT FIRST",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "DIFF OR {{APPLY}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your kubectl apply just changed more than you thought."
+  },
+  {
+   "id": "bug",
+   "text": "Apply does not show you a preview first."
+  },
+  {
+   "id": "why",
+   "text": "Hand edits, drift, or the wrong context, and you find out in production."
+  },
+  {
+   "id": "fix",
+   "text": "Run kubectl diff first. The API server previews what apply would change. Exit code zero, no differences. Exit code one, differences found. Gate CI on it, then apply."
+  },
+  {
+   "id": "bait",
+   "text": "Diff first, or straight to apply? Comment which one your team does."
+  },
+  {
+   "id": "follow",
+   "text": "Follow me for one DevOps fix every day."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 430,
+   "text": "Run {{kubectl diff}} before apply",
+   "font": "sans",
+   "size": 44,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "terminal",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "$ kubectl apply -f deploy.yaml",
+    "deployment.apps/web {{configured}}",
+    "# ...configured what, exactly?"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 560,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 760,
+   "text": "Applied. {{No preview.}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "WHAT CHANGED?",
+   "x": 540,
+   "y": 560,
+   "size": 48,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 520,
+   "r": 48,
+   "color": "cyan",
+   "label": "Preview before apply",
+   "label_size": 44
+  },
+  {
+   "id": "plan",
+   "type": "window",
+   "x": 540,
+   "y": 1240,
+   "w": 960,
+   "h": 200,
+   "title": "kubectl diff exit code",
+   "status": "cyan",
+   "body": "{{1 = changes found}}, 0 = none",
+   "body_size": 46,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "gen",
+   "type": "code",
+   "x": 540,
+   "y": 900,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "in CI, before apply",
+   "hl": "purple",
+   "border": "purple",
+   "lines": [
+    "$ kubectl diff -f k8s/",
+    "  {{# exit 1 = review it}}",
+    "$ kubectl apply -f k8s/"
+   ]
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 560,
+   "text": "{{Diff first}} or apply?",
+   "font": "marker",
+   "size": 50,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 880,
+   "w": 380,
+   "h": 200,
+   "title": "",
+   "body": "{{DIFF}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 880,
+   "w": 380,
+   "h": 200,
+   "title": "",
+   "body": "{{APPLY}}",
+   "body_size": 56,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  },
+  {
+   "id": "follow",
+   "type": "text",
+   "x": 540,
+   "y": 1110,
+   "text": "Follow me for {{one DevOps fix}} every day",
+   "font": "sans",
+   "size": 44,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "cyan",
+   "upper": false
+  },
+  {
+   "id": "tags",
+   "type": "text",
+   "x": 540,
+   "y": 1240,
+   "text": "{{#Kubernetes #kubectl #DevOps}}",
+   "font": "sans",
+   "size": 44,
+   "weight": "Bold",
+   "color": "white",
+   "hl": "purple",
+   "upper": false
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@changed",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@thought",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@preview",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1,
+   "lines": [
+    "# hand edit?  drift?",
+    "{{# wrong context: prod?}}",
+    "# you find out later"
+   ]
+  },
+  {
+   "at": "why@drift",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@context",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@production",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1,
+   "lines": [
+    "$ kubectl diff -f deploy.yaml",
+    "{{-  replicas: 3}}",
+    "{{+  replicas: 5}}"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@server",
+   "do": "show",
+   "target": [
+    "ok",
+    "plan"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding",
+   "stagger": 0.1
+  },
+  {
+   "at": "fix@change",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@zero",
+   "do": "pulse",
+   "target": "plan"
+  },
+  {
+   "at": "fix@found",
+   "do": "pulse",
+   "target": "plan"
+  },
+  {
+   "at": "fix@Gate",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@CI",
+   "do": "show",
+   "target": "gen",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@then",
+   "do": "pulse",
+   "target": [
+    "gen",
+    "plan"
+   ]
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": [
+    "gen",
+    "plan"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@straight",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@does",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "show",
+   "target": [
+    "follow",
+    "tags"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "follow@DevOps",
+   "do": "pulse",
+   "target": [
+    "follow",
+    "tags"
+   ]
+  },
+  {
+   "at": 1.5,
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "follow@every+0.8",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@every+1.8",
+   "do": "pulse",
+   "target": "tags"
+  },
+  {
+   "at": 14.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 21.6,
+   "do": "pulse",
+   "target": "plan"
+  },
+  {
+   "at": 23,
+   "do": "pulse",
+   "target": "term"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW ME",
+  "line2": "{{1 DEVOPS FIX DAILY}}",
+  "line3": "#Kubernetes #kubectl #DevOps"
+ }
+}
