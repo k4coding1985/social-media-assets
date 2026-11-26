@@ -1,0 +1,240 @@
+{
+ "slug": "git-ignore-tracked-file-rm-cached",
+ "series": "GIT MISTAKES #6",
+ "next": 7,
+ "handle": "@K4CODING",
+ "title": "Why .gitignore won't ignore app.log",
+ "hook": "IT'S IN .GITIGNORE. GIT STILL TRACKS IT.",
+ "accent": "#FFC857",
+ "watermark": "GIT",
+ "topic_card": 1.8,
+ "question": "Tracked by mistake: log files or node_modules?",
+ "fact_source": "https://git-scm.com/docs/gitignore (Files already tracked by Git are not affected; to stop tracking a file that is currently tracked, use git rm --cached) + https://git-scm.com/docs/git-rm (--cached: remove paths only from the index, working tree files left alone)",
+ "voice": {
+  "ref": "/workspace/ingress/work/tts2/ref_am_michael.wav",
+  "exaggeration": 0.45,
+  "cfg_weight": 0.4,
+  "seed": 900
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": "#1F3A5F",
+   "icon": "git",
+   "motion": "popin",
+   "tags": [
+    "THE BUG"
+   ],
+   "headline": "Git still tracks app.log",
+   "sub": "app.log is in .gitignore. git status: modified.",
+   "voice": "You added app dot log to git ignore, but git still shows it as modified?",
+   "caption": "You added app.log to .gitignore, but Git still shows it as modified?",
+   "illustration": {
+    "type": "terminal",
+    "title": "bash",
+    "lines": [
+     "$ cat .gitignore",
+     "app.log",
+     "$ git status",
+     "modified: app.log"
+    ],
+    "chips": [
+     {
+      "text": "IN .gitignore",
+      "color": "cyan"
+     },
+     {
+      "text": "STILL TRACKED",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "why",
+   "bg": "#7A2E4D",
+   "icon": "bug",
+   "motion": "slide",
+   "tags": [
+    "WHY",
+    "GIT DOCS"
+   ],
+   "headline": ".gitignore skips tracked files",
+   "code": {
+    "file": "terminal",
+    "lines": [
+     "$ echo app.log >> .gitignore",
+     "$ git status",
+     "modified: app.log"
+    ],
+    "bad": [
+     2
+    ],
+    "mark_at": 1.6,
+    "stamp": {
+     "text": "STILL TRACKED",
+     "color": "red"
+    }
+   },
+   "voice": "Git ignore only works on untracked files. Files already tracked by git are not affected.",
+   "caption": ".gitignore only works on untracked files. Files already tracked by Git are not affected.",
+   "illustration": {
+    "type": "git_branch",
+    "chips": [
+     {
+      "text": "TRACKED",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fix",
+   "bg": "#1E6F5C",
+   "icon": "check",
+   "motion": "rotate",
+   "tags": [
+    "THE FIX"
+   ],
+   "headline": "Untrack it with --cached",
+   "code": {
+    "file": "terminal",
+    "lines": [
+     "$ git rm --cached app.log",
+     "$ git commit -m \"stop tracking app.log\""
+    ],
+    "good": [
+     0
+    ],
+    "mark_at": 1.2,
+    "stamp": {
+     "text": "UNTRACKED",
+     "color": "green"
+    }
+   },
+   "voice": "Run git r m, dash dash cached, app dot log, then commit. Your file stays on disk.",
+   "caption": "Run git rm --cached app.log, then commit. Your file stays on disk.",
+   "illustration": {
+    "type": "laptop",
+    "ok": true,
+    "chips": [
+     {
+      "text": "FILE KEPT ON DISK",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "payoff",
+   "bg": "#17408B",
+   "icon": "git",
+   "motion": "zoom",
+   "tags": [
+    "PAYOFF"
+   ],
+   "headline": "Now .gitignore works",
+   "code": {
+    "file": "terminal",
+    "lines": [
+     "$ git status",
+     "nothing to commit,",
+     "working tree clean"
+    ],
+    "good": [
+     1,
+     2
+    ],
+    "mark_at": 1.4
+   },
+   "voice": "Now the file is untracked, so git ignore keeps it out of later commits.",
+   "caption": "Now the file is untracked, so .gitignore keeps it out of later commits.",
+   "illustration": {
+    "type": "terminal",
+    "title": "bash",
+    "lines": [
+     "$ git status",
+     "working tree clean"
+    ],
+    "chips": [
+     {
+      "text": "IGNORED",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bait",
+   "type": "question",
+   "bg": "#4A2C6B",
+   "icon": "question",
+   "tags": [
+    "YOUR TURN"
+   ],
+   "voice": "What did you track by mistake: log files or node modules? Comment your answer.",
+   "caption": "What did you track by mistake: log files or node_modules? Comment your answer."
+  },
+  {
+   "id": "follow",
+   "type": "end",
+   "bg": "#12233B",
+   "icon": "follow",
+   "voice": "Follow K four coding for part seven.",
+   "caption": "Follow K4Coding for part 7.",
+   "illustration": {
+    "type": "terminal",
+    "title": "bash",
+    "lines": [
+     "$ cat .gitignore",
+     "app.log",
+     "$ git status",
+     "modified: app.log"
+    ],
+    "chips": [
+     {
+      "text": "IN .gitignore",
+      "color": "cyan"
+     },
+     {
+      "text": "STILL TRACKED",
+      "color": "red"
+     }
+    ]
+   }
+  }
+ ],
+ "variants": {
+  "facebook": {
+   "title": "Fix: .gitignore not working on tracked files",
+   "hook": "GIT IGNORED YOUR .GITIGNORE?",
+   "scenes": {
+    "hook": {
+     "voice": "Your file is in git ignore, and git keeps committing it anyway. Here is why.",
+     "caption": "Your file is in .gitignore, and Git keeps committing it anyway. Here is why.",
+     "headline": ".gitignore did nothing"
+    }
+   }
+  }
+ },
+ "cover_illustration": {
+  "type": "terminal",
+  "title": "bash",
+  "lines": [
+   "$ cat .gitignore",
+   "app.log",
+   "$ git status",
+   "modified: app.log"
+  ],
+  "chips": [
+   {
+    "text": "IN .gitignore",
+    "color": "cyan"
+   },
+   {
+    "text": "STILL TRACKED",
+    "color": "red"
+   }
+  ]
+ }
+}
