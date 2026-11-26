@@ -1,0 +1,244 @@
+{
+ "slug": "python-nested-list-multiply-shared-rows",
+ "series": "BACKEND BASICS #6",
+ "next": 7,
+ "handle": "@K4CODING",
+ "title": "Why [[0]*3]*3 shares one row",
+ "hook": "SET 1 CELL. ALL 3 ROWS CHANGED.",
+ "accent": "#FFC857",
+ "watermark": "PY",
+ "topic_card": 1.8,
+ "question": "List comprehension or NumPy array?",
+ "fact_source": "https://docs.python.org/3/faq/programming.html#how-do-i-create-a-multidimensional-list and https://docs.python.org/3/library/stdtypes.html#common-sequence-operations (note 2: items in s*n are referenced multiple times, not copied; [[0]*3]*3 makes 3 references to one list; fix: [[0]*3 for _ in range(3)])",
+ "voice": {
+  "ref": "/workspace/ingress/work/tts2/ref_am_michael.wav",
+  "exaggeration": 0.45,
+  "cfg_weight": 0.4,
+  "seed": 900
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": "#1F3A5F",
+   "icon": "code",
+   "motion": "popin",
+   "tags": [
+    "THE BUG"
+   ],
+   "headline": "One write changed three rows",
+   "sub": "g[0][0] = 1 hit every row.",
+   "voice": "You set one cell in your grid, and all three rows change?",
+   "caption": "You set one cell in your grid, and all 3 rows change?",
+   "illustration": {
+    "type": "terminal",
+    "title": "python",
+    "lines": [
+     "$ python",
+     "> g = [[0]*3]*3",
+     "> g[0][0] = 1",
+     "[[1,0,0],[1,0,0],[1,0,0]]"
+    ],
+    "chips": [
+     {
+      "text": "CHANGED 1 CELL",
+      "color": "cyan"
+     },
+     {
+      "text": "3 ROWS CHANGED",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "why",
+   "bg": "#7A2E4D",
+   "icon": "bug",
+   "motion": "slide",
+   "tags": [
+    "WHY",
+    "PYTHON DOCS"
+   ],
+   "headline": "* 3 copies the reference",
+   "code": {
+    "file": "grid.py",
+    "lines": [
+     "g = [[0]*3]*3",
+     "# 3 refs, 1 list",
+     "g[0][0] = 1  # all rows"
+    ],
+    "bad": [
+     0
+    ],
+    "mark_at": 1.6,
+    "stamp": {
+     "text": "1 LIST, 3 REFS",
+     "color": "red"
+    }
+   },
+   "voice": "Times three copies the reference, not the list. All three rows are the same inner list.",
+   "caption": "* 3 copies the reference, not the list. All 3 rows are the same inner list.",
+   "illustration": {
+    "type": "laptop",
+    "ok": false,
+    "chips": [
+     {
+      "text": "SAME LIST x3",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fix",
+   "bg": "#1E6F5C",
+   "icon": "check",
+   "motion": "rotate",
+   "tags": [
+    "THE FIX"
+   ],
+   "headline": "Build each row fresh",
+   "code": {
+    "file": "grid.py",
+    "lines": [
+     "g = [[0]*3",
+     "     for _ in range(3)]",
+     "g[0][0] = 1"
+    ],
+    "good": [
+     0,
+     1
+    ],
+    "mark_at": 1.2,
+    "stamp": {
+     "text": "3 NEW LISTS",
+     "color": "green"
+    }
+   },
+   "voice": "Build each row fresh with a list comprehension, using for underscore in range of three.",
+   "caption": "Build each row fresh with a list comprehension: for _ in range(3).",
+   "illustration": {
+    "type": "laptop",
+    "ok": true,
+    "chips": [
+     {
+      "text": "NEW ROW EACH",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "payoff",
+   "bg": "#17408B",
+   "icon": "code",
+   "motion": "zoom",
+   "tags": [
+    "PAYOFF"
+   ],
+   "headline": "1 write = 1 cell",
+   "code": {
+    "file": "grid.py",
+    "lines": [
+     "print(g)",
+     "# [[1,0,0],[0,0,0],[0,0,0]]"
+    ],
+    "good": [
+     1
+    ],
+    "mark_at": 1.4
+   },
+   "voice": "Now one write changes one cell, not three. Three rows, three separate lists.",
+   "caption": "Now 1 write changes 1 cell, not 3. Three rows, three separate lists.",
+   "illustration": {
+    "type": "table",
+    "columns": [
+     "#",
+     "c0",
+     "c1",
+     "c2"
+    ],
+    "rows": [
+     [
+      "0",
+      "1",
+      "0",
+      "0"
+     ],
+     [
+      "1",
+      "0",
+      "0",
+      "0"
+     ],
+     [
+      "2",
+      "0",
+      "0",
+      "0"
+     ]
+    ],
+    "chips": [
+     {
+      "text": "1 CELL CHANGED",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bait",
+   "type": "question",
+   "bg": "#4A2C6B",
+   "icon": "question",
+   "tags": [
+    "YOUR TURN"
+   ],
+   "voice": "For a grid, which do you use: a list comprehension, or a NumPy array? Comment your answer.",
+   "caption": "For a grid, which do you use: a list comprehension, or a NumPy array? Comment your answer.",
+   "yes": "LIST COMP",
+   "no": "NUMPY"
+  },
+  {
+   "id": "follow",
+   "type": "end",
+   "bg": "#12233B",
+   "icon": "follow",
+   "voice": "Follow K four coding for part seven.",
+   "caption": "Follow K4Coding for part 7.",
+   "illustration": {
+    "type": "terminal",
+    "title": "python",
+    "lines": [
+     "$ python",
+     "> g = [[0]*3]*3",
+     "> g[0][0] = 1",
+     "[[1,0,0],[1,0,0],[1,0,0]]"
+    ],
+    "chips": [
+     {
+      "text": "CHANGED 1 CELL",
+      "color": "cyan"
+     },
+     {
+      "text": "3 ROWS CHANGED",
+      "color": "red"
+     }
+    ]
+   }
+  }
+ ],
+ "variants": {
+  "facebook": {
+   "title": "Fix: Python grid rows change together",
+   "hook": "WHY DID EVERY ROW BECOME 1?",
+   "scenes": {
+    "hook": {
+     "voice": "You change the first row of your Python grid, and every row changes with it.",
+     "caption": "You change the first row of your Python grid, and every row changes with it.",
+     "headline": "Every row changed"
+    }
+   }
+  }
+ }
+}

@@ -35,3 +35,4 @@
 2026-11-20 1800 SQL Bugs #7 sql-count-column-skips-nulls-count-star 2D
 2026-11-26 1300 Git Mistakes #6 git-ignore-tracked-file-rm-cached 2D
 2026-11-26 1800 JS Gotchas #6 javascript-map-parseint-nan-radix 2D
+2026-11-26 2100 Backend Basics #6 python-nested-list-multiply-shared-rows 2D
