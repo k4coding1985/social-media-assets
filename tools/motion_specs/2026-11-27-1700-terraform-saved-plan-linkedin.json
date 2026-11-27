@@ -1,0 +1,543 @@
+{
+ "slug": "2026-11-27-1700-terraform-saved-plan-linkedin",
+ "watermark": "",
+ "voice": {
+  "name": "en-IN-NeerjaExpressiveNeural",
+  "rate": "+5%",
+  "pitch": "+0Hz"
+ },
+ "captions": {
+  "enabled": true,
+  "keywords": [
+   "terraform apply",
+   "plan",
+   "-out",
+   "stale",
+   "CI"
+  ],
+  "keyword_color": "yellow",
+  "max_chars": 30
+ },
+ "cover_at": "fix@exact+0.3",
+ "tail": 1.8,
+ "chapters": [
+  {
+   "id": "hook",
+   "text": "{{BLIND}} APPLY",
+   "color": "red"
+  },
+  {
+   "id": "bug",
+   "at": "bug:start",
+   "text": "{{NEW PLAN}}",
+   "color": "red"
+  },
+  {
+   "id": "why",
+   "at": "why:start",
+   "text": "{{DRIFT}} HAPPENS",
+   "color": "red"
+  },
+  {
+   "id": "fix",
+   "at": "fix:start",
+   "text": "SAVE THE {{PLAN}}",
+   "color": "purple"
+  },
+  {
+   "id": "payoff",
+   "at": "fix@exact",
+   "text": "{{APPLY}} THAT FILE",
+   "color": "cyan"
+  },
+  {
+   "id": "bait",
+   "at": "bait:start",
+   "text": "SAVED OR {{FRESH}}?",
+   "color": "yellow"
+  }
+ ],
+ "voiceover": [
+  {
+   "id": "hook",
+   "text": "Your CI ran terraform apply on a plan nobody reviewed."
+  },
+  {
+   "id": "bug",
+   "text": "Apply without a plan file makes a brand new plan at apply time."
+  },
+  {
+   "id": "why",
+   "text": "Someone merged, or the cloud drifted, and what runs is not what you approved."
+  },
+  {
+   "id": "fix",
+   "text": "Save the plan with dash out. Then apply that exact file. If the state changed since, Terraform rejects it as stale. Review in CI, then apply the saved plan."
+  },
+  {
+   "id": "bait",
+   "text": "Saved plan, or fresh apply? Comment which one your team uses."
+  },
+  {
+   "id": "follow",
+   "text": "Follow me for one DevOps fix every day."
+  }
+ ],
+ "elements": [
+  {
+   "id": "sub",
+   "type": "text",
+   "x": 540,
+   "y": 430,
+   "text": "Apply the {{plan you reviewed}}",
+   "font": "sans",
+   "size": 44,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true,
+   "start_visible": true
+  },
+  {
+   "id": "term",
+   "type": "code",
+   "x": 540,
+   "y": 860,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "terminal",
+   "hl": "red",
+   "border": "red",
+   "lines": [
+    "$ terraform apply -auto-approve",
+    "{{# plan made just now}}",
+    "# ...not the one reviewed"
+   ],
+   "start_visible": true
+  },
+  {
+   "id": "xmark",
+   "type": "badge",
+   "kind": "x",
+   "x": 540,
+   "y": 560,
+   "r": 56,
+   "color": "red"
+  },
+  {
+   "id": "panic",
+   "type": "text",
+   "x": 540,
+   "y": 760,
+   "text": "Approved plan. {{New apply.}}",
+   "font": "sans",
+   "size": 52,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "red",
+   "upper": true
+  },
+  {
+   "id": "gone",
+   "type": "badge",
+   "kind": "stamp",
+   "text": "WHAT RAN?",
+   "x": 540,
+   "y": 560,
+   "size": 48,
+   "color": "red"
+  },
+  {
+   "id": "ok",
+   "type": "badge",
+   "kind": "check",
+   "x": 540,
+   "y": 520,
+   "r": 48,
+   "color": "cyan",
+   "label": "Apply what you reviewed",
+   "label_size": 44
+  },
+  {
+   "id": "plan",
+   "type": "window",
+   "x": 540,
+   "y": 1240,
+   "w": 960,
+   "h": 200,
+   "title": "state changed since plan?",
+   "status": "cyan",
+   "body": "{{Stale plan}} = rejected",
+   "body_size": 46,
+   "hl": "cyan",
+   "border": "cyan"
+  },
+  {
+   "id": "gen",
+   "type": "code",
+   "x": 540,
+   "y": 900,
+   "w": 1020,
+   "size": 44,
+   "min_lines": 3,
+   "title": "in CI",
+   "hl": "purple",
+   "border": "purple",
+   "lines": [
+    "$ terraform plan -out=tfplan",
+    "  {{# review, approve}}",
+    "$ terraform apply tfplan"
+   ]
+  },
+  {
+   "id": "baitq",
+   "type": "text",
+   "x": 540,
+   "y": 560,
+   "text": "{{Saved plan}} or fresh?",
+   "font": "marker",
+   "size": 50,
+   "color": "white",
+   "hl": "yellow",
+   "upper": true
+  },
+  {
+   "id": "yesbox",
+   "type": "window",
+   "x": 330,
+   "y": 880,
+   "w": 380,
+   "h": 200,
+   "title": "",
+   "body": "{{SAVED}}",
+   "body_size": 56,
+   "hl": "cyan",
+   "border": "cyan",
+   "status": "cyan"
+  },
+  {
+   "id": "nobox",
+   "type": "window",
+   "x": 750,
+   "y": 880,
+   "w": 380,
+   "h": 200,
+   "title": "",
+   "body": "{{FRESH}}",
+   "body_size": 56,
+   "hl": "yellow",
+   "border": "yellow",
+   "status": "yellow"
+  },
+  {
+   "id": "follow",
+   "type": "text",
+   "x": 540,
+   "y": 1110,
+   "text": "Follow me for {{one DevOps fix}} every day",
+   "font": "sans",
+   "size": 44,
+   "weight": "ExtraBold",
+   "color": "white",
+   "hl": "cyan",
+   "upper": false
+  },
+  {
+   "id": "tags",
+   "type": "text",
+   "x": 540,
+   "y": 1240,
+   "text": "{{#Terraform #IaC #DevOps}}",
+   "font": "sans",
+   "size": 44,
+   "weight": "Bold",
+   "color": "white",
+   "hl": "purple",
+   "upper": false
+  }
+ ],
+ "timeline": [
+  {
+   "at": 0,
+   "do": "type",
+   "target": "term",
+   "dur": 0.01
+  },
+  {
+   "at": 0.15,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 0.15,
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "red",
+   "dur": 0.25,
+   "sfx": "alert"
+  },
+  {
+   "at": "hook@nobody",
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "hook@reviewed",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.45
+  },
+  {
+   "at": "bug:start",
+   "do": "hide",
+   "target": [
+    "sub",
+    "term"
+   ],
+   "dur": 0.2
+  },
+  {
+   "at": "bug:start",
+   "do": "show",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "whoosh",
+   "stagger": 0.08
+  },
+  {
+   "at": "bug@brand",
+   "do": "pulse",
+   "target": "xmark"
+  },
+  {
+   "at": "why:start",
+   "do": "hide",
+   "target": [
+    "xmark",
+    "panic"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "why:start",
+   "do": "show",
+   "target": "term",
+   "anim": "slide_up",
+   "dur": 0.4
+  },
+  {
+   "at": "why:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1,
+   "lines": [
+    "# PR merged after review",
+    "{{# cloud drifted}}",
+    "# new plan, no review"
+   ]
+  },
+  {
+   "at": "why@merged",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "why@drifted",
+   "do": "show",
+   "target": "gone",
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "alert"
+  },
+  {
+   "at": "why@approved",
+   "do": "shake",
+   "target": "term",
+   "dur": 0.5
+  },
+  {
+   "at": "fix:start",
+   "do": "hide",
+   "target": "gone",
+   "dur": 0.25
+  },
+  {
+   "at": "fix:start",
+   "do": "swap",
+   "target": "term",
+   "type_dur": 1,
+   "lines": [
+    "$ terraform plan -out=tfplan",
+    "{{$ terraform apply tfplan}}",
+    "# applies exactly that plan"
+   ]
+  },
+  {
+   "at": "fix:start",
+   "do": "color",
+   "target": [
+    "term",
+    "term:hl"
+   ],
+   "color": "cyan",
+   "dur": 0.35
+  },
+  {
+   "at": "fix@exact",
+   "do": "show",
+   "target": [
+    "ok",
+    "plan"
+   ],
+   "anim": "pop",
+   "dur": 0.4,
+   "sfx": "ding",
+   "stagger": 0.1
+  },
+  {
+   "at": "fix@changed",
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": "fix@rejects",
+   "do": "pulse",
+   "target": "plan"
+  },
+  {
+   "at": "fix@stale",
+   "do": "pulse",
+   "target": "plan"
+  },
+  {
+   "at": "fix@Review",
+   "do": "hide",
+   "target": [
+    "ok",
+    "term"
+   ],
+   "dur": 0.3
+  },
+  {
+   "at": "fix@CI",
+   "do": "show",
+   "target": "gen",
+   "anim": "slide_up",
+   "dur": 0.45
+  },
+  {
+   "at": "fix@saved",
+   "do": "pulse",
+   "target": [
+    "gen",
+    "plan"
+   ]
+  },
+  {
+   "at": "bait:start",
+   "do": "hide",
+   "target": [
+    "gen",
+    "plan"
+   ],
+   "dur": 0.25
+  },
+  {
+   "at": "bait:start",
+   "do": "show",
+   "target": "baitq",
+   "anim": "pop",
+   "dur": 0.4
+  },
+  {
+   "at": "bait@fresh",
+   "do": "show",
+   "target": [
+    "yesbox",
+    "nobox"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "bait@Comment",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "bait@uses",
+   "do": "pulse",
+   "target": "baitq"
+  },
+  {
+   "at": "follow:start",
+   "do": "show",
+   "target": [
+    "follow",
+    "tags"
+   ],
+   "anim": "slide_up",
+   "dur": 0.4,
+   "stagger": 0.1
+  },
+  {
+   "at": "follow@DevOps",
+   "do": "pulse",
+   "target": [
+    "follow",
+    "tags"
+   ]
+  },
+  {
+   "at": 1.5,
+   "do": "pulse",
+   "target": "sub"
+  },
+  {
+   "at": "follow@every+0.8",
+   "do": "pulse",
+   "target": [
+    "yesbox",
+    "nobox"
+   ]
+  },
+  {
+   "at": "follow@every+1.8",
+   "do": "pulse",
+   "target": "tags"
+  },
+  {
+   "at": 14.5,
+   "do": "pulse",
+   "target": "term"
+  },
+  {
+   "at": 21.6,
+   "do": "pulse",
+   "target": "plan"
+  },
+  {
+   "at": 23,
+   "do": "pulse",
+   "target": "term"
+  }
+ ],
+ "end_card": {
+  "segment": "follow",
+  "line1": "FOLLOW ME",
+  "line2": "{{1 DEVOPS FIX DAILY}}",
+  "line3": "#Terraform #IaC #DevOps"
+ }
+}
