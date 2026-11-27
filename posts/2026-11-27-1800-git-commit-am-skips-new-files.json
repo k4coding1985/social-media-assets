@@ -1,0 +1,244 @@
+{
+ "slug": "git-commit-am-skips-new-files",
+ "series": "GIT MISTAKES #7",
+ "next": 8,
+ "handle": "@K4CODING",
+ "title": "Why git commit -am skips new files",
+ "hook": "YOU COMMITTED. pay.py NEVER MADE IT.",
+ "accent": "#FFC857",
+ "watermark": "GIT",
+ "topic_card": 1.8,
+ "question": "Before commit: git add . or each file by name?",
+ "fact_source": "https://git-scm.com/docs/git-commit (-a/--all: Automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected) + https://git-scm.com/docs/git-status (?? is used for untracked paths); outputs reproduced with git 2.47.3",
+ "voice": {
+  "ref": "/workspace/ingress/work/tts2/ref_am_michael.wav",
+  "exaggeration": 0.45,
+  "cfg_weight": 0.4,
+  "seed": 900
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": "#1F3A5F",
+   "icon": "git",
+   "motion": "popin",
+   "tags": [
+    "THE BUG"
+   ],
+   "headline": "Your new file never got committed",
+   "sub": "git commit -am: 1 file changed. pay.py: still untracked.",
+   "voice": "You ran git commit dash a m, but your new file never got committed?",
+   "caption": "You ran git commit -am, but your new file never got committed?",
+   "illustration": {
+    "type": "terminal",
+    "title": "bash",
+    "lines": [
+     "$ git commit -am \"add payments\"",
+     "1 file changed",
+     "$ git status --short",
+     "?? pay.py"
+    ],
+    "chips": [
+     {
+      "text": "COMMITTED: 1 FILE",
+      "color": "cyan"
+     },
+     {
+      "text": "pay.py LEFT OUT",
+      "color": "red"
+     }
+    ]
+   },
+   "seed": 917
+  },
+  {
+   "id": "why",
+   "bg": "#7A2E4D",
+   "icon": "bug",
+   "motion": "slide",
+   "tags": [
+    "WHY",
+    "GIT DOCS"
+   ],
+   "headline": "-a only stages tracked files",
+   "code": {
+    "file": "terminal",
+    "lines": [
+     "$ git commit -am \"add payments\"",
+     "1 file changed",
+     "?? pay.py   (untracked)"
+    ],
+    "bad": [
+     0
+    ],
+    "mark_at": 1.6,
+    "stamp": {
+     "text": "1 FILE, NOT 2",
+     "color": "red"
+    }
+   },
+   "voice": "Dash a only stages files git already tracks. New files you have not told git about are skipped.",
+   "caption": "-a only stages files Git already tracks. New files you have not told Git about are skipped.",
+   "illustration": {
+    "type": "git_branch",
+    "chips": [
+     {
+      "text": "NEW FILE SKIPPED",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fix",
+   "bg": "#1E6F5C",
+   "icon": "check",
+   "motion": "rotate",
+   "tags": [
+    "THE FIX"
+   ],
+   "headline": "git add the new file first",
+   "code": {
+    "file": "terminal",
+    "lines": [
+     "$ git add pay.py",
+     "$ git commit -am \"add payments\"",
+     "2 files changed"
+    ],
+    "good": [
+     0
+    ],
+    "mark_at": 1.2,
+    "stamp": {
+     "text": "2 FILES",
+     "color": "green"
+    }
+   },
+   "voice": "Run git add pay dot p y first, then commit. Now the commit shows two files changed, not one.",
+   "caption": "Run git add pay.py first, then commit. Now the commit shows 2 files changed, not 1.",
+   "illustration": {
+    "type": "laptop",
+    "ok": true,
+    "chips": [
+     {
+      "text": "2 FILES CHANGED",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "payoff",
+   "bg": "#17408B",
+   "icon": "git",
+   "motion": "zoom",
+   "tags": [
+    "PRO TIP"
+   ],
+   "headline": "Check git status first",
+   "code": {
+    "file": "terminal",
+    "lines": [
+     "$ git status --short",
+     " M app.py",
+     "?? pay.py"
+    ],
+    "bad": [
+     2
+    ],
+    "mark_at": 1.4
+   },
+   "voice": "Pro tip: run git status before you commit. Two question marks mean untracked.",
+   "caption": "Pro tip: run git status before you commit. ?? means untracked.",
+   "illustration": {
+    "type": "terminal",
+    "title": "bash",
+    "lines": [
+     "$ git status --short",
+     " M app.py",
+     "?? pay.py"
+    ],
+    "chips": [
+     {
+      "text": "?? = UNTRACKED",
+      "color": "accent"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bait",
+   "type": "question",
+   "bg": "#4A2C6B",
+   "icon": "question",
+   "tags": [
+    "YOUR TURN"
+   ],
+   "voice": "Before you commit, do you run git add dot, or add each file by name? Comment your answer.",
+   "caption": "Before you commit, do you run git add . or add each file by name? Comment your answer.",
+   "yes": "ADD .",
+   "no": "EACH"
+  },
+  {
+   "id": "follow",
+   "type": "end",
+   "bg": "#12233B",
+   "icon": "follow",
+   "voice": "Follow K four coding for part eight.",
+   "caption": "Follow K4Coding for part 8.",
+   "illustration": {
+    "type": "terminal",
+    "title": "bash",
+    "lines": [
+     "$ git commit -am \"add payments\"",
+     "1 file changed",
+     "$ git status --short",
+     "?? pay.py"
+    ],
+    "chips": [
+     {
+      "text": "COMMITTED: 1 FILE",
+      "color": "cyan"
+     },
+     {
+      "text": "pay.py LEFT OUT",
+      "color": "red"
+     }
+    ]
+   }
+  }
+ ],
+ "variants": {
+  "facebook": {
+   "title": "Fix: git commit -a missed my new file",
+   "hook": "1 FILE CHANGED? YOU EDITED 2.",
+   "scenes": {
+    "hook": {
+     "voice": "You changed two files, but git says one file changed. Your new file got left behind.",
+     "caption": "You changed 2 files, but Git says 1 file changed. Your new file got left behind.",
+     "headline": "Git left your new file behind"
+    }
+   }
+  }
+ },
+ "cover_illustration": {
+  "type": "terminal",
+  "title": "bash",
+  "lines": [
+   "$ git commit -am \"add payments\"",
+   "1 file changed",
+   "$ git status --short",
+   "?? pay.py"
+  ],
+  "chips": [
+   {
+    "text": "COMMITTED: 1 FILE",
+    "color": "cyan"
+   },
+   {
+    "text": "pay.py LEFT OUT",
+    "color": "red"
+   }
+  ]
+ }
+}
