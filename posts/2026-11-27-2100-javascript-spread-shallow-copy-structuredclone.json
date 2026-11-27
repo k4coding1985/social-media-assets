@@ -1,0 +1,241 @@
+{
+ "slug": "javascript-spread-shallow-copy-structuredclone",
+ "series": "JS GOTCHAS #7",
+ "next": 8,
+ "handle": "@K4CODING",
+ "title": "Why your object copy changed the original",
+ "hook": "I EDITED THE COPY. THE ORIGINAL CHANGED.",
+ "accent": "#FFC857",
+ "watermark": "JS",
+ "topic_card": 1.8,
+ "question": "structuredClone() or JSON.parse(JSON.stringify())?",
+ "fact_source": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax (spread effectively goes one level deep when copying) ; https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone (creates a deep clone)",
+ "voice": {
+  "ref": "/workspace/ingress/work/tts2/ref_am_michael.wav",
+  "exaggeration": 0.45,
+  "cfg_weight": 0.4,
+  "seed": 900
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "bg": "#1F3A5F",
+   "icon": "code",
+   "motion": "popin",
+   "tags": [
+    "THE BUG"
+   ],
+   "headline": "Your copy changed the original",
+   "sub": "You edited copy. user changed too.",
+   "voice": "You copy an object with spread, change the copy's city, and the original user changes too?",
+   "caption": "You copy an object with {...user}, change the copy's city, and the original changes too?",
+   "illustration": {
+    "type": "terminal",
+    "title": "node",
+    "lines": [
+     "> const copy = {...user}",
+     "> copy.address.city = 'Pune'",
+     "> user.address.city",
+     "'Pune'"
+    ],
+    "chips": [
+     {
+      "text": "COPY EDITED",
+      "color": "cyan"
+     },
+     {
+      "text": "ORIGINAL CHANGED",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "why",
+   "bg": "#7A2E4D",
+   "icon": "bug",
+   "motion": "slide",
+   "tags": [
+    "WHY",
+    "MDN"
+   ],
+   "headline": "Spread copies one level deep",
+   "code": {
+    "file": "app.js",
+    "lines": [
+     "const copy = { ...user }",
+     "copy.address.city = 'Pune'",
+     "// same address object!"
+    ],
+    "bad": [
+     0
+    ],
+    "mark_at": 1.6,
+    "stamp": {
+     "text": "SHALLOW COPY",
+     "color": "red"
+    }
+   },
+   "voice": "Spread only copies one level deep. Nested objects like address are shared, not copied.",
+   "caption": "Spread only copies one level deep. Nested objects like address are shared, not copied.",
+   "illustration": {
+    "type": "laptop",
+    "ok": false,
+    "chips": [
+     {
+      "text": "SHARED address",
+      "color": "red"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fix",
+   "bg": "#1E6F5C",
+   "icon": "check",
+   "motion": "rotate",
+   "tags": [
+    "THE FIX"
+   ],
+   "headline": "Use structuredClone",
+   "code": {
+    "file": "app.js",
+    "lines": [
+     "const copy = structuredClone(user)",
+     "copy.address.city = 'Pune'"
+    ],
+    "good": [
+     0
+    ],
+    "mark_at": 1.2,
+    "stamp": {
+     "text": "DEEP COPY",
+     "color": "green"
+    }
+   },
+   "voice": "Use structured clone. It copies every nested level, so the original stays safe.",
+   "caption": "Use structuredClone(). It copies every nested level, so the original stays safe.",
+   "illustration": {
+    "type": "laptop",
+    "ok": true,
+    "chips": [
+     {
+      "text": "DEEP COPY",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "payoff",
+   "bg": "#17408B",
+   "icon": "code",
+   "motion": "zoom",
+   "tags": [
+    "PAYOFF"
+   ],
+   "headline": "Original stays untouched",
+   "code": {
+    "file": "app.js",
+    "lines": [
+     "user.address.city",
+     "// 'Delhi' (unchanged)"
+    ],
+    "good": [
+     1
+    ],
+    "mark_at": 1.4
+   },
+   "voice": "Now the original keeps Delhi. Zero shared nested objects, zero surprise bugs.",
+   "caption": "Now the original keeps 'Delhi'. Zero shared nested objects, zero surprise bugs.",
+   "illustration": {
+    "type": "terminal",
+    "title": "node",
+    "lines": [
+     "> user.address.city",
+     "'Delhi'"
+    ],
+    "chips": [
+     {
+      "text": "0 SHARED",
+      "color": "green"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bait",
+   "type": "question",
+   "bg": "#4A2C6B",
+   "icon": "question",
+   "tags": [
+    "YOUR TURN"
+   ],
+   "voice": "For deep copies, which do you use: structured clone, or JSON parse of JSON stringify? Comment your answer.",
+   "caption": "For deep copies, which do you use: structuredClone(), or JSON.parse(JSON.stringify())? Comment your answer.",
+   "yes": "CLONE",
+   "no": "JSON"
+  },
+  {
+   "id": "follow",
+   "type": "end",
+   "bg": "#12233B",
+   "icon": "follow",
+   "voice": "Follow K four coding for part eight.",
+   "caption": "Follow K4Coding for part 8.",
+   "illustration": {
+    "type": "terminal",
+    "title": "node",
+    "lines": [
+     "> const copy = {...user}",
+     "> copy.address.city = 'Pune'",
+     "> user.address.city",
+     "'Pune'"
+    ],
+    "chips": [
+     {
+      "text": "COPY EDITED",
+      "color": "cyan"
+     },
+     {
+      "text": "ORIGINAL CHANGED",
+      "color": "red"
+     }
+    ]
+   }
+  }
+ ],
+ "variants": {
+  "facebook": {
+   "title": "Fix: JavaScript object copy changes the original",
+   "hook": "SPREAD COPY? YOUR ORIGINAL IS NOT SAFE",
+   "scenes": {
+    "hook": {
+     "voice": "Spread looks like a full copy. But change a nested field, and the original object changes with it.",
+     "caption": "{...obj} looks like a full copy. But change a nested field, and the original object changes with it.",
+     "headline": "{...obj} is not a deep copy"
+    }
+   }
+  }
+ },
+ "cover_illustration": {
+  "type": "terminal",
+  "title": "node",
+  "lines": [
+   "> const copy = {...user}",
+   "> copy.address.city = 'Pune'",
+   "> user.address.city",
+   "'Pune'"
+  ],
+  "chips": [
+   {
+    "text": "COPY EDITED",
+    "color": "cyan"
+   },
+   {
+    "text": "ORIGINAL CHANGED",
+    "color": "red"
+   }
+  ]
+ }
+}
